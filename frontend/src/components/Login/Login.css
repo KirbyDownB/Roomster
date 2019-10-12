@@ -1,0 +1,12 @@
+.login__right {
+  background-color: #F57676;
+  height: 100vh;
+}
+
+.login__logo-container {
+  margin-top: 64px;
+}
+
+.login__logo {
+  width: 100px
+}
