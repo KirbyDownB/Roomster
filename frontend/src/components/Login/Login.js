@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import './Login.css';
 import logo from '../../assets/imgs/roomster-logo.svg';
+import { Input } from 'antd';
 
 class Login extends Component {
   render() {
@@ -8,10 +9,18 @@ class Login extends Component {
       <Fragment>
         <div className="container-fluid">
           <div className="row">
-            <div className="col-5">
-              <div className="row justify-content-center">
-                <div className="login__logo-container">
-                  <img src={logo} className="login__logo"/>
+            <div className="col-5 login__left">
+              <div className="login__left--narrow">
+                <div className="row justify-content-center">
+                  <div className="login__logo-container">
+                    <img src={logo} className="login__logo"/>
+                  </div>
+                </div>
+                <div className="row">
+                  <h1 className="login__title">Welcome back.</h1>
+                </div>
+                <div className="row justify-content-center">
+                  <Input placeholder="Username/Email"/>
                 </div>
               </div>
             </div>

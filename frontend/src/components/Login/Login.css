@@ -1,3 +1,7 @@
+.login__left--narrow {
+  margin: 0 74px
+}
+
 .login__right {
   background-color: #F57676;
   height: 100vh;
@@ -9,4 +13,12 @@
 
 .login__logo {
   width: 100px
+}
+
+.login__title {
+  color: #F57676;
+  font-weight: bolder;
+  font-family: "Asap", sans-serif;
+  font-size: 48px;
+  margin-top: 96px;
 }
