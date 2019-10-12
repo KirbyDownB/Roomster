@@ -1,16 +1,41 @@
 import React, { Component, Fragment } from 'react';
 import './Login.css';
 import logo from '../../assets/imgs/roomster-logo.svg';
-import { Form, Icon, Input, Button } from 'antd';
+import spinner from '../../assets/tail-spin.svg';
+import { Form, Icon, Input, Button, Alert } from 'antd';
 import { NavLink } from 'react-router-dom';
 
 const { Item } = Form;
 
 class Login extends Component {
-  state = {}
+  state = {
+    isLoginLoading: false,
+    alertMessage: ""
+  }
 
   handleSubmit = e => {
     e.preventDefault();
+
+    let username = e.target.username.value;
+    let password = e.target.password.value;
+
+    if (!username) {
+      this.setState({ alertMessage: "You forgot to enter your username!" });
+      return;
+    } else if (!password) {
+      this.setState({ alertMessage: "You forgot to enter your password!" });
+      return;
+    } else {
+      this.setState({ alertMessage: "" });
+    }
+
+    /* TODO: Handle login request to backend */
+
+    this.setState({ isLoginLoading: true });
+  }
+
+  handleAlertClose = () => {
+    this.setState({ alertMessage: "" });
   }
 
   render() {
@@ -25,23 +50,24 @@ class Login extends Component {
                     <img src={logo} className="login__logo"/>
                   </div>
                 </div>
-                <div className="row">
-                  <h1 className="login__title">Welcome back.</h1>
-                </div>
                 <div className="row justify-content-center">
                   <Form onSubmit={this.handleSubmit} className="login__form">
+                    <div className="login__title">Welcome back.</div>
                     <Item className="login__item">
                       <Input
                         className="login__input login__username"
+                        name="username"
+                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                         placeholder="Username/Email"
-                        style={{ width: 440 }}
                       />
                     </Item>
                     <Item className="login__item">
                       <Input
                         className="login__input login__password"
+                        name="password"
+                        type="password"
+                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                         placeholder="Password"
-                        style={{ width: 440 }}
                       />
                     </Item>
                     <NavLink to="/forgot-password">
@@ -51,10 +77,10 @@ class Login extends Component {
                     </NavLink>
                     <Item classname="login__item">
                       <Button
-                        className="login__button"
+                        className="login__button login__button--login"
                         htmlType="submit"
                         type="primary"
-                        style={{width: 440 }}
+                        style={{ width: 440 }}
                       >
                         <span className="login__button--bold">LOGIN</span>
                       </Button>
@@ -63,13 +89,25 @@ class Login extends Component {
                   <NavLink to="/signup">
                     <Button
                       ghost
-                      className="login__button--signup"
+                      className="login__button login__button--signup"
                       type="primary"
-                      style={{width: 440 }}
+                      style={{ width: 440 }}
                     >
                       <span className="login__button--bold">SIGNUP</span>
                     </Button>
                   </NavLink>
+                </div>
+                <div className="row justify-content-center">
+                  <div className="login__userfeedback">
+                    {this.state.alertMessage.length > 0 && <Alert
+                      className="login__alert"
+                      message={this.state.alertMessage}
+                      type="warning"
+                      closable
+                      afterClose={this.handleAlertClose}
+                    />}
+                    {this.state.isLoginLoading && <img className="login__spinner" src={spinner}/> }
+                  </div>
                 </div>
               </div>
             </div>
