@@ -1,9 +1,18 @@
 import React, { Component, Fragment } from 'react';
 import './Login.css';
 import logo from '../../assets/imgs/roomster-logo.svg';
-import { Input } from 'antd';
+import { Form, Icon, Input, Button } from 'antd';
+import { NavLink } from 'react-router-dom';
+
+const { Item } = Form;
 
 class Login extends Component {
+  state = {}
+
+  handleSubmit = e => {
+    e.preventDefault();
+  }
+
   render() {
     return (
       <Fragment>
@@ -20,7 +29,47 @@ class Login extends Component {
                   <h1 className="login__title">Welcome back.</h1>
                 </div>
                 <div className="row justify-content-center">
-                  <Input placeholder="Username/Email"/>
+                  <Form onSubmit={this.handleSubmit} className="login__form">
+                    <Item className="login__item">
+                      <Input
+                        className="login__input login__username"
+                        placeholder="Username/Email"
+                        style={{ width: 440 }}
+                      />
+                    </Item>
+                    <Item className="login__item">
+                      <Input
+                        className="login__input login__password"
+                        placeholder="Password"
+                        style={{ width: 440 }}
+                      />
+                    </Item>
+                    <NavLink to="/forgot-password">
+                      <div className="login__forgot">
+                        Forgot your password?
+                      </div>
+                    </NavLink>
+                    <Item classname="login__item">
+                      <Button
+                        className="login__button"
+                        htmlType="submit"
+                        type="primary"
+                        style={{width: 440 }}
+                      >
+                        <span className="login__button--bold">LOGIN</span>
+                      </Button>
+                    </Item>
+                  </Form>
+                  <NavLink to="/signup">
+                    <Button
+                      ghost
+                      className="login__button--signup"
+                      type="primary"
+                      style={{width: 440 }}
+                    >
+                      <span className="login__button--bold">SIGNUP</span>
+                    </Button>
+                  </NavLink>
                 </div>
               </div>
             </div>

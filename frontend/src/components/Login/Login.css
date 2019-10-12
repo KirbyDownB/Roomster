@@ -22,3 +22,26 @@
   font-size: 48px;
   margin-top: 96px;
 }
+
+.login__form {
+  margin-top: -12px;
+}
+
+.login__input {
+  background-color: #F4F4F4;
+  border: none;
+}
+
+.login__button {
+  margin-top: 64px;
+}
+
+.login__button--bold {
+  font-weight: bold;
+  letter-spacing: 12px;
+}
+
+.login__forgot {
+  margin-top: -16px;
+  color: #F57676;
+}
