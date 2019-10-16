@@ -1,0 +1,62 @@
+.signupBG {
+  width: 100vw;
+  height: 100vh;
+}
+
+.suLeft {
+  background-color: #F57676;
+  height: 100vh;
+}
+.removePadding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.removeMargin {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.logoBox {
+  text-align: center;
+  padding-top: 8%;
+}
+
+.formBox {
+  height: 100%;
+  width: 100%;
+  padding: 8%;
+}
+
+.formTitle {
+  font-weight: 700;
+  font-size: 50px;
+  color: #F57676;
+  margin: 0;
+}
+
+.formBody {
+  font-size: 16px;
+  margin: 0;
+}
+
+.inputBox {
+  display: flex;
+  padding-top: 6%;
+}
+
+.inputBox2 {
+  display: flex;
+  padding-top: 2%;
+}
+
+.inputWrap {
+  width: 80%;
+  height: 80px;
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  padding-top: 10%;
+}
