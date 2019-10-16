@@ -10,6 +10,7 @@
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "react": "^16.10.2",
+    "react-animated-css": "^1.2.1",
     "react-app-rewired": "^2.1.3",
     "react-dom": "^16.10.2",
     "react-router-dom": "^5.1.2",
