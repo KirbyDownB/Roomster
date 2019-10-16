@@ -9,6 +9,7 @@ const circleLogo = require('../../assets/imgs/circle-logo.svg');
 class Signup extends Component {
   state = {
     email: '',
+    profile: '',
     password1: '',
     password2: '',
     firstName: '',
@@ -45,9 +46,9 @@ class Signup extends Component {
                     </div>
                     <div style={{width: '10%'}}></div>
                     <div style={{width: "45%"}}>
-                      <p className="formBody">Email *</p>
+                      <p className="formBody">Profile</p>
                       <div className="inputWrap">
-                        <Input value={this.state.email} onChange={this.handleChange} placeholder="Username / Email" prefix={<Icon type="mail" style={{color: 'rgba(0, 0, 0)'}} />}/>
+                        <Input value={this.state.profile} onChange={this.handleChange} placeholder="Upload Picture" prefix={<Icon type="file-add" style={{color: 'rgba(0, 0, 0)'}} />}/>
                       </div>
                     </div>
                   </div>
