@@ -1,7 +1,6 @@
 from flask import Flask
-from apis import api
+from flask_sqlalchemy import SQLAlchemy
+from apis import api,app
 
-app = Flask(__name__)
 api.init_app(app)
-
 app.run(debug=True)
