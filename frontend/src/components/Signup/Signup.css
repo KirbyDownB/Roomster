@@ -23,9 +23,12 @@
 }
 
 .formBox {
-  height: 100%;
+  height: 90%;
   width: 100%;
-  padding: 8%;
+  padding-top: 7%;
+  padding-right: 8%;
+  padding-left: 8%;
+  padding-bottom: 4%;
 }
 
 .formTitle {
@@ -51,12 +54,62 @@
 }
 
 .inputWrap {
-  width: 80%;
+  width: 100%;
   height: 80px;
 }
 
 .footer {
+  background-color: #F4F4F4;
+  position: absolute;
+  bottom: 0;
   width: 100%;
+  height: 11%;
   display: flex;
-  padding-top: 10%;
+  justify-content: space-between;
+}
+
+.prevButton {
+  color: #F57676;
+  border-radius: 8px;
+  border: 1px solid #F57676;
+  width: 120px;
+  padding: 6px;
+  transition: 0.4s;
+}
+
+.prevButton:hover {
+  background-color: rgba(255, 255, 255, .1);
+}
+
+.nextButton {
+  width: 120px;
+  padding: 6px;
+  color: white;
+  border-radius: 10px;
+  background-color: #F57676;
+  transition: 0.4s;
+  border: 1px solid transparent;
+}
+
+.nextButton:hover {
+  background-color: rgba(245, 118, 118, .7);
+}
+
+.buttonWrapper {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-left: 12%;
+}
+
+.buttonWrapper2 {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-right: 12%;
+}
+
+button:focus {
+  outline: 0 !important;
+}
+button:focus:active {
+  outline: 0 !important;
 }
