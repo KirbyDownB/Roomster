@@ -6,22 +6,9 @@ import circleLogo from '../../assets/imgs/circle-logo.svg'
 
 class Signup extends Component {
   state = {
-    email: '',
-    profile: '',
-    password1: '',
-    password2: '',
-    firstName: '',
-    lastName: '',
-    address: '',
-    phoneNumber: '',
-    dateOfBirth: ''
   }
 
-  handleChange = (e) => {
-    this.setState({[e.target.name]: e.target.value});
-  }
-
-  handleSubmit = () => {
+  handleSubmit = (e) => {
     //add post
   }
 
@@ -37,7 +24,8 @@ class Signup extends Component {
                 </div>
               </div>
               <div className="col-6 signup__removePadding">
-                <Form onSubmit={this.handleSubmit} className="signup__formBox">
+                <Form onSubmit={this.handleSubmit}>
+                <div className="signup__formBox">
                   <h1 className="signup__formTitle">Rooming made easy for you.</h1>
                   <div className="signup__inputBox">
                     <div style={{width: "45%"}}>
@@ -46,7 +34,6 @@ class Signup extends Component {
                         <Input
                           name="email"
                           value={this.state.email}
-                          onChange={this.handleChange}
                           placeholder="Username / Email"
                           prefix={<Icon type="mail" style={{color: 'rgba(0, 0, 0)'}} />}
                         />
@@ -59,7 +46,6 @@ class Signup extends Component {
                         <Input
                           name="profile"
                           value={this.state.profile}
-                          onChange={this.handleChange}
                           placeholder="Upload Picture"
                           prefix={<Icon type="file-add" style={{color: 'rgba(0, 0, 0)'}} />}
                         />
@@ -74,7 +60,6 @@ class Signup extends Component {
                           name="password1"
                           type="password"
                           value={this.state.password1}
-                          onChange={this.handleChange}
                           placeholder="Password"
                           prefix={<Icon type="lock" style={{color: 'rgba(0, 0, 0)'}} />}
                         />
@@ -88,7 +73,6 @@ class Signup extends Component {
                           name="password2"
                           type="password"
                           value={this.state.password2}
-                          onChange={this.handleChange}
                           placeholder="Password"
                           prefix={<Icon type="lock" style={{color: 'rgba(0, 0, 0)'}} />}
                         />
@@ -102,7 +86,6 @@ class Signup extends Component {
                         <Input
                           name="firstName"
                           value={this.state.firstName}
-                          onChange={this.handleChange}
                           placeholder="First Name"
                           prefix={<Icon type="user" style={{color: 'rgba(0, 0, 0)'}} />}
                         />
@@ -115,7 +98,6 @@ class Signup extends Component {
                         <Input
                           name="lastName"
                           value={this.state.lastName}
-                          onChange={this.handleChange}
                           placeholder="Last Name"
                           prefix={<Icon type="user" style={{color: 'rgba(0, 0, 0)'}} />}
                         />
@@ -129,7 +111,6 @@ class Signup extends Component {
                         <Input
                           name="phoneNumber"
                           value={this.state.phoneNumber}
-                          onChange={this.handleChange}
                           placeholder="Phone Number"
                           prefix={<Icon type="phone" style={{color: 'rgba(0, 0, 0)'}} />}
                         />
@@ -142,7 +123,6 @@ class Signup extends Component {
                         <Input
                           name="dateOfBirth"
                           value={this.state.dateOfBirth}
-                          onChange={this.handleChange}
                           placeholder="Date of Birth"
                           prefix={<Icon type="calendar"
                           style={{color: 'rgba(0, 0, 0)'}} />}
@@ -155,21 +135,21 @@ class Signup extends Component {
                       <Input
                         name="address"
                         value={this.state.address}
-                        onChange={this.handleChange}
                         placeholder="Address"
                         prefix={<Icon type="bank" style={{color: 'rgba(0, 0, 0)'}} />}
                       />
                     </div>
                   </div>
+                  </div>
+                  <div className="signup__footer">
+                    <div className="signup__buttonWrapper">
+                      <button className="signup__prevButton">Previous</button>
+                    </div>
+                    <div className="signup__buttonWrapper2">
+                      <button className="signup__nextButton">Next</button>
+                    </div>
+                  </div>
                 </Form>
-                <div className="signup__footer">
-                  <div className="signup__buttonWrapper">
-                    <button className="signup__prevButton">Previous</button>
-                  </div>
-                  <div className="signup__buttonWrapper2">
-                    <button className="signup__nextButton">Next</button>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
