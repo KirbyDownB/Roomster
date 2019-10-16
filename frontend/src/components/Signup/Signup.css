@@ -1,74 +1,74 @@
-.signupBG {
+.signup__background {
   width: 100vw;
   height: 100vh;
 }
 
-.suLeft {
+.signup__suLeft {
   background-color: #F57676;
   height: 100vh;
 }
-.removePadding {
+.signup__removePadding {
   padding-left: 0;
   padding-right: 0;
 }
 
-.removeMargin {
+.signup__removeMargin {
   margin-left: 0;
   margin-right: 0;
 }
 
-.logoBox {
+.signup__logoBox {
   text-align: center;
   padding-top: 8%;
 }
 
-.formBox {
+.signup__formBox {
   height: 90%;
   width: 100%;
-  padding-top: 7%;
+  padding-top: 8%;
   padding-right: 8%;
   padding-left: 8%;
   padding-bottom: 4%;
 }
 
-.formTitle {
+.signup__formTitle {
   font-weight: 700;
-  font-size: 50px;
+  font-size: 45px;
   color: #F57676;
   margin: 0;
 }
 
-.formBody {
+.signup__formBody {
   font-size: 16px;
   margin: 0;
 }
 
-.inputBox {
+.signup__inputBox {
   display: flex;
   padding-top: 6%;
 }
 
-.inputBox2 {
+.signup__inputBox2 {
   display: flex;
   padding-top: 2%;
 }
 
-.inputWrap {
+.signup__inputWrap {
   width: 100%;
   height: 80px;
 }
 
-.footer {
+.signup__footer {
   background-color: #F4F4F4;
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 11%;
+  height: 10%;
   display: flex;
   justify-content: space-between;
 }
 
-.prevButton {
+.signup__prevButton {
   color: #F57676;
   border-radius: 8px;
   border: 1px solid #F57676;
@@ -77,11 +77,11 @@
   transition: 0.4s;
 }
 
-.prevButton:hover {
+.signup__prevButton:hover {
   background-color: rgba(255, 255, 255, .1);
 }
 
-.nextButton {
+.signup__nextButton {
   width: 120px;
   padding: 6px;
   color: white;
@@ -91,17 +91,17 @@
   border: 1px solid transparent;
 }
 
-.nextButton:hover {
+.signup__nextButton:hover {
   background-color: rgba(245, 118, 118, .7);
 }
 
-.buttonWrapper {
+.signup__buttonWrapper {
   margin-top: auto;
   margin-bottom: auto;
   padding-left: 12%;
 }
 
-.buttonWrapper2 {
+.signup__buttonWrapper2 {
   margin-top: auto;
   margin-bottom: auto;
   padding-right: 12%;
