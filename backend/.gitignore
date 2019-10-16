@@ -1,2 +1,6 @@
 CS180/*
 CS180/
+migrations/*
+migrations/
+__pycache__/*
+__pycache__/
