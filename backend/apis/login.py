@@ -1,12 +1,12 @@
 from flask import Flask
 from flask_restplus import Resource, Api, fields, Namespace
+from .models import User
 import jwt
 
 api = Namespace('login', description='Login related operations')
 
 user_login_data = api.model('user_login_data', {
-    'email': fields.String(description="User email"),
-    'username': fields.String(description="User username"),
+    'identifier': fields.String(description="User email or username"),
     'password': fields.String(description="User password")
 })
 
@@ -20,6 +20,26 @@ class Login(Resource):
 
     @api.expect(user_login_data)
     def post(self):
+        data = api.payload
+        identifier = data.get('identifier')
+
+        password = data.get('password')
+
+
+        if identifier.find('@') > -1:
+            user_data = User.query.filter_by(email=email).first()
         
-        print(api.payload)
-        return api.payload
+        else:
+            user_data = User.query.filter_by(username=username).first()
+
+        
+        if not user_data:
+            return {"Message":"This user does not exist"}
+
+        if user_data.check_password_hash(password):
+            token = jwt.encode({'username':u.username, 'email':u.email}, "SECRET_KEY")
+            token.decode('utf-8')
+            return {"Message":"Login Successful", "token":token}
+
+        else:
+            return {"Message":"Incorrect Password"}
