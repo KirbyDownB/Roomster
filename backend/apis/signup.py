@@ -32,13 +32,13 @@ class Signup(Resource):
     def post(self):
     
         data = api.payload
-        u = User(email=data.get('email'), username=data.get('username'), first_name=data.get('first_name'),\
+        user_data = User(email=data.get('email'), username=data.get('username'), first_name=data.get('first_name'),\
         last_name=data.get('last_name'), address=data.get('address'), phone_number=data.get('phone_number'), \
         age=data.get('age'), range=data.get('range'), location=data.get('location'))
 
         try:
-            u.set_password(data.get('password'))
-            db.session.add(u)
+            user_data.set_password(data.get('password'))
+            db.session.add(user_data)
             db.session.commit()
 
         
