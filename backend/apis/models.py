@@ -17,7 +17,6 @@ class User(UserMixin, db.Model):
     location = db.Column(db.String(120))
 
 
-
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
