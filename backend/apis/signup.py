@@ -4,6 +4,7 @@ from .models import User
 from . import db
 from .models import User
 import jwt
+from sqlalchemy import exc
 api = Namespace('signup', description='Signup related operations')
 
 user = api.model('User', {
@@ -25,7 +26,7 @@ user = api.model('User', {
 @api.route('/')
 class Signup(Resource):
     def get(self):
-        return {"Hey":"You sent a GET request"}
+        return {"Message":"You sent a GET request"}
 
     @api.expect(user)
     def post(self):
@@ -35,9 +36,15 @@ class Signup(Resource):
         last_name=data.get('last_name'), address=data.get('address'), phone_number=data.get('phone_number'), \
         age=data.get('age'), range=data.get('range'), location=data.get('location'))
 
-        u.set_password(data.get('password'))
-        db.session.add(u)
-        db.session.commit()
+        try:
+            u.set_password(data.get('password'))
+            db.session.add(u)
+            db.session.commit()
+
+        
+        except exc.SQLAlchemyError:
+            return {"Message":"Something went wrong when signing up the user"}
+
 
         token = jwt.encode({'username':u.username, 'email':u.email}, "SECRET_KEY")
         token.decode('utf-8')
