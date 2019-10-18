@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import './Login.css';
 import logo from '../../assets/imgs/roomster-logo.svg';
+import { userLoginFetch } from '../../redux/action';
 import spinner from '../../assets/tail-spin.svg';
 import { Form, Icon, Input, Button, Alert } from 'antd';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import './Login.css';
 
 const { Item } = Form;
 
@@ -26,11 +28,9 @@ class Login extends Component {
       this.setState({ alertMessage: "You forgot to enter your password!" });
       return;
     } else {
+      this.props.userLoginFetch(username, password)
       this.setState({ alertMessage: "" });
     }
-
-    /* TODO: Handle login request to backend */
-
     this.setState({ isLoginLoading: true });
   }
 
@@ -119,4 +119,8 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = dispatch => ({
+  userLoginFetch: (username, password) => dispatch(userLoginFetch(username, password)),
+})
+
+export default connect(null, mapDispatchToProps)(Login);
