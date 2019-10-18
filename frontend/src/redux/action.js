@@ -1,8 +1,9 @@
 import React from 'react';
+import { BASE_URL } from '../const.js';
 
 export const userLoginFetch = (username, password) => {
   return dispatch => {
-    return fetch("http://localhost:5000/api/login", {
+    return fetch(`"${ BASE_URL }/api/login"`, {
       headers: {
         "Content-Type": "application/json"
       },
