@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Listings.css';
-import { Button, Icon, Modal } from 'antd';
+import { Button, Icon, Popover } from 'antd';
 import Item from './Item/Item';
 
 class Listings extends Component {
@@ -13,13 +13,16 @@ class Listings extends Component {
     
     this.setState({ isFilterOpen: true });
   }
-  
-  handleOk = e => {
-    console.log(e);
+
+  hide = () => {
     this.setState({
-      isFilterOpen: false,
-    });
-  };
+      isFilterOpen: false
+    })
+  }
+
+  handleVisibleChange = isFilterOpen => {
+    this.setState({ isFilterOpen });
+  }
 
   render() {
     return (
@@ -29,14 +32,23 @@ class Listings extends Component {
             <h2 className="listings__title">Listings</h2>
           </div>
           <div className="col-2">
-            <Button
-              type="default"
-              className="listings__filter--button"
-              onClick={this.showFilter}
+            <Popover
+              content={<a onClick={this.hide}>Close</a>}
+              trigger="click"
+              visible={this.state.isFilterOpen}
+              placement="bottom"
+              onVisibleChange={this.handleVisibleChange}
             >
-              <Icon type="control" />
-              Filter
-            </Button>
+              <Button
+                type="default"
+                className="listings__filter--button"
+                onClick={this.showFilter}
+                size="large"
+              >
+                <Icon type="control" />
+                Filter
+              </Button>
+            </Popover>
           </div>
         </div>
         <div className="listings__items--container">
@@ -44,11 +56,6 @@ class Listings extends Component {
             <Item />
           </div>
         </div>
-        <Modal
-          centered
-          visible={this.state.isFilterOpen}
-          onOk={this.handleOk}
-        />
       </div>
     )
   }
