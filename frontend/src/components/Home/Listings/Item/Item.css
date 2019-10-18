@@ -1,0 +1,8 @@
+.item__container {
+  height: 180px;
+  background-color: #FFFFFF;
+  width: 100%;
+  box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.12);
+  border-radius: 10px;
+  width: 1100px;
+}

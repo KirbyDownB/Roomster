@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Listings.css';
 import { Button, Icon, Modal } from 'antd';
+import Item from './Item/Item';
 
 class Listings extends Component {
   state = {
@@ -36,6 +37,11 @@ class Listings extends Component {
               <Icon type="control" />
               Filter
             </Button>
+          </div>
+        </div>
+        <div className="listings__items--container">
+          <div className="row">
+            <Item />
           </div>
         </div>
         <Modal
