@@ -23,6 +23,8 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
+    "test:coverage": "react-app-rewired test --watchAll=false --coverage",
+    "test:watch": "react-app-rewired test --env=jsdom --watchAll=true",
     "eject": "react-app-rewired eject",
     "prettier": "prettier --write **/*.js"
   },
@@ -42,6 +44,15 @@
     ]
   },
   "devDependencies": {
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "jest-fetch-mock": "^2.1.2",
     "prettier": "1.18.2"
+  },
+  "jest": {
+    "automock": false,
+    "setupFiles": [
+      "./setupJest.js"
+    ]
   }
 }

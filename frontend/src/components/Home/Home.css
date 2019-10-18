@@ -1,0 +1,12 @@
+.home__container {
+  height: 100vh;
+}
+
+.home__main {
+  background-color: #FFFAFA;
+  height: 100vh;
+}
+
+.ant-input {
+  background-color: #FFFFFF;
+}
