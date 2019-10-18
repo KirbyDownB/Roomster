@@ -33,6 +33,7 @@
   border: none;
   outline: none;
   border-radius: 4px;
+  font-family: "Asap", sans-serif;
 }
 
 .login__button--login {

@@ -7,6 +7,7 @@
   height: 100vh;
 }
 
-.ant-input {
+.ant-input-lg {
   background-color: #FFFFFF;
+  border-radius: 10px;
 }
