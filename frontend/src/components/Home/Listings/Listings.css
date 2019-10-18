@@ -1,0 +1,24 @@
+.listings__title {
+  margin-top: 4%;
+  margin-left: 6.5%;
+  font-family: "Asap", sans-serif;
+  color: #505050;
+  font-weight: bold;
+}
+
+.listings__filter--button {
+  margin-top: 25%;
+  background-color: white;
+  color: #F57676;
+  font-family: "Asap", sans-serif;
+  border: none;
+  box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.12);
+  border-radius: 10px;
+  margin-left: 16%;
+  font-weight: 400;
+}
+
+
+.anticon {
+  vertical-align: 0;
+}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Animated } from 'react-animated-css';
 import { Input, Icon, Button, Form } from 'antd';
 import './Signup.css';
-import circleLogo from '../../assets/imgs/circle-logo.svg'
+import circleLogo from '../../assets/imgs/circle-logo.svg';
 
 class Signup extends Component {
   state = {
@@ -20,7 +20,7 @@ class Signup extends Component {
             <div className="row signup__removeMargin">
               <div className="col-6 signup__removePadding signup__suLeft">
                 <div className="signup__logoBox">
-                  <img src={circleLogo}></img>
+                  <img src={circleLogo} alt=""/>
                 </div>
               </div>
               <div className="col-6 signup__removePadding">
@@ -29,11 +29,10 @@ class Signup extends Component {
                   <h1 className="signup__formTitle">Rooming made easy for you.</h1>
                   <div className="signup__inputBox">
                     <div style={{width: "45%"}}>
-                      <p className="signup__formBody">Email *</p>
+                      <p className="signup__formBody">Email <span className="signup__red">*</span></p>
                       <div className="signup__inputWrap">
                         <Input
                           name="email"
-                          value={this.state.email}
                           placeholder="Username / Email"
                           prefix={<Icon type="mail" style={{color: 'rgba(0, 0, 0)'}} />}
                         />
@@ -45,7 +44,6 @@ class Signup extends Component {
                       <div className="signup__inputWrap">
                         <Input
                           name="profile"
-                          value={this.state.profile}
                           placeholder="Upload Picture"
                           prefix={<Icon type="file-add" style={{color: 'rgba(0, 0, 0)'}} />}
                         />
@@ -54,12 +52,11 @@ class Signup extends Component {
                   </div>
                   <div className="signup__inputBox2">
                     <div style={{width: "45%"}}>
-                      <p className="signup__formBody">Password *</p>
+                      <p className="signup__formBody">Password <span className="signup__red">*</span></p>
                       <div className="signup__inputWrap">
                         <Input
                           name="password1"
                           type="password"
-                          value={this.state.password1}
                           placeholder="Password"
                           prefix={<Icon type="lock" style={{color: 'rgba(0, 0, 0)'}} />}
                         />
@@ -67,12 +64,11 @@ class Signup extends Component {
                     </div>
                     <div style={{width: '10%'}}></div>
                     <div style={{width: "45%"}}>
-                      <p className="signup__formBody">Password *</p>
+                      <p className="signup__formBody">Confirm Password <span className="signup__red">*</span></p>
                       <div className="signup__inputWrap">
                         <Input
                           name="password2"
                           type="password"
-                          value={this.state.password2}
                           placeholder="Password"
                           prefix={<Icon type="lock" style={{color: 'rgba(0, 0, 0)'}} />}
                         />
@@ -81,7 +77,7 @@ class Signup extends Component {
                   </div>
                   <div className="signup__inputBox2">
                     <div style={{width: "45%"}}>
-                      <p className="signup__formBody">First Name *</p>
+                      <p className="signup__formBody">First Name <span className="signup__red">*</span></p>
                       <div className="signup__inputWrap">
                         <Input
                           name="firstName"
@@ -93,11 +89,10 @@ class Signup extends Component {
                     </div>
                     <div style={{width: '10%'}}></div>
                     <div style={{width: "45%"}}>
-                      <p className="signup__formBody">Last Name *</p>
+                      <p className="signup__formBody">Last Name <span className="signup__red">*</span></p>
                       <div className="signup__inputWrap">
                         <Input
                           name="lastName"
-                          value={this.state.lastName}
                           placeholder="Last Name"
                           prefix={<Icon type="user" style={{color: 'rgba(0, 0, 0)'}} />}
                         />
@@ -106,11 +101,10 @@ class Signup extends Component {
                   </div>
                   <div className="signup__inputBox2">
                     <div style={{width: "45%"}}>
-                      <p className="signup__formBody">Phone Number *</p>
+                      <p className="signup__formBody">Phone Number <span className="signup__red">*</span></p>
                       <div className="signup__inputWrap">
                         <Input
                           name="phoneNumber"
-                          value={this.state.phoneNumber}
                           placeholder="Phone Number"
                           prefix={<Icon type="phone" style={{color: 'rgba(0, 0, 0)'}} />}
                         />
@@ -118,11 +112,10 @@ class Signup extends Component {
                     </div>
                     <div style={{width: '10%'}}></div>
                     <div style={{width: "45%"}}>
-                      <p className="signup__formBody">Date of Birth *</p>
+                      <p className="signup__formBody">Date of Birth <span className="signup__red">*</span></p>
                       <div className="signup__inputWrap">
                         <Input
                           name="dateOfBirth"
-                          value={this.state.dateOfBirth}
                           placeholder="Date of Birth"
                           prefix={<Icon type="calendar"
                           style={{color: 'rgba(0, 0, 0)'}} />}
@@ -132,9 +125,9 @@ class Signup extends Component {
                   </div>
                   <div className="signup__inputBox2">
                     <div style={{width: '100%'}}>
+                      <p className="signup__formBody">Address <span className="signup__red">*</span></p>
                       <Input
                         name="address"
-                        value={this.state.address}
                         placeholder="Address"
                         prefix={<Icon type="bank" style={{color: 'rgba(0, 0, 0)'}} />}
                       />
@@ -146,7 +139,13 @@ class Signup extends Component {
                       <button className="signup__prevButton">Previous</button>
                     </div>
                     <div className="signup__buttonWrapper2">
-                      <button className="signup__nextButton">Next</button>
+                      <Button
+                        htmlType="submit"
+                        className="signup__nextButton"
+                        type="primary"
+                      >
+                        Next
+                      </Button>
                     </div>
                   </div>
                 </Form>
