@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { tokenRefresh } from './redux/action';
 import './App.css';
 
 import Landing from './components/Landing/Landing';
@@ -8,6 +10,8 @@ import Signup from './components/Signup/Signup';
 import Home from './components/Home/Home';
 
 function App() {
+  tokenRefresh()
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -22,4 +26,8 @@ function App() {
   );
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  tokenRefresh: () => dispatch(tokenRefresh())
+})
+
+export default connect(mapDispatchToProps)(App);
