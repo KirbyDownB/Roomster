@@ -30,3 +30,7 @@ const loginUser = (user) => ({
   type: 'LOGIN_USER',
   payload: user
 })
+
+const logoutUser = (user) => ({
+  type: 'LOGOUT_USER',
+})
