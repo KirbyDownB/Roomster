@@ -17,7 +17,10 @@ api = Api(
 )
 from .login import api as ns_login
 from .signup import api as ns_signup
+from .passwordreset import api as ns_passwordreset
 
 api.add_namespace(ns_login, path='/api/login')
 api.add_namespace(ns_signup, path='/api/signup')
+api.add_namespace(ns_passwordreset, path="/api/passwordreset")
+
 
