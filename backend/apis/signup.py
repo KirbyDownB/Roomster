@@ -46,7 +46,7 @@ class Signup(Resource):
             return {"Message":"Something went wrong when signing up the user"}
 
 
-        token = jwt.encode({'username':u.username, 'email':u.email}, "SECRET_KEY")
+        token = jwt.encode({'username':user_data.username, 'email':user_data.email}, "SECRET_KEY")
         token.decode('utf-8')
 
 
