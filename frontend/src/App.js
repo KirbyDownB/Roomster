@@ -8,7 +8,7 @@ import Landing from './components/Landing/Landing';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Home from './components/Home/Home';
-import Reset from './components/PasswordReset/Reset'
+import ForgotPassword from './components/PasswordReset/ForgotPassword'
 
 function App() {
   tokenRefresh()
@@ -21,7 +21,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route path="/home" component={Home} />
-          <Route path="/reset/:token" component={Reset}/>
+          <Route path="/reset/:token" component={ForgotPassword}/>
         </Switch>
       </BrowserRouter>
     </div>
