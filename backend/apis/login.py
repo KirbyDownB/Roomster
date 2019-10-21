@@ -37,7 +37,7 @@ class Login(Resource):
             return {"Message":"This user does not exist"}
 
         if user_data.check_password_hash(password):
-            token = jwt.encode({'username':u.username, 'email':u.email}, "SECRET_KEY")
+            token = jwt.encode({'username':user_data.username, 'email':user_data.email}, "SECRET_KEY")
             token.decode('utf-8')
             return {"Message":"Login Successful", "token":token}
 

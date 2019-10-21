@@ -15,6 +15,8 @@ api = Api(
     description='CS 180 Fall 2019 Project',
     # All API metadatas
 )
+site = "http://localhost:3000/"
+endpoint_name = "resetPassword/"
 from .login import api as ns_login
 from .signup import api as ns_signup
 from .passwordreset import api as ns_passwordreset

@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restplus import Resource, Api, fields, Namespace
 from .models import User
+from . import site,endpoint_name
 import jwt
 
 api = Namespace('passwordreset', description='Password Reset operations related operations')
@@ -8,12 +9,12 @@ api = Namespace('passwordreset', description='Password Reset operations related 
 password_reset_data = api.model('password_reset_data', {
     'new_password': fields.String(description="New password")
 })
+reset_email_data = api.model('reset_email_data', {
+    'email': fields.String(description="Email address to send reset password email to")
+})
 
 parser = api.parser()
 parser.add_argument('Authorization',type=str,location='headers',help='Bearer Access Token', required=True)
-
-link = "http://localhost:3000/"
-endpoint_name = "resetPassword/"
 
 
 @api.route('/password')
@@ -26,6 +27,8 @@ class PasswordReset(Resource):
         
         data = api.payload
         password = data.get('new_password')
+        if password is None:
+            return {"Message":"New password is missing"}
         user_data = None
         args = parser.parse_args()
         token = args['Authorization']
@@ -50,8 +53,33 @@ class PasswordReset(Resource):
 
         return {"Message":"Password Reset"}
 
-# @api.route('/email')
-# class SendResetEmail(Resource)
+@api.route('/email')
+class SendResetEmail(Resource):
+
+    def post(self):
+
+        data = api.payload
+        email = data.get('email')
+        if email is None:
+            return {"Message":"Email is missing"}
+
+        user_data = None
+
+        if email.find('@') > -1:
+            user_data = User.query.filter_by(email=email).first()
+
+        if not user_data or user_data is None:
+            return {"Message":"No user with this email found"}
+
+        token = jwt.encode({'username': user_data.username, "email":user_data.email}, "SECRET_KEY")
+        link = site + endpoint_name + token.decode('utf-8')
+
+
+        return {"Message":"Email successfully sent"}
+
+
+
+
 
 
         
