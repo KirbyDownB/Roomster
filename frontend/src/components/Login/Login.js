@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import logo from '../../assets/imgs/roomster-logo.svg';
 import { userLoginFetch } from '../../redux/action';
 import spinner from '../../assets/tail-spin.svg';
-import { Form, Icon, Input, Button, Alert } from 'antd';
+import { Form, Icon, Input, Button, Alert, Popover } from 'antd';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import './Login.css';
@@ -12,7 +12,10 @@ const { Item } = Form;
 class Login extends Component {
   state = {
     isLoginLoading: false,
-    alertMessage: ""
+    showForgotPassword: false,
+    isPasswordResetSubmitting: false,
+    alertMessage: "",
+    resetEmail: ""
   }
 
   handleSubmit = e => {
@@ -38,6 +41,30 @@ class Login extends Component {
     this.setState({ alertMessage: "" });
   }
 
+  handleForgotPassword = () => {
+    this.setState({ showForgotPassword: true });
+  }
+
+  handleForgotPasswordVisible = showForgotPassword => {
+    this.setState({ showForgotPassword });
+  }
+
+  handlePasswordResetSubmit = e => {
+    e.preventDefault();
+
+    this.setState({ isPasswordResetSubmitting: true });
+
+    if (this.state.resetEmail) {
+      console.log("Submitting email", this.state.resetEmail);
+    }
+  }
+
+  handlePasswordResetChange = e => {
+    e.preventDefault();
+
+    this.setState({ resetEmail: e.target.value });
+  }
+
   render() {
     return (
       <Fragment>
@@ -47,7 +74,7 @@ class Login extends Component {
               <div className="login__left--narrow">
                 <div className="row justify-content-center">
                   <div className="login__logo-container">
-                    <img src={logo} className="login__logo"/>
+                    <img src={logo} className="login__logo" alt=""/>
                   </div>
                 </div>
                 <div className="row justify-content-center">
@@ -70,11 +97,50 @@ class Login extends Component {
                         placeholder="Password"
                       />
                     </Item>
-                    <NavLink to="/forgot-password">
-                      <div className="login__forgot">
-                        Forgot your password?
-                      </div>
-                    </NavLink>
+                    <Popover
+                      trigger="click"
+                      visible={this.state.showForgotPassword}
+                      onVisibleChange={this.handleForgotPasswordVisible}
+                      content={
+                        <div className="login__forgotPassword--container">
+                          <div className="login__forgotPassword--caption">
+                            Enter your email below to send a password reset link.
+                          </div>
+                          <Form onSubmit={this.handlePasswordResetSubmit}>
+                            <Item>
+                              <Input
+                                placeholder="Enter your email"
+                                prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                className="login__resetInput"
+                                name="resetEmail"
+                                value={this.state.resetEmail}
+                                onChange={this.handlePasswordResetChange}
+                              />
+                            </Item>
+                            <Item className="login__resetItem">
+                              <div className="login__resetButton--container">
+                                <Button
+                                  className="login__resetButton"
+                                  type="primary"
+                                  loading={this.state.isPasswordResetSubmitting}
+                                  onClick={this.handlePasswordResetSubmit}
+                                >
+                                  Submit
+                                </Button>
+                              </div>
+                            </Item>
+                          </Form>
+                        </div>
+                      }
+                    >
+                      <Button
+                        type="link"
+                        onClick={this.handleForgotPassword}
+                        className="login__forgot"
+                      >
+                          Forgot your password?
+                      </Button>
+                    </Popover>
                     <Item classname="login__item">
                       <Button
                         className="login__button login__button--login"
