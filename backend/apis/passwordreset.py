@@ -5,7 +5,7 @@ import jwt
 
 api = Namespace('passwordreset', description='Password Reset operations related operations')
 
-password_reset_data = api.model('user_login_data', {
+password_reset_data = api.model('password_reset_data', {
     'identifier': fields.String(description="User email or username"),
 })
 
