@@ -46,8 +46,11 @@
 }
 
 .login__forgot {
-  margin-top: -16px;
+  padding-top: -10%;
+  margin-left: -16px;
   color: #F57676;
+  font-family: "Asap", sans-serif;
+  font-weight: bold;
 }
 
 .login__userfeedback {
@@ -62,4 +65,30 @@
 
 .ant-alert-close-icon {
   line-height: 16px;
+}
+
+.login__item {
+  margin-bottom: 8px;
+}
+
+.login__forgotPassword--container {
+  text-align: left;
+}
+
+.login__forgotPassword--caption {
+  font-family: "Asap", sans-serif;
+  margin-top: 8px;
+}
+
+.login__resetItem {
+  margin-bottom: 0;
+}
+
+.login__resetButton {
+  font-family: "Asap", sans-serif;
+}
+
+.login__resetButton--container {
+  text-align: center;
+  margin-top: -16px;
 }
