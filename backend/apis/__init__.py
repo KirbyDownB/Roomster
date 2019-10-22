@@ -1,12 +1,16 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_restplus import Api
 from flask_migrate import Migrate
+from flask_mail_sendgrid import MailSendGrid
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = ''
 db = SQLAlchemy(app)
+app.config['MAIL_SENDGRID_API_KEY'] = os.getenv('SENDGRID_API_KEY')
+mail = MailSendGrid(app)
 migrate = Migrate(app, db)
 
 api = Api(

@@ -1,8 +1,10 @@
 from flask import Flask
 from flask_restplus import Resource, Api, fields, Namespace
+from flask_mail import Message
 from .models import User
-from . import site,endpoint_name
+from . import site,endpoint_name, mail
 import jwt
+
 
 api = Namespace('passwordreset', description='Password Reset operations related operations')
 
@@ -46,7 +48,7 @@ class PasswordReset(Resource):
             user_data = User.query.filter_by(email=user_email).first()
 
         if not user_data or user_data is None:
-            return {"Message":"This user does not exist"}
+            return {"Message":"This user does not exist or an invalid email was sent"}
 
 
         user_data.set_password(password)
@@ -56,6 +58,7 @@ class PasswordReset(Resource):
 @api.route('/email')
 class SendResetEmail(Resource):
 
+    @api.expect(reset_email_data)
     def post(self):
 
         data = api.payload
@@ -73,6 +76,17 @@ class SendResetEmail(Resource):
 
         token = jwt.encode({'username': user_data.username, "email":user_data.email}, "SECRET_KEY")
         link = site + endpoint_name + token.decode('utf-8')
+
+        subject = "[Roomster] Password Reset"
+        body = "We recieved a request to reset your password. \n If that was you, click the link here: \n " + link + "\n\n Sincerely, \n The Roomster Team"
+        recipients = [email]
+
+        msg = Message(subject=subject, sender="roomsterhelp@gmail.com", body=body, recipients=recipients)
+
+        try:
+            mail.send_message(msg)
+        except:
+            return {"Message":"Something went wrong when sending the email"}
 
 
         return {"Message":"Email successfully sent"}
