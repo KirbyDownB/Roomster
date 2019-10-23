@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_restplus import Resource, Api, fields, Namespace
+from flask_mail import Message
 from .models import User
-from . import db
+from . import db, mail
 from .models import User
 import jwt
 from sqlalchemy import exc
@@ -46,8 +47,21 @@ class Signup(Resource):
             return {"Message":"Something went wrong when signing up the user"}
 
 
-        token = jwt.encode({'username':u.username, 'email':u.email}, "SECRET_KEY")
+        token = jwt.encode({'username':user_data.username, 'email':user_data.email}, "SECRET_KEY")
         token.decode('utf-8')
+
+
+        subject = "[Roomster] Thanks for signing up!"
+        body = "Thank you for signing up for Roomster!" + "\n\n Sincerely, \n The Roomster Team"
+        recipients = [user_data.email]
+
+        msg = Message(subject=subject, sender="roomsterhelp@gmail.com", body=body, recipients=recipients)
+
+        try:
+            mail.send_message(msg)
+        except:
+            return {"Message":"Something went wrong when sending the email"}
+
 
 
         return {"Message":"Signup Successful", "token":token}
