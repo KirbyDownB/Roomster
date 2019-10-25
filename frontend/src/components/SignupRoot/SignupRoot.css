@@ -1,28 +1,28 @@
-.signup__background {
+.signupRoot__background {
   width: 100vw;
   height: 100vh;
 }
 
-.signup__suLeft {
+.signupRoot__suLeft {
   background-color: #F57676;
   height: 100vh;
 }
-.signup__removePadding {
+.signupRoot__removePadding {
   padding-left: 0;
   padding-right: 0;
 }
 
-.signup__removeMargin {
+.signupRoot__removeMargin {
   margin-left: 0;
   margin-right: 0;
 }
 
-.signup__logoBox {
+.signupRoot__logoBox {
   text-align: center;
   padding-top: 8%;
 }
 
-.signup__formBox {
+.signupRoot__formBox {
   height: 100%;
   width: 100%;
   padding-top: 8%;
@@ -31,38 +31,40 @@
   padding-bottom: 4%;
 }
 
-.signup__formTitle {
+.signupRoot__formTitle {
   font-weight: 700;
   font-size: 45px;
   color: #F57676;
-  margin: 0;
+  margin-bottom: -8%;
+  margin-top: 6%;
   font-family: "Asap", sans-serif;
+  text-align: center;
 }
 
-.signup__formBody {
+.signupRoot__formBody {
   font-size: 16px;
   margin: 0;
   font-family: "Asap", sans-serif;
 }
 
-.signup__inputBox {
+.signupRoot__inputBox {
   display: flex;
   padding-top: 6%;
   font-family: "Asap", sans-serif;
 }
 
-.signup__inputBox2 {
+.signupRoot__inputBox2 {
   display: flex;
   padding-top: 2%;
   font-family: "Asap", sans-serif;
 }
 
-.signup__inputWrap {
+.signupRoot__inputWrap {
   width: 100%;
   height: 80px;
 }
 
-.signup__footer {
+.signupRoot__footer {
   background-color: #F4F4F4;
   position: absolute;
   bottom: 0;
@@ -72,7 +74,7 @@
   justify-content: space-between;
 }
 
-.signup__prevButton {
+.signupRoot__prevButton {
   color: #F57676;
   border-radius: 8px;
   border: 1px solid #F57676;
@@ -82,11 +84,11 @@
   font-family: "Asap", sans-serif;
 }
 
-.signup__prevButton:hover {
+.signupRoot__prevButton:hover {
   background-color: rgba(255, 255, 255, .1);
 }
 
-.signup__nextButton {
+.signupRoot__nextButton {
   width: 120px;
   padding: 6px;
   border-radius: 10px;
@@ -96,13 +98,13 @@
   font-family: "Asap", sans-serif;
 }
 
-.signup__buttonWrapper {
+.signupRoot__buttonWrapper {
+  margin: 0 auto;
   margin-top: auto;
   margin-bottom: auto;
-  padding-left: 12%;
 }
 
-.signup__buttonWrapper2 {
+.signupRoot__buttonWrapper2 {
   margin-top: auto;
   margin-bottom: auto;
   padding-right: 12%;
@@ -116,6 +118,10 @@ button:focus:active {
   outline: 0 !important;
 }
 
-.signup__red {
+.signupRoot__red {
   color: #F57676;
+}
+
+.ant-calendar-picker-icon {
+  color: rgba(0, 0, 0, 1);
 }
