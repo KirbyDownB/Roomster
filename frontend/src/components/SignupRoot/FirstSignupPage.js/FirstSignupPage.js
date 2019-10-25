@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import './SignupInfo.css';
+import './FirstSignupPage.css';
 import { Form, Input, Button, DatePicker, Icon } from 'antd';
 
-class SignupInfo extends Component {
+class FirstSignupPage extends Component {
   state = {
     dob: ''
   }
 
-  handleSignupInfoSubmit = e => {
+  handleFirstSignupInfoSubmit = e => {
     e.preventDefault();
 
-    const userSignupInfo = {
+    const firstSignupInfo = {
       passwordOne: e.target.password1.value,
       passwordTwo: e.target.password2.value,
       firstName: e.target.firstName.value,
@@ -21,7 +21,7 @@ class SignupInfo extends Component {
     }
 
     // Send signup info data to the parent component
-    this.props.setSignupInfo(userSignupInfo)
+    this.props.setFirstSignupInfo(firstSignupInfo)
 
     // Render the next page through the parent component
     this.props.setPageTwo();
@@ -33,13 +33,13 @@ class SignupInfo extends Component {
 
   render() {
     return (
-      <div className="signupInfoInfo__container">
-        <Form onSubmit={this.handleSignupInfoSubmit}>
-          <div className="signupInfo__formBox">
-            <div className="signupInfo__inputBox">
+      <div className="firstSignupPage__container">
+        <Form onSubmit={this.handleFirstSignupInfoSubmit}>
+          <div className="firstSignupPage__formBox">
+            <div className="firstSignupPage__inputBox">
               <div style={{width: "45%"}}>
-                <p className="signupInfo__formBody">Email <span className="signupInfo__red">*</span></p>
-                <div className="signupInfo__inputWrap">
+                <p className="firstSignupPage__formBody">Email <span className="firstSignupPage__red">*</span></p>
+                <div className="firstSignupPage__inputWrap">
                   <Input
                     name="email"
                     placeholder="Username / Email"
@@ -49,10 +49,10 @@ class SignupInfo extends Component {
               </div>
               <div style={{width: '10%'}}></div>
             </div>
-            <div className="signupInfo__inputBox2">
+            <div className="firstSignupPage__inputBox2">
               <div style={{width: "45%"}}>
-                <p className="signupInfo__formBody">Password <span className="signupInfo__red">*</span></p>
-                <div className="signupInfo__inputWrap">
+                <p className="firstSignupPage__formBody">Password <span className="firstSignupPage__red">*</span></p>
+                <div className="firstSignupPage__inputWrap">
                   <Input
                     name="password1"
                     type="password"
@@ -63,8 +63,8 @@ class SignupInfo extends Component {
               </div>
               <div style={{width: '10%'}}></div>
               <div style={{width: "45%"}}>
-                <p className="signupInfo__formBody">Confirm Password <span className="signupInfo__red">*</span></p>
-                <div className="signupInfo__inputWrap">
+                <p className="firstSignupPage__formBody">Confirm Password <span className="firstSignupPage__red">*</span></p>
+                <div className="firstSignupPage__inputWrap">
                   <Input
                     name="password2"
                     type="password"
@@ -74,10 +74,10 @@ class SignupInfo extends Component {
                 </div>
               </div>
             </div>
-            <div className="signupInfo__inputBox2">
+            <div className="firstSignupPage__inputBox2">
               <div style={{width: "45%"}}>
-                <p className="signupInfo__formBody">First Name <span className="signupInfo__red">*</span></p>
-                <div className="signupInfo__inputWrap">
+                <p className="firstSignupPage__formBody">First Name <span className="firstSignupPage__red">*</span></p>
+                <div className="firstSignupPage__inputWrap">
                   <Input
                     name="firstName"
                     placeholder="First Name"
@@ -87,8 +87,8 @@ class SignupInfo extends Component {
               </div>
               <div style={{width: '10%'}}></div>
               <div style={{width: "45%"}}>
-                <p className="signupInfo__formBody">Last Name <span className="signupInfo__red">*</span></p>
-                <div className="signupInfo__inputWrap">
+                <p className="firstSignupPage__formBody">Last Name <span className="firstSignupPage__red">*</span></p>
+                <div className="firstSignupPage__inputWrap">
                   <Input
                     name="lastName"
                     placeholder="Last Name"
@@ -97,10 +97,10 @@ class SignupInfo extends Component {
                 </div>
               </div>
             </div>
-            <div className="signupInfo__inputBox2">
+            <div className="firstSignupPage__inputBox2">
               <div style={{width: "45%"}}>
-                <p className="signupInfo__formBody">Phone Number <span className="signupInfo__red">*</span></p>
-                <div className="signupInfo__inputWrap">
+                <p className="firstSignupPage__formBody">Phone Number <span className="firstSignupPage__red">*</span></p>
+                <div className="firstSignupPage__inputWrap">
                   <Input
                     name="phoneNumber"
                     placeholder="Phone Number"
@@ -110,10 +110,10 @@ class SignupInfo extends Component {
               </div>
               <div style={{width: '10%'}}></div>
               <div style={{width: "45%"}}>
-                <p className="signupInfo__formBody">Date of Birth <span className="signupInfo__red">*</span></p>
-                <div className="signupInfo__inputWrap">
+                <p className="firstSignupPage__formBody">Date of Birth <span className="firstSignupPage__red">*</span></p>
+                <div className="firstSignupPage__inputWrap">
                   <DatePicker
-                    className="signupInfo__datePicker"
+                    className="firstSignupPage__datePicker"
                     format="MM-DD-YYYY"
                     onChange={this.handleDateChange}
                     prefix={<Icon type="calendar" style={{color: 'rgba(0, 0, 0)'}} />}
@@ -121,9 +121,9 @@ class SignupInfo extends Component {
                 </div>
               </div>
             </div>
-            <div className="signupInfo__inputBox2">
+            <div className="firstSignupPage__inputBox2">
             <div style={{width: '100%'}}>
-              <p className="signupInfo__formBody">Address <span className="signupInfo__red">*</span></p>
+              <p className="firstSignupPage__formBody">Address <span className="firstSignupPage__red">*</span></p>
               <Input
                 name="address"
                 placeholder="Address"
@@ -132,11 +132,11 @@ class SignupInfo extends Component {
             </div>
           </div>
           </div>
-          <div className="signupInfo__footer">
-            <div className="signupInfo__buttonWrapper">
+          <div className="firstSignupPage__footer">
+            <div className="firstSignupPage__buttonWrapper">
               <Button
                 htmlType="submit"
-                className="signupInfo__nextButton"
+                className="firstSignupPage__nextButton"
                 type="primary"
               >
                 Next
@@ -149,4 +149,4 @@ class SignupInfo extends Component {
   }
 }
 
-export default SignupInfo;
+export default FirstSignupPage;

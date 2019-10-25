@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Animated } from 'react-animated-css';
 import './SignupRoot.css';
 import circleLogo from '../../assets/imgs/circle-logo.svg';
-import SignupInfo from './SignupInfo/SignupInfo';
-import MoreInfo from './MoreInfo/MoreInfo';
+import FirstSignupPage from './FirstSignupPage.js/FirstSignupPage';
+import SecondSignupPage from './SecondSignupPage/SecondSignupPage';
 
 class SignupRoot extends Component {
   state = {
@@ -26,9 +26,9 @@ class SignupRoot extends Component {
     });
   }
 
-  setSignupInfo = userSignupInfo => {
+  setFirstSignupInfo = firstSignupInfo => {
     const currentSignupInfo = this.state.signupInfo;
-    this.setState({ signupInfo: {...currentSignupInfo, userSignupInfo} });
+    this.setState({ signupInfo: {...currentSignupInfo, firstSignupInfo} });
   }
 
   handleFinalSubmit = e => {
@@ -63,8 +63,8 @@ class SignupRoot extends Component {
               </div>
               <div className="col-6 signupRoot__removePadding">
                 <h1 className="signupRoot__formTitle">Rooming made easy for you.</h1>
-                {this.state.pageOne && <SignupInfo setPageTwo={this.setPageTwo} setSignupInfo={this.setSignupInfo} />}
-                {this.state.pageTwo && <MoreInfo setPageOne={this.setPageOne} handleFinalSubmit={this.handleFinalSubmit} />}
+                {this.state.pageOne && <FirstSignupPage setPageTwo={this.setPageTwo} setFirstSignupInfo={this.setFirstSignupInfo} />}
+                {this.state.pageTwo && <SecondSignupPage setPageOne={this.setPageOne} handleFinalSubmit={this.handleFinalSubmit} />}
               </div>
             </div>
           </div>

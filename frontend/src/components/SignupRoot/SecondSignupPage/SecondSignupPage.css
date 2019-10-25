@@ -1,28 +1,28 @@
-.moreInfo__background {
+.secondSignupPage__background {
   width: 100vw;
   height: 100vh;
 }
 
-.moreInfo__suLeft {
+.secondSignupPage__suLeft {
   background-color: #F57676;
   height: 100vh;
 }
-.moreInfo__removePadding {
+.secondSignupPage__removePadding {
   padding-left: 0;
   padding-right: 0;
 }
 
-.moreInfo__removeMargin {
+.secondSignupPage__removeMargin {
   margin-left: 0;
   margin-right: 0;
 }
 
-.moreInfo__logoBox {
+.secondSignupPage__logoBox {
   text-align: center;
   padding-top: 8%;
 }
 
-.moreInfo__formBox {
+.secondSignupPage__formBox {
   height: 100%;
   width: 100%;
   padding-top: 8%;
@@ -31,7 +31,7 @@
   padding-bottom: 4%;
 }
 
-.moreInfo__formTitle {
+.secondSignupPage__formTitle {
   font-weight: 700;
   font-size: 45px;
   color: #F57676;
@@ -41,30 +41,30 @@
   text-align: center;
 }
 
-.moreInfo__formBody {
+.secondSignupPage__formBody {
   font-size: 16px;
   margin: 0;
   font-family: "Asap", sans-serif;
 }
 
-.moreInfo__inputBox {
+.secondSignupPage__inputBox {
   display: flex;
   padding-top: 6%;
   font-family: "Asap", sans-serif;
 }
 
-.moreInfo__inputBox2 {
+.secondSignupPage__inputBox2 {
   display: flex;
   padding-top: 2%;
   font-family: "Asap", sans-serif;
 }
 
-.moreInfo__inputWrap {
+.secondSignupPage__inputWrap {
   width: 100%;
   height: 80px;
 }
 
-.moreInfo__footer {
+.secondSignupPage__footer {
   background-color: #F4F4F4;
   position: absolute;
   bottom: 0;
@@ -74,7 +74,7 @@
   justify-content: space-between;
 }
 
-.moreInfo__prevButton {
+.secondSignupPage__prevButton {
   color: #F57676;
   border-radius: 8px;
   border: 1px solid #F57676;
@@ -84,11 +84,11 @@
   font-family: "Asap", sans-serif;
 }
 
-.moreInfo__prevButton:hover {
+.secondSignupPage__prevButton:hover {
   background-color: rgba(255, 255, 255, .1);
 }
 
-.moreInfo__submitButton {
+.secondSignupPage__submitButton {
   width: 120px;
   padding: 6px;
   border-radius: 10px;
@@ -98,13 +98,13 @@
   font-family: "Asap", sans-serif;
 }
 
-.moreInfo__buttonWrapper {
+.secondSignupPage__buttonWrapper {
   margin: 0 auto;
   margin-top: auto;
   margin-bottom: auto;
 }
 
-.moreInfo__buttonWrapper2 {
+.secondSignupPage__buttonWrapper2 {
   margin-top: auto;
   margin-bottom: auto;
   padding-right: 12%;
@@ -118,7 +118,7 @@ button:focus:active {
   outline: 0 !important;
 }
 
-.moreInfo__red {
+.secondSignupPage__red {
   color: #F57676;
 }
 
