@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './SignupInfo.css';
 import { Form, Input, Button, DatePicker, Icon } from 'antd';
 
-class signupInfoInfo extends Component {
+class SignupInfo extends Component {
   state = {
     dob: ''
   }
@@ -149,4 +149,4 @@ class signupInfoInfo extends Component {
   }
 }
 
-export default signupInfoInfo;
+export default SignupInfo;
