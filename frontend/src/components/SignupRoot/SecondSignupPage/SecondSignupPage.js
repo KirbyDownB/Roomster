@@ -1,107 +1,94 @@
 import React, { Component } from 'react';
 import './SecondSignupPage.css';
-import { Form, Input, Button, DatePicker, Icon } from 'antd';
+import { Form, Input, Button, Icon, Slider } from 'antd';
 
 class SecondSignupPage extends Component {
+  state = {
+    priceRange: [0, 10000]
+  }
+
+  handleSecondSignupPageSubmit = e => {
+    e.preventDefault();
+
+    const secondSignupInfo = {
+      age: e.target.age.value,
+      location: e.target.location.value,
+      ethnicity: e.target.ethnicity.value,
+      numRoommates: e.target.numRoommates.value,
+      priceRange: this.state.priceRange
+    };
+
+    this.props.handleFinalSubmit(secondSignupInfo);
+  }
+
+  handlePriceRangeChange = value => {
+    this.setState({ priceRange: value });
+  }
+
   render() {
     return (
       <div className="secondSignupPage__container">
-        <Form onSubmit={this.props.handleFinalSubmit}>
+        <Form onSubmit={this.handleSecondSignupPageSubmit}>
           <div className="secondSignupPage__formBox">
-            <div className="secondSignupPage__inputBox">
-              <div style={{width: "45%"}}>
-                <p className="secondSignupPage__formBody">Email <span className="secondSignupPage__red">*</span></p>
-                <div className="secondSignupPage__inputWrap">
-                  <Input
-                    name="email"
-                    placeholder="Username / Email"
-                    prefix={<Icon type="mail" style={{color: 'rgba(0, 0, 0)'}} />}
-                  />
-                </div>
-              </div>
-              <div style={{width: '10%'}}></div>
-            </div>
             <div className="secondSignupPage__inputBox2">
               <div style={{width: "45%"}}>
-                <p className="secondSignupPage__formBody">Password <span className="secondSignupPage__red">*</span></p>
+                <p className="secondSignupPage__formBody">Age</p>
                 <div className="secondSignupPage__inputWrap">
                   <Input
-                    name="password1"
-                    type="password"
-                    placeholder="Password"
-                    prefix={<Icon type="lock" style={{color: 'rgba(0, 0, 0)'}} />}
+                    name="age"
+                    placeholder="Age"
+                    prefix={<Icon type="number" style={{color: 'rgba(0, 0, 0)'}} />}
                   />
                 </div>
               </div>
               <div style={{width: '10%'}}></div>
               <div style={{width: "45%"}}>
-                <p className="secondSignupPage__formBody">Confirm Password <span className="secondSignupPage__red">*</span></p>
+                <p className="secondSignupPage__formBody">Location</p>
                 <div className="secondSignupPage__inputWrap">
                   <Input
-                    name="password2"
-                    type="password"
-                    placeholder="Password"
-                    prefix={<Icon type="lock" style={{color: 'rgba(0, 0, 0)'}} />}
+                    name="location"
+                    placeholder="Location"
+                    prefix={<Icon type="environment" style={{color: 'rgba(0, 0, 0)'}} />}
                   />
                 </div>
               </div>
             </div>
             <div className="secondSignupPage__inputBox2">
               <div style={{width: "45%"}}>
-                <p className="secondSignupPage__formBody">First Name <span className="secondSignupPage__red">*</span></p>
+                <p className="secondSignupPage__formBody">Ethnicity</p>
                 <div className="secondSignupPage__inputWrap">
                   <Input
-                    name="firstName"
-                    placeholder="First Name"
-                    prefix={<Icon type="user" style={{color: 'rgba(0, 0, 0)'}} />}
+                    name="ethnicity"
+                    placeholder="Ethnicity"
+                    prefix={<Icon type="flag" style={{color: 'rgba(0, 0, 0)'}} />}
                   />
                 </div>
               </div>
               <div style={{width: '10%'}}></div>
               <div style={{width: "45%"}}>
-                <p className="secondSignupPage__formBody">Last Name <span className="secondSignupPage__red">*</span></p>
+                <p className="secondSignupPage__formBody">Number of Roommates</p>
                 <div className="secondSignupPage__inputWrap">
                   <Input
-                    name="lastName"
-                    placeholder="Last Name"
-                    prefix={<Icon type="user" style={{color: 'rgba(0, 0, 0)'}} />}
+                    name="numRoommates"
+                    placeholder="Number of Roommates"
+                    prefix={<Icon type="smile" style={{color: 'rgba(0, 0, 0)'}} />}
                   />
                 </div>
               </div>
             </div>
             <div className="secondSignupPage__inputBox2">
-              <div style={{width: "45%"}}>
-                <p className="secondSignupPage__formBody">Phone Number <span className="secondSignupPage__red">*</span></p>
-                <div className="secondSignupPage__inputWrap">
-                  <Input
-                    name="phoneNumber"
-                    placeholder="Phone Number"
-                    prefix={<Icon type="phone" style={{color: 'rgba(0, 0, 0)'}} />}
-                  />
-                </div>
+              <div style={{width: '100%'}}>
+                <p className="secondSignupPage__formBody secondSignupPage__priceRange--title">Price Range</p>
+                <Slider
+                  className="secondSignupPage__slider"
+                  range
+                  onAfterChange={this.handlePriceRangeChange}
+                  defaultValue={[0, 10000]}
+                  max={10000}
+                  step={100}
+                  marks={{ 0: '$0', 10000: '$10,000' }}
+                />
               </div>
-              <div style={{width: '10%'}}></div>
-              <div style={{width: "45%"}}>
-                <p className="secondSignupPage__formBody">Date of Birth <span className="secondSignupPage__red">*</span></p>
-                <div className="secondSignupPage__inputWrap">
-                  <DatePicker
-                    className="secondSignupPage__datePicker"
-                    format="MM-DD-YYYY"
-                    onChange={this.handleDateChange}
-                    prefix={<Icon type="calendar" style={{color: 'rgba(0, 0, 0)'}} />}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="secondSignupPage__inputBox2">
-            <div style={{width: '100%'}}>
-              <p className="secondSignupPage__formBody">Address <span className="secondSignupPage__red">*</span></p>
-              <Input
-                name="address"
-                placeholder="Address"
-                prefix={<Icon type="bank" style={{color: 'rgba(0, 0, 0)'}} />}
-              />
-            </div>
           </div>
           </div>
           <div className="secondSignupPage__footer">

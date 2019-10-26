@@ -7,7 +7,7 @@ class FirstSignupPage extends Component {
     dob: ''
   }
 
-  handleFirstSignupInfoSubmit = e => {
+  handleFirstPageSignupSubmit = e => {
     e.preventDefault();
 
     const firstSignupInfo = {
@@ -34,7 +34,7 @@ class FirstSignupPage extends Component {
   render() {
     return (
       <div className="firstSignupPage__container">
-        <Form onSubmit={this.handleFirstSignupInfoSubmit}>
+        <Form onSubmit={this.handleFirstPageSignupSubmit}>
           <div className="firstSignupPage__formBox">
             <div className="firstSignupPage__inputBox">
               <div style={{width: "45%"}}>

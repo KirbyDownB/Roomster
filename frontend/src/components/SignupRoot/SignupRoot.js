@@ -28,26 +28,21 @@ class SignupRoot extends Component {
 
   setFirstSignupInfo = firstSignupInfo => {
     const currentSignupInfo = this.state.signupInfo;
-    this.setState({ signupInfo: {...currentSignupInfo, firstSignupInfo} });
+    this.setState({ signupInfo: {...currentSignupInfo, ...firstSignupInfo} });
   }
 
-  handleFinalSubmit = e => {
-    // const moreSignupInfo = {
-    //   passwordOne: e.target.password1.value,
-    //   passwordTwo: e.target.password2.value,
-    //   firstName: e.target.firstName.value,
-    //   lastName: e.target.lastName.value,
-    //   phoneNumber: e.target.phoneNumber.value,
-    //   dob: this.state.dob,
-    //   address: e.target.address.value
-    // }
+  handleFinalSubmit = secondSignupInfo => {
+    const allInfo = { ...this.state.signupInfo, ...secondSignupInfo };
 
-    // Make a format like the above, and combine the object with the state's object shown below
-    // const allInfo = {...this.state.signupInfo, moreSignupInfo}
+    // TODO Post request to backend
   }
 
   handleDateChange = (date, dateString) => {
     console.log("Got a date", dateString);
+  }
+
+  handlePriceRangeChange = value => {
+    console.log("Got a value", value)
   }
 
   render(){
@@ -64,7 +59,7 @@ class SignupRoot extends Component {
               <div className="col-6 signupRoot__removePadding">
                 <h1 className="signupRoot__formTitle">Rooming made easy for you.</h1>
                 {this.state.pageOne && <FirstSignupPage setPageTwo={this.setPageTwo} setFirstSignupInfo={this.setFirstSignupInfo} />}
-                {this.state.pageTwo && <SecondSignupPage setPageOne={this.setPageOne} handleFinalSubmit={this.handleFinalSubmit} />}
+                {this.state.pageTwo && <SecondSignupPage setPageOne={this.setPageOne} handleFinalSubmit={this.handleFinalSubmit} handlePriceRangeChange={this.handlePriceRangeChange} />}
               </div>
             </div>
           </div>
