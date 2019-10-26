@@ -6,7 +6,7 @@ import './App.css';
 
 import Landing from './components/Landing/Landing';
 import Login from './components/Login/Login';
-import Signup from './components/Signup/Signup';
+import SignupRoot from './components/SignupRoot/SignupRoot';
 import Home from './components/Home/Home';
 import ForgotPassword from './components/PasswordReset/ForgotPassword'
 
@@ -19,7 +19,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/signup" component={SignupRoot} />
           <Route path="/home" component={Home} />
           <Route path="/reset/:token" component={ForgotPassword}/>
         </Switch>
