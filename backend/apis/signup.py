@@ -18,7 +18,7 @@ user = api.model('User', {
     'phone_number':fields.String(description="Phone Number"),
     'age': fields.String(description="Age"),
     'range': fields.String(description="Range"),
-    'location': fields.String(description="Location"),
+    'location_of_interest': fields.String(description="Location"),
     'ethnicity' : fields.String(description='Ethnicity'),
 })
 
@@ -36,7 +36,7 @@ class Signup(Resource):
         data = api.payload
         user_data = User(email=data.get('email'), username=data.get('username'), first_name=data.get('first_name'),\
         last_name=data.get('last_name'), address=data.get('address'), phone_number=data.get('phone_number'), \
-        age=data.get('age'), range=data.get('range'), ethnicity=data.get('ethnicity'))
+        age=data.get('age'), range=data.get('range'), ethnicity=data.get('ethnicity'), location_of_interest=data.get('location_of_interest'))
 
         try:
             user_data.set_password(data.get('password'))
@@ -62,7 +62,5 @@ class Signup(Resource):
             mail.send_message(msg)
         except:
             return {"Message":"Something went wrong when sending the email"}
-
-
 
         return {"Message":"Signup Successful", "token":token}

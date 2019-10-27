@@ -25,7 +25,6 @@ class User(UserMixin, db.Model):
     ethnicity = db.Column(db.String(DB_STRING_LENGTH))
     price_range_min = db.Column(db.String(DB_STRING_LENGTH))
     price_range_max = db.Column(db.String(DB_STRING_LENGTH))
-    ethnicity = db.Column(db.String(DB_STRING_LENGTH))
     duration = db.Column(db.String(DB_STRING_LENGTH))
 
 
