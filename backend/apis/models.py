@@ -19,7 +19,6 @@ class User(UserMixin, db.Model):
     range = db.Column(db.String(DB_STRING_LENGTH))
     location_of_interest = db.Column(db.String(DB_STRING_LENGTH))
     age = db.Column(db.String(DB_STRING_LENGTH))
-    price_range = db.Column(db.String(DB_STRING_LENGTH))
     pf_pic = db.Column(db.String(DB_STRING_LENGTH))
     bio = db.Column(db.String(DB_STRING_LENGTH))
     number_of_roommates = db.Column(db.String(DB_STRING_LENGTH))

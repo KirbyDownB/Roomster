@@ -19,6 +19,7 @@ user = api.model('User', {
     'age': fields.String(description="Age"),
     'range': fields.String(description="Range"),
     'location': fields.String(description="Location"),
+    'ethnicity' : fields.String(description='Ethnicity'),
 })
 
 
@@ -35,7 +36,7 @@ class Signup(Resource):
         data = api.payload
         user_data = User(email=data.get('email'), username=data.get('username'), first_name=data.get('first_name'),\
         last_name=data.get('last_name'), address=data.get('address'), phone_number=data.get('phone_number'), \
-        age=data.get('age'), range=data.get('range'))
+        age=data.get('age'), range=data.get('range'), ethnicity=data.get('ethnicity'))
 
         try:
             user_data.set_password(data.get('password'))

@@ -36,6 +36,12 @@ class Listings(Resource):
         #price_range_min = data.get('price_range_min')
 
         if age and not location and not ethnicity and not number_of_roomates:
-            user_data = User.query.filter_by(age=age)
+            user_data = User.query.filter_by(age=age).first()
+        # if location and not age and not ethnicity and not number_of_roomates:
+        #     user_data = User.query.filter_by(location=location).first()
+        # if ethnicity and not location and not age and not number_of_roomates:
+        #     user_data = User.query.filter_by(ethnicity=ethnicity).first()
+        # if number_of_roomates and not location and not ethnicity and not age:
+        #     user_data = User.query.filter_by(number_of_roomates=number_of_roomates).first()
 
         return {'Message': 'cool'}
