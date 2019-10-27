@@ -26,10 +26,10 @@ class Login(Resource):
         password = data.get('password')
 
 
-        if identifier.find('@') > -1:
+        if identifier.find('@') > -1:        
             user_data = User.query.filter_by(email=identifier).first()
         
-        else:
+        else:     
             user_data = User.query.filter_by(username=identifier).first()
 
         
