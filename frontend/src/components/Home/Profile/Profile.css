@@ -1,3 +1,7 @@
+.profile__container {
+  background-color: #FFFAFA;
+}
+
 .profile__title {
   font-weight: 700;
   font-size: 50px;
@@ -17,10 +21,17 @@
 }
 
 .profile__button--submit {
-  margin-top: 64px;
+  margin-top: 32px;
+  margin-bottom: 64px;
 }
 
 .profile__button--bold {
   font-weight: bold;
   letter-spacing: 12px;
+}
+
+.profile__input--caption {
+  font-family:"Asap", sans-serif;
+  font-weight: bold;
+  margin-bottom: -8px;
 }
