@@ -9,6 +9,15 @@ class Home extends Component {
     activePage: "profile"
   }
 
+  handleProfileClick = e => {
+    e.preventDefault();
+    this.setState({ activePage: "profile" });
+  }
+
+  handleListingsClick = e => {
+    e.preventDefault();
+    this.setState({ activePage: "listings" });
+  }
 
   render() {
     return (
@@ -16,11 +25,23 @@ class Home extends Component {
         <div className="container-fluid">
           <div className="row">
             <div className="col-2 home__sideMenu">
-              <div className="home__innerMenu">
+              <div
+                className="home__innerMenu"
+                onClick={e => {
+                  e.preventDefault();
+                  this.setState({ activePage: "profile" });
+                }}
+              >
                 <Icon className="home__icon" type="user" />
                 <p className="home__menu_text">Profile</p>
               </div>
-              <div className="home__innerMenu">
+              <div
+                className="home__innerMenu"
+                onClick={e => {
+                  e.preventDefault();
+                  this.setState({ activePage: "listings" });
+                }}
+              >
                 <Icon className="home__icon" type="menu" />
                 <p className="home__menu_text">Listings</p>
               </div>
