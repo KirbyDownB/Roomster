@@ -172,7 +172,7 @@ class Login extends Component {
                       closable
                       afterClose={this.handleAlertClose}
                     />}
-                    {this.state.isLoginLoading && <img className="login__spinner" src={spinner}/> }
+                    {this.state.isLoginLoading && <img className="login__spinner" src={spinner} alt=""/> }
                   </div>
                 </div>
               </div>
