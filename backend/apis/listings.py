@@ -39,7 +39,6 @@ class Listings(Resource):
 
  #*********************************1 ENTRY QUERIES***********************************************************************     
 
-
         if age and not location_of_interest and not ethnicity and not number_of_roomates and not duration: #A
             user_data = User.query.filter_by(age=age).all()
             # for users in user_data:
@@ -75,7 +74,7 @@ class Listings(Resource):
             user_data = User.query.filter_by(duration=duration).all()
             # for users in user_data:
             #     print(user_data)
-            # print('HOLAAAAAA5!')       
+            # print('HOLAAAAAA6!')       
 
  # NEED TO PROVE THAT THE QUERIES BELOW ARE CORRECT ***********************************************************************
  #*********************************2 ENTIRES QUERIES***********************************************************************     
@@ -84,37 +83,37 @@ class Listings(Resource):
             user_data = User.query.filter_by(location_of_interest=location_of_interest, age=age).all()
             # for users in user_data:
             #     print(user_data)
-            # print('HOLAAAAAA5!')       
+            # print('HOLAAAAAA7!')       
 
         if ethnicity and age and not location_of_interest and not number_of_roomates: #AE
             user_data = User.query.filter(age==age, ethnicity==ethnicity).all()
             # for users in user_data:
             #     print(user_data)
-            # print('HOLAAAAAA6!')   
+            # print('HOLAAAAAA8!')   
 
         if ethnicity and number_of_roomates and not location_of_interest and not age: #A#
             user_data = User.query.filter(number_of_roomates==number_of_roomates, ethnicity==ethnicity).all()
             # for users in user_data:
             #     print(user_data)
-            # print('HOLAAAAAA7!')
+            # print('HOLAAAAAA9!')
 
         if ethnicity and location_of_interest and not age and not number_of_roomates: #LE
             user_data = User.query.filter(location_of_interest==location_of_interest, ethnicity==ethnicity).all()
             # for users in user_data:
             #     print(user_data)
-            # print('HOLAAAAAA8!')
+            # print('HOLAAAAAA10!')
 
         if location_of_interest and number_of_roomates and not age and not ethnicity: #L#
             user_data = User.query.filter(location_of_interest==location_of_interest, number_of_roomates==number_of_roomates).all()
             # for users in user_data:
             #     print(user_data)
-            # print('HOLAAAAAA9!')
+            # print('HOLAAAAAA11!')
 
         if ethnicity and number_of_roomates and not age and not location_of_interest: #E#
             user_data = User.query.filter(ethnicity==ethnicity, number_of_roomates==number_of_roomates).all()
             # for users in user_data:
             #     print(user_data)
-            # print('HOLAAAAAA10!')
+            # print('HOLAAAAAA12!')
 
  #*********************************3 ENTIRES QUERIES***********************************************************************     
 
@@ -122,26 +121,26 @@ class Listings(Resource):
             user_data = User.query.filter(ethnicity==ethnicity, location_of_interest==location_of_interest, age==age).all()
             # for users in user_data:
             #     print(user_data)
-            # print('HOLAAAAAA11!')
+            # print('HOLAAAAAA13!')
 
 
         if age and location_of_interest and number_of_roomates and not ethnicity: #AL#
             user_data = User.query.filter(number_of_roomates==number_of_roomates, location_of_interest==location_of_interest, age==age).all()
             # for users in user_data:
             #     print(user_data)
-            # print('HOLAAAAAA12!')
+            # print('HOLAAAAAA14!')
 
         if age and ethnicity and number_of_roomates and not location_of_interest: #AE#
             user_data = User.query.filter(number_of_roomates==number_of_roomates, ethnicity==ethnicity, age==age).all()
             # for users in user_data:
             #     print(user_data)
-            # print('HOLAAAAAA13!')
+            # print('HOLAAAAAA15!')
 
         if location_of_interest and ethnicity and number_of_roomates and not age: #LE#
             user_data = User.query.filter(number_of_roomates==number_of_roomates, ethnicity==ethnicity, location_of_interest==location_of_interest).all()
             # for users in user_data:
             #     print(user_data)
-            # print('HOLAAAAAA14!')
+            # print('HOLAAAAAA16!')
 
  #*********************************4 ENTIRES QUERIES***********************************************************************
 
@@ -149,6 +148,6 @@ class Listings(Resource):
             user_data = User.query.filter(number_of_roomates==number_of_roomates, ethnicity==ethnicity, location_of_interest==location_of_interest, age==age).all()
             # for users in user_data:
             #     print(user_data)
-            # print('HOLAAAAAA15!')
+            # print('HOLAAAAAA17!')
 
         return {'Message': 'cool'}
