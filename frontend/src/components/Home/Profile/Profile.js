@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Profile.css';
-import { Input, Icon, Form, DatePicker, Slider, Button } from 'antd';
+import { Input, Icon, Form, Slider, Button } from 'antd';
 import  { BASE_URL } from '../../../constants';
 import { mockProfileInfo } from '../../../mocks';
 
@@ -17,28 +17,67 @@ class Profile extends Component {
     age: '',
     location: '',
     ethnicity: '',
-    numRoommates: 0,
-    priceRange: [null, null]
+    password: '',
+    numRoommates: null,
+    priceLow: null,
+    priceHigh: null,
+    token: null
   }
 
   componentDidMount = () => {
-    // fetch(`${BASE_URL}/api/something`, {
-    //   //something
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log("Received the current user's information", data);
-    //   })
-    //   .catch(error => {
-    //     console.error("Got an error", error);
-    //   })
+    const token = localStorage.getItem("token");
 
-    const { email, firstName, lastName, phoneNumber, dob, address, age, location, ethnicity, numRoommates, priceLow, priceHigh } = mockProfileInfo;
-    this.setState({ email, firstName, lastName, phoneNumber, dob, address, age, location, ethnicity, numRoommates, priceRange: [priceLow, priceHigh] });
+    fetch(`${BASE_URL}/api/update_profile/`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Received the current user's information", data);
+        const { user } = data;
+        const { address, age, email, ethnicity, first_name: firstName, last_name: lastName, location_of_interest: location, number_of_roommates: numRoommates, phone_number: phoneNumber, price_range_max: priceHigh, price_range_min: priceLow } = user;
+
+        this.setState({ email, firstName, lastName, phoneNumber, address, age, location, ethnicity, numRoommates, priceLow, priceHigh });
+      })
+      .catch(error => {
+        console.error("Got an error", error);
+      })
+
+    // const { email, firstName, lastName, phoneNumber, dob, address, age, location, ethnicity, numRoommates, priceLow, priceHigh } = mockProfileInfo;
+    // this.setState({ email, firstName, lastName, phoneNumber, dob, address, age, location, ethnicity, numRoommates, priceRange: [priceLow, priceHigh] });
   }
 
   handleProfileUpdate = e => {
     e.preventDefault();
+
+    this.setState({ isLoading: true });
+
+    const token = localStorage.getItem("token");
+    let userInfo = this.state;
+    delete userInfo.isLoading;
+
+    fetch(`${BASE_URL}/api/update_profile/`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+      method: "POST",
+      body: JSON.stringify({ ...this.state })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Received the current user's information", data);
+        const { user } = data;
+        const { address, age, email, ethnicity, first_name: firstName, last_name: lastName, location_of_interest: location, number_of_roommates: numRoommates, phone_number: phoneNumber, price_range_max: priceHigh, price_range_min: priceLow } = user;
+
+        this.setState({ email, firstName, lastName, phoneNumber, address, age, location, ethnicity, numRoommates, priceRange: [priceLow, priceHigh], isLoading: false });
+      })
+      .catch(error => {
+        console.error("Got an error", error);
+        this.setState({ isLoading: false });
+      })
   }
 
   handleProfileDateChange = (date, dateString) => {
@@ -61,7 +100,7 @@ class Profile extends Component {
     return (
       <div className="profile__container">
         <div className="container-fluid">
-          {this.state.priceRange[0] && this.state.priceRange[1] && <Form onSubmit={this.handleProfileUpdate}>
+          {this.state.priceLow && this.state.priceHigh && <Form onSubmit={this.handleProfileUpdate}>
             <div className="row justify-content-center">
               <div className="col-10">
                 <div className="profile__title">
@@ -222,7 +261,7 @@ class Profile extends Component {
                   <Slider
                     range
                     onAfterChange={this.handleProfilePriceRangeChange}
-                    defaultValue={this.state.priceRange}
+                    defaultValue={[this.state.priceLow, this.state.priceHigh]}
                     max={10000}
                     step={100}
                     marks={{ 0: '$0', 5000: '$5,000', 10000: '$10,000' }}
@@ -236,6 +275,7 @@ class Profile extends Component {
                 htmlType="submit"
                 type="primary"
                 style={{ width: 440 }}
+                loading={this.state.isLoading}
               >
                 <span className="profile__button--bold">SUBMIT</span>
               </Button>
