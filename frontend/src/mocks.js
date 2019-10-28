@@ -10,5 +10,5 @@ export const mockProfileInfo = {
   ethnicity: 'test',
   numRoommates: 3,
   priceLow: 2000,
-  priceHigh: 9000
-}
+  priceHigh: 9000,
+};

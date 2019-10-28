@@ -78,6 +78,7 @@
 .login__forgotPassword--caption {
   font-family: "Asap", sans-serif;
   margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .login__resetItem {
@@ -86,6 +87,8 @@
 
 .login__resetButton {
   font-family: "Asap", sans-serif;
+  margin-top: 35px;
+  margin-bottom: 10px;
 }
 
 .login__resetButton--container {

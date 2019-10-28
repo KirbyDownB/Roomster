@@ -73,12 +73,14 @@ class Login extends Component {
           email: this.state.resetEmail
         }),
       })
-      .then(resp => resp.json())
-      .then(resp => {
-        this.setState({ isPasswordResetSubmitting: false });
-        console.log(resp)
-      })
-      console.log("Submitting email", this.state.resetEmail);
+        .then(resp => resp.json())
+        .then(data => {
+          this.setState({ isPasswordResetSubmitting: false });
+        })
+        .catch(error => {
+          console.error(error);
+          this.setState({ isPasswordResetSubmitting: false });
+        })
     }
   }
 
