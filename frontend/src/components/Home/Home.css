@@ -7,6 +7,33 @@
   height: 100vh;
 }
 
+.home__sideMenu {
+  background-color: #F57676;
+}
+
+.home__innerMenu {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10%;
+  color: white;
+}
+
+.home__menu_text {
+  margin: 0;
+  padding-left: 15px;
+  font-size: 16px;
+}
+
+.home__icon {
+  font-size: 16px;
+}
+
+.home__innerMenu:hover {
+  color: red;
+}
+
 .ant-input-lg {
   background-color: #FFFFFF;
   border-radius: 10px;
