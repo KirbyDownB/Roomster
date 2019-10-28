@@ -35,15 +35,8 @@ class SignupRoot extends Component {
 
   handleFinalSubmit = secondSignupInfo => {
     const allInfo = { ...this.state.signupInfo, ...secondSignupInfo };
+    console.log("Got all info", allInfo)
     this.props.userRegisterFetch(allInfo)
-  }
-
-  handleDateChange = (date, dateString) => {
-    console.log("Got a date", dateString);
-  }
-
-  handlePriceRangeChange = value => {
-    console.log("Got a value", value)
   }
 
   render(){
@@ -60,7 +53,7 @@ class SignupRoot extends Component {
               <div className="col-6 signupRoot__removePadding">
                 <h1 className="signupRoot__formTitle">Rooming made easy for you.</h1>
                 {this.state.pageOne && <FirstSignupPage setPageTwo={this.setPageTwo} setFirstSignupInfo={this.setFirstSignupInfo} />}
-                {this.state.pageTwo && <SecondSignupPage setPageOne={this.setPageOne} handleFinalSubmit={this.handleFinalSubmit} handlePriceRangeChange={this.handlePriceRangeChange} />}
+                {this.state.pageTwo && <SecondSignupPage setPageOne={this.setPageOne} handleFinalSubmit={this.handleFinalSubmit} />}
               </div>
             </div>
           </div>

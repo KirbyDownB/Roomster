@@ -1,3 +1,4 @@
-const BASE_URL = 'http://812e892f.ngrok.io';
+const BASE_URL = 'http://aa6dc42f.ngrok.io';
+const inputIconColor = { color: 'rgba(0, 0, 0)' };
 
-export { BASE_URL };
+export { BASE_URL, inputIconColor };

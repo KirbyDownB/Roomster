@@ -42,9 +42,10 @@
 }
 
 .secondSignupPage__formBody {
-  font-size: 16px;
+  font-size: 14px;
   margin: 0;
   font-family: "Asap", sans-serif;
+  font-weight: bold;
 }
 
 .secondSignupPage__inputBox {

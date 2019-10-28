@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './FirstSignupPage.css';
-import { Form, Input, Button, DatePicker, Icon } from 'antd';
+import { Form, Input, Button, Icon } from 'antd';
+import { inputIconColor } from '../../../constants';
 
 class FirstSignupPage extends Component {
 
@@ -40,7 +41,7 @@ class FirstSignupPage extends Component {
                   <Input
                     name="email"
                     placeholder="Username / Email"
-                    prefix={<Icon type="mail" style={{color: 'rgba(0, 0, 0)'}} />}
+                    prefix={<Icon type="mail" style={inputIconColor} />}
                   />
                 </div>
               </div>
@@ -54,7 +55,7 @@ class FirstSignupPage extends Component {
                     name="password1"
                     type="password"
                     placeholder="Password"
-                    prefix={<Icon type="lock" style={{color: 'rgba(0, 0, 0)'}} />}
+                    prefix={<Icon type="lock" style={inputIconColor} />}
                   />
                 </div>
               </div>
@@ -66,7 +67,7 @@ class FirstSignupPage extends Component {
                     name="password2"
                     type="password"
                     placeholder="Password"
-                    prefix={<Icon type="lock" style={{color: 'rgba(0, 0, 0)'}} />}
+                    prefix={<Icon type="lock" style={inputIconColor} />}
                   />
                 </div>
               </div>
@@ -78,7 +79,7 @@ class FirstSignupPage extends Component {
                   <Input
                     name="firstName"
                     placeholder="First Name"
-                    prefix={<Icon type="user" style={{color: 'rgba(0, 0, 0)'}} />}
+                    prefix={<Icon type="user" style={inputIconColor} />}
                   />
                 </div>
               </div>
@@ -89,7 +90,7 @@ class FirstSignupPage extends Component {
                   <Input
                     name="lastName"
                     placeholder="Last Name"
-                    prefix={<Icon type="user" style={{color: 'rgba(0, 0, 0)'}} />}
+                    prefix={<Icon type="user" style={inputIconColor} />}
                   />
                 </div>
               </div>
@@ -101,7 +102,7 @@ class FirstSignupPage extends Component {
                   <Input
                     name="phoneNumber"
                     placeholder="Phone Number"
-                    prefix={<Icon type="phone" style={{color: 'rgba(0, 0, 0)'}} />}
+                    prefix={<Icon type="phone" style={inputIconColor} />}
                   />
                 </div>
               </div>
@@ -114,7 +115,7 @@ class FirstSignupPage extends Component {
               <Input
                 name="address"
                 placeholder="Address"
-                prefix={<Icon type="bank" style={{color: 'rgba(0, 0, 0)'}} />}
+                prefix={<Icon type="bank" style={inputIconColor} />}
               />
             </div>
           </div>

@@ -37,7 +37,9 @@ class App extends Component {
       <div className="App">
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={Landing} />
+            <Route exact path="/" component={Landing}>
+              <Redirect to="/login"/>
+            </Route>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignupRoot} />
             <PrivateRoute
