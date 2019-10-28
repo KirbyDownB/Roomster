@@ -3,6 +3,7 @@ import { Form, Icon, Input, Button, Alert } from 'antd';
 import logo from '../../assets/imgs/roomster-logo.svg';
 import spinner from '../../assets/tail-spin.svg';
 import { NavLink } from 'react-router-dom';
+import { BASE_URL } from '../../constants';
 import './ForgotPassword.css';
 
 const { Item } = Form;
@@ -23,8 +24,23 @@ class ForgotPassword extends Component {
       this.setState({ alertMessage: "Your passwords do not match!" });
     }
     else {
+      console.log("hello")
       this.setState({ isForgotPasswordLoading: true });
-      //add fetch
+      fetch(`${ BASE_URL }/api/reset/password/`, {
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': this.props.match.params.token
+        },
+        method: "POST",
+        body: JSON.stringify({
+          new_password: password1
+        }),
+      })
+      .then(resp => resp.json())
+      .then(resp => {
+        console.log(resp)
+        this.setState({ isForgotPasswordLoading: false });
+      })
     }
   }
 
