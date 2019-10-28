@@ -61,26 +61,38 @@ class Listings(Resource):
             return {"Message":"Something went wrong when updating your profile"}
 
         if email is not ""
+            user_data.email = new_email
 
         if first_name is not ""
+            user_data.first_name = new_first_name
 
         if last_name is not ""
+            user_data.last_name =  new_last_name
 
         if phone_number is not ""
+            user_data.phone_number = new_phone_number
 
         if date_of_birth is not ""
+            user_data.date_of_birth = new_date_of_birth
 
         if address is not ""
+            user_data.address = new_address
 
         if age is not ""
+            user_data.age = new_age
 
         if location_of_interest is not ""
+            user_data.location_of_interest = new_location_of_interest
         
         if ethnicity is not ""
+            user_data.ethnicity = new_ethnicity
 
         if number_of_roommates is not ""
+            user_data.number_of_roommates = new_number_of_roommates
 
-        if price_range_mix is not ""
+        if price_range_min is not ""
+            user_data.price_range_min = new_price_range_min
 
         if price_range_max is not ""
+            user_data.price_range_max = new_price_range_max
 
