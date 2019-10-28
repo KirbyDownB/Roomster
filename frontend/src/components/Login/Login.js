@@ -117,30 +117,24 @@ class Login extends Component {
                           <div className="login__forgotPassword--caption">
                             Enter your email below to send a password reset link.
                           </div>
-                          <Form onSubmit={this.handlePasswordResetSubmit}>
-                            <Item>
-                              <Input
-                                placeholder="Enter your email"
-                                prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                className="login__resetInput"
-                                name="resetEmail"
-                                value={this.state.resetEmail}
-                                onChange={this.handlePasswordResetChange}
-                              />
-                            </Item>
-                            <Item className="login__resetItem">
-                              <div className="login__resetButton--container">
-                                <Button
-                                  className="login__resetButton"
-                                  type="primary"
-                                  loading={this.state.isPasswordResetSubmitting}
-                                  onClick={this.handlePasswordResetSubmit}
-                                >
-                                  Submit
-                                </Button>
-                              </div>
-                            </Item>
-                          </Form>
+                          <Input
+                            placeholder="Enter your email"
+                            prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                            className="login__resetInput"
+                            name="resetEmail"
+                            value={this.state.resetEmail}
+                            onChange={this.handlePasswordResetChange}
+                          />
+                          <div className="login__resetButton--container">
+                            <Button
+                              className="login__resetButton"
+                              type="primary"
+                              loading={this.state.isPasswordResetSubmitting}
+                              onClick={this.handlePasswordResetSubmit}
+                            >
+                              Submit
+                            </Button>
+                          </div>
                         </div>
                       }
                     >
