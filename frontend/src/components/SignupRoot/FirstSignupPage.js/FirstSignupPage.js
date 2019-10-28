@@ -3,20 +3,17 @@ import './FirstSignupPage.css';
 import { Form, Input, Button, DatePicker, Icon } from 'antd';
 
 class FirstSignupPage extends Component {
-  state = {
-    dob: ''
-  }
 
   handleFirstPageSignupSubmit = e => {
     e.preventDefault();
 
     const firstSignupInfo = {
+      email: e.target.email.value,
       passwordOne: e.target.password1.value,
       passwordTwo: e.target.password2.value,
       firstName: e.target.firstName.value,
       lastName: e.target.lastName.value,
       phoneNumber: e.target.phoneNumber.value,
-      dob: this.state.dob,
       address: e.target.address.value
     }
 
@@ -109,17 +106,7 @@ class FirstSignupPage extends Component {
                 </div>
               </div>
               <div style={{width: '10%'}}></div>
-              <div style={{width: "45%"}}>
-                <p className="firstSignupPage__formBody">Date of Birth <span className="firstSignupPage__red">*</span></p>
-                <div className="firstSignupPage__inputWrap">
-                  <DatePicker
-                    className="firstSignupPage__datePicker"
-                    format="MM-DD-YYYY"
-                    onChange={this.handleDateChange}
-                    prefix={<Icon type="calendar" style={{color: 'rgba(0, 0, 0)'}} />}
-                  />
-                </div>
-              </div>
+      
             </div>
             <div className="firstSignupPage__inputBox2">
             <div style={{width: '100%'}}>

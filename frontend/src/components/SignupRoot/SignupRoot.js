@@ -4,6 +4,8 @@ import './SignupRoot.css';
 import circleLogo from '../../assets/imgs/circle-logo.svg';
 import FirstSignupPage from './FirstSignupPage.js/FirstSignupPage';
 import SecondSignupPage from './SecondSignupPage/SecondSignupPage';
+import { userRegisterFetch } from '../../redux/action';
+import { connect } from 'react-redux';
 
 class SignupRoot extends Component {
   state = {
@@ -33,8 +35,7 @@ class SignupRoot extends Component {
 
   handleFinalSubmit = secondSignupInfo => {
     const allInfo = { ...this.state.signupInfo, ...secondSignupInfo };
-
-    // TODO Post request to backend
+    this.props.userRegisterFetch(allInfo)
   }
 
   handleDateChange = (date, dateString) => {
@@ -69,4 +70,8 @@ class SignupRoot extends Component {
   }
 }
 
-export default SignupRoot;
+const mapDispatchToProps = dispatch => ({
+  userRegisterFetch: user => dispatch(userRegisterFetch(user))
+})
+
+export default connect(null, mapDispatchToProps)(SignupRoot);
