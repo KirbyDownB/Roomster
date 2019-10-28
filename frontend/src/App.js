@@ -13,7 +13,7 @@ import ForgotPassword from './components/PasswordReset/ForgotPassword'
 function PrivateRoute ({component: Component, isAuthenticated, ...rest}) {
   console.log(isAuthenticated)
   return(
-    <Route {...rest} render={(props) => isAuthenticated
+    <Route {...rest} render={(props) => isAuthenticated.id
       ? <Component {...props} />
       : <Redirect to={{pathname:'/login', state: {from: props.location}}} />}
       />

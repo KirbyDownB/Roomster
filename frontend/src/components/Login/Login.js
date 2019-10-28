@@ -6,6 +6,7 @@ import { Form, Icon, Input, Button, Alert, Popover } from 'antd';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { BASE_URL } from '../../constants';
 import './Login.css';
 
 const { Item } = Form;
@@ -63,6 +64,20 @@ class Login extends Component {
     this.setState({ isPasswordResetSubmitting: true });
 
     if (this.state.resetEmail) {
+      fetch(`${ BASE_URL }/api/reset/email/`, {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+          email: this.state.resetEmail
+        }),
+      })
+      .then(resp => resp.json())
+      .then(resp => {
+        this.setState({ isPasswordResetSubmitting: false });
+        console.log(resp)
+      })
       console.log("Submitting email", this.state.resetEmail);
     }
   }
