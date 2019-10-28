@@ -13,6 +13,7 @@ listings_data = api.model('listings_data', {
     'location_of_interest': fields.String(description="Location of desired area"),
     'ethnicity': fields.String(description="Ethnicity of desired roommates"),
     'number_of_roomates': fields.String(description="Amount of desired roommates"),
+    'duration' : fields.String(description="Duration")
     #'price_range_max': fields.String(description="Desired maximum price range"),
     #'price_range_min': fields.String(description="Desired minimum price range"),
 })
@@ -32,42 +33,55 @@ class Listings(Resource):
         location_of_interest = data.get('location_of_interest')
         ethnicity = data.get('ethnicity')
         number_of_roomates = data.get('number_of_roomates')
+        duration = data.get('Duration')
         #price_range_max = data.get('price_range_max')       
         #price_range_min = data.get('price_range_min')
 
  #*********************************1 ENTRY QUERIES***********************************************************************     
 
 
-        if age and not location_of_interest and not ethnicity and not number_of_roomates: #A
-            user_data = User.query.filter(age==age).all()
+        if age and not location_of_interest and not ethnicity and not number_of_roomates and not duration: #A
+            user_data = User.query.filter_by(age=age).all()
             # for users in user_data:
-            print(user_data)
-            print('HOLAAAAAA1!')
+            #     print(user_data)
+            # print('HOLAAAAAA1!')
 
-        if location_of_interest and not age and not ethnicity and not number_of_roomates: #L
-            user_data = User.query.filter(location_of_interest==location_of_interest).all()
+        if location_of_interest and not age and not ethnicity and not number_of_roomates and not duration: #L
+            user_data = User.query.filter_by(location_of_interest=location_of_interest).all()
             # for users in user_data:
-            print(user_data)
-            print('HOLAAAAAA2!')
+            #     print(user_data)
+            # print('HOLAAAAAA2!')
 
-        if ethnicity and not location_of_interest and not age and not number_of_roomates: #E
-            user_data = User.query.filter(ethnicity==ethnicity).all()
+        if ethnicity and not location_of_interest and not age and not number_of_roomates and not duration: #E
+            user_data = User.query.filter_by(ethnicity=ethnicity).all()
             # for users in user_data:
-            print(user_data)
-            print('HOLAAAAAA3!')
+            #     print(user_data)
+            # print('HOLAAAAAA3!')
 
 
-        if number_of_roomates and not location_of_interest and not ethnicity and not age: ##
-            user_data = User.query.filter(number_of_roomates==number_of_roomates).all()
-            for users in user_data:
-                print(user_data)
-            print('HOLAAAAAA4!')
+        if number_of_roomates and not location_of_interest and not ethnicity and not age and not duration: ##
+            user_data = User.query.filter_by(number_of_roomates=number_of_roomates).all()
+            # for users in user_data:
+            #     print(user_data)
+            # print('HOLAAAAAA4!')
+
+        if number_of_roomates and not location_of_interest and not ethnicity and not age and not duration: ##
+            user_data = User.query.filter_by(number_of_roomates=number_of_roomates).all()
+            # for users in user_data:
+            #     print(user_data)
+            # print('HOLAAAAAA5!') 
+
+        if duration and not number_of_roomates and not location_of_interest and not ethnicity and not age: ##
+            user_data = User.query.filter_by(duration=duration).all()
+            # for users in user_data:
+            #     print(user_data)
+            # print('HOLAAAAAA5!')       
 
  # NEED TO PROVE THAT THE QUERIES BELOW ARE CORRECT ***********************************************************************
  #*********************************2 ENTIRES QUERIES***********************************************************************     
 
         if location_of_interest and age and not ethnicity and not number_of_roomates: #AL
-            user_data = User.query.filter(location_of_interest==location_of_interest, age==age).all()
+            user_data = User.query.filter_by(location_of_interest=location_of_interest, age=age).all()
             # for users in user_data:
             #     print(user_data)
             # print('HOLAAAAAA5!')       

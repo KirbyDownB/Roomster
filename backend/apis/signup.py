@@ -23,6 +23,7 @@ user = api.model('User', {
     'range_max' : fields.String(description='Range Max'),
     'range_min':fields.String(description='Range Min'),
     'num_roommates': fields.String(description='Number of Roommates'),
+    'duration' : fields.String(description='Duration')
 })
 
 
