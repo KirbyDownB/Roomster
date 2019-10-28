@@ -10,7 +10,6 @@ api = Namespace('signup', description='Signup related operations')
 
 user = api.model('User', {
     'email': fields.String(description="User email"),
-    'username': fields.String(description="User username"),
     'password': fields.String(description="User password"),
     'first_name': fields.String(description="Address"),
     'last_name':fields.String(description="Phone Number"),
@@ -38,7 +37,7 @@ class Signup(Resource):
     def post(self):
     
         data = api.payload
-        user_data = User(email=data.get('email'), username=data.get('username'), first_name=data.get('first_name'),\
+        user_data = User(email=data.get('email'), first_name=data.get('first_name'),\
         last_name=data.get('last_name'), address=data.get('address'), phone_number=data.get('phone_number'), \
         age=data.get('age'), range=data.get('range'), ethnicity=data.get('ethnicity'), location_of_interest=data.get('location_of_interest')\
             ,price_range_min=data.get('range_min'), price_range_max=data.get('range_max'), number_of_roommates=data.get('number_of_roommmates'), duration=data.get('duration'))
@@ -54,8 +53,8 @@ class Signup(Resource):
             return {"Message":"Something went wrong when signing up the user"}
 
 
-        token = jwt.encode({'username':user_data.username, 'email':user_data.email}, "SECRET_KEY")
-        token.decode('utf-8')
+        token = jwt.encode({'email':user_data.email}, "SECRET_KEY")
+        token = token.decode('utf-8')
 
 
         subject = "[Roomster] Thanks for signing up!"
@@ -65,7 +64,7 @@ class Signup(Resource):
         msg = Message(subject=subject, sender="roomsterhelp@gmail.com", body=body, recipients=recipients)
 
         try:
-            mail.send_message(msg)
+            mail.send(msg)
         except:
             return {"Message":"Something went wrong when sending the email"}
 

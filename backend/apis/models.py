@@ -8,7 +8,6 @@ DB_STRING_LENGTH = 120
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(DB_STRING_LENGTH), unique=True, nullable=False)
     email = db.Column(db.String(DB_STRING_LENGTH), unique=True, nullable=False)
     password_hash = db.Column(db.String(DB_STRING_LENGTH),  nullable=False)
     first_name = db.Column(db.String(DB_STRING_LENGTH), nullable=False)

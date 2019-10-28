@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restplus import Api
 from flask_migrate import Migrate
 from flask_mail_sendgrid import MailSendGrid
+from flask_cors import CORS
 
 
 app = Flask(__name__)
@@ -12,7 +13,7 @@ db = SQLAlchemy(app)
 app.config['MAIL_SENDGRID_API_KEY'] = os.getenv('SENDGRID_API_KEY')
 mail = MailSendGrid(app)
 migrate = Migrate(app, db)
-
+CORS(app)
 api = Api(
     title='Roomster Backend',
     version='1.0',
@@ -20,7 +21,7 @@ api = Api(
     # All API metadatas
 )
 site = "http://localhost:3000/"
-endpoint_name = "resetPassword/"
+endpoint_name = "reset/"
 from .login import api as ns_login
 from .signup import api as ns_signup
 from .passwordreset import api as ns_passwordreset
