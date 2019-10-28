@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import './Home.css';
-
-import Search from './Search/Search';
 import Listings from './Listings/Listings';
+import Profile from './Profile/Profile';
 
 class Home extends Component {
+  state = {
+    activePage: "profile"
+  }
+
+
   render() {
     return (
       <div className="home__container">
@@ -12,8 +16,8 @@ class Home extends Component {
           <div className="row">
             <div className="col-2">hi</div>
             <div className="col-10 home__main">
-              <Search />
-              <Listings />
+              {this.state.activePage === "listings" && <Listings />}
+              {this.state.activePage === "profile" && <Profile />}
             </div>
           </div>
         </div>

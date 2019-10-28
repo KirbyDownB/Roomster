@@ -1,0 +1,26 @@
+.profile__title {
+  font-weight: 700;
+  font-size: 45px;
+  color: #F57676;
+  margin-top: 6%;
+  margin-bottom: 2%;
+  font-family: "Asap", sans-serif;
+  text-align: center;
+}
+
+.profile__datePicker, .profile__address {
+  width: 100%;
+}
+
+.profile__submit {
+  margin-top: 4%;
+}
+
+.profile__button--submit {
+  margin-top: 64px;
+}
+
+.profile__button--bold {
+  font-weight: bold;
+  letter-spacing: 12px;
+}
