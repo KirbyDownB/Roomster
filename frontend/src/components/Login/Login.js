@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import logo from '../../assets/imgs/roomster-logo.svg';
 import { userLoginFetch } from '../../redux/action';
 import spinner from '../../assets/tail-spin.svg';
+import people from '../../assets/imgs/people-1.svg';
 import { Form, Icon, Input, Button, Alert, Popover } from 'antd';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -201,7 +202,11 @@ class Login extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-7 login__right"></div>
+            <div className="col-7 login__right">
+              <div className="login__people--background">
+                <img src={people} alt="" className="login__people"/>
+              </div>
+            </div>
           </div>
         </div>
       </Fragment>

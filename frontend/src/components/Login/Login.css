@@ -101,3 +101,12 @@
   font-family: "Asap", sans-serif;
   margin-bottom: -12px;
 }
+
+.login__people--background {
+  text-align: center;
+  margin-top: 14%;
+}
+
+.login__people {
+  width: 80%;
+}
