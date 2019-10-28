@@ -1,5 +1,5 @@
 import React from 'react';
-import { BASE_URL } from '../const.js';
+import { BASE_URL } from '../constants.js';
 
 export const userLoginFetch = (username, password) => {
   return dispatch => {
