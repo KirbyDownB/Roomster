@@ -3,6 +3,7 @@ import logo from '../../assets/imgs/roomster-logo.svg';
 import { userLoginFetch } from '../../redux/action';
 import spinner from '../../assets/tail-spin.svg';
 import { Form, Icon, Input, Button, Alert, Popover } from 'antd';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import './Login.css';
@@ -15,11 +16,13 @@ class Login extends Component {
     showForgotPassword: false,
     isPasswordResetSubmitting: false,
     alertMessage: "",
-    resetEmail: ""
+    resetEmail: "",
+    redirectHome: false
   }
 
   handleSubmit = e => {
     e.preventDefault();
+    this.setState({ isLoginLoading: true });
 
     let username = e.target.username.value;
     let password = e.target.password.value;
@@ -32,9 +35,14 @@ class Login extends Component {
       return;
     } else {
       this.props.userLoginFetch(username, password)
+      .then(resp => {
+        this.setState({
+          redirectHome: true,
+          isLoginLoading: false
+        })
+      })
       this.setState({ alertMessage: "" });
     }
-    this.setState({ isLoginLoading: true });
   }
 
   handleAlertClose = () => {
@@ -66,6 +74,9 @@ class Login extends Component {
   }
 
   render() {
+    if (this.state.redirectHome){
+      return <Redirect push to= "/home" />
+    }
     return (
       <Fragment>
         <div className="container-fluid">
@@ -186,7 +197,7 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  userLoginFetch: (username, password) => dispatch(userLoginFetch(username, password)),
+  userLoginFetch: (email, password) => dispatch(userLoginFetch(email, password))
 })
 
 export default connect(null, mapDispatchToProps)(Login);

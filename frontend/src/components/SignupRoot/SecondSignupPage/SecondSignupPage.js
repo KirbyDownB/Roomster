@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './SecondSignupPage.css';
 import { Form, Input, Button, Icon, Slider } from 'antd';
+import './SecondSignupPage.css';
+
 
 class SecondSignupPage extends Component {
   state = {

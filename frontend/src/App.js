@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import React, { Component } from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { tokenRefresh } from './redux/action';
 import './App.css';
@@ -10,9 +10,21 @@ import SignupRoot from './components/SignupRoot/SignupRoot';
 import Home from './components/Home/Home';
 import ForgotPassword from './components/PasswordReset/ForgotPassword'
 
-function App() {
-  tokenRefresh()
+function PrivateRoute ({component: Component, isAuthenticated, ...rest}) {
+  console.log(isAuthenticated)
+  return(
+    <Route {...rest} render={(props) => isAuthenticated
+      ? <Component {...props} />
+      : <Redirect to={{pathname:'/login', state: {from: props.location}}} />}
+      />
+  )
+}
 
+class App extends Component {
+  componentDidMount = () => {
+    this.props.tokenRefresh()
+  }
+  render(){
   return (
     <div className="App">
       <BrowserRouter>
@@ -20,16 +32,21 @@ function App() {
           <Route exact path="/" component={Landing} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignupRoot} />
-          <Route path="/home" component={Home} />
+          <PrivateRoute path='/home' component={Home} isAuthenticated={this.props.user}/>
           <Route path="/reset/:token" component={ForgotPassword}/>
         </Switch>
       </BrowserRouter>
     </div>
   );
 }
+}
+
+const mapStateToProps = state => ({
+  user: state.user
+})
 
 const mapDispatchToProps = dispatch => ({
   tokenRefresh: () => dispatch(tokenRefresh())
 })
 
-export default connect(mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
