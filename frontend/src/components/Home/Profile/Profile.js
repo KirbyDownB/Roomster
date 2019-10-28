@@ -27,8 +27,10 @@ class Profile extends Component {
       <div className="profile__container">
         <Form onSubmit={this.handleProfileUpdate}>
           <div className="row justify-content-center">
-            <div className="profile__title">
-              Edit your profile.
+            <div className="col-10">
+              <div className="profile__title">
+                Edit your profile.
+              </div>
             </div>
           </div>
           <div className="row justify-content-center">

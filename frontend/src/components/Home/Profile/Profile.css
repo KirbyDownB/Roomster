@@ -1,11 +1,11 @@
 .profile__title {
   font-weight: 700;
-  font-size: 45px;
+  font-size: 50px;
   color: #F57676;
   margin-top: 6%;
   margin-bottom: 2%;
   font-family: "Asap", sans-serif;
-  text-align: center;
+  text-align: left;
 }
 
 .profile__datePicker, .profile__address {
