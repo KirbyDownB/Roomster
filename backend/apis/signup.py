@@ -20,6 +20,9 @@ user = api.model('User', {
     'range': fields.String(description="Range"),
     'location_of_interest': fields.String(description="Location"),
     'ethnicity' : fields.String(description='Ethnicity'),
+    'range_max' : fields.String(description='Range Max'),
+    'range_min':fields.String(description='Range Min'),
+    'num_roommates': fields.String(description='Number of Roommates'),
 })
 
 
@@ -36,7 +39,8 @@ class Signup(Resource):
         data = api.payload
         user_data = User(email=data.get('email'), username=data.get('username'), first_name=data.get('first_name'),\
         last_name=data.get('last_name'), address=data.get('address'), phone_number=data.get('phone_number'), \
-        age=data.get('age'), range=data.get('range'), ethnicity=data.get('ethnicity'), location_of_interest=data.get('location_of_interest'))
+        age=data.get('age'), range=data.get('range'), ethnicity=data.get('ethnicity'), location_of_interest=data.get('location_of_interest')\
+            ,price_range_min=data.get('range_min'), price_range_max=data.get('range_max'), number_of_roommates=data.get('number_of_roommmates'), duration=data.get('duration'))
 
         try:
             user_data.set_password(data.get('password'))
@@ -44,7 +48,8 @@ class Signup(Resource):
             db.session.commit()
 
         
-        except exc.SQLAlchemyError:
+        except exc.SQLAlchemyError as e:
+            print(e)
             return {"Message":"Something went wrong when signing up the user"}
 
 

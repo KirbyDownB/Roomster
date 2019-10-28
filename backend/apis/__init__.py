@@ -7,7 +7,7 @@ from flask_mail_sendgrid import MailSendGrid
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 db = SQLAlchemy(app)
 app.config['MAIL_SENDGRID_API_KEY'] = os.getenv('SENDGRID_API_KEY')
 mail = MailSendGrid(app)
