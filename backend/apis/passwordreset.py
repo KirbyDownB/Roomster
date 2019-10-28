@@ -2,7 +2,8 @@ from flask import Flask
 from flask_restplus import Resource, Api, fields, Namespace
 from flask_mail import Message
 from .models import User
-from . import site,endpoint_name, mail
+from . import site,endpoint_name, mail, db
+from sqlalchemy import exc
 import jwt
 
 
@@ -19,7 +20,7 @@ parser = api.parser()
 parser.add_argument('Authorization',type=str,location='headers',help='Bearer Access Token', required=True)
 
 
-@api.route('/password')
+@api.route('/password/')
 class PasswordReset(Resource):
     def get(self):
         return {"Message":"You sent a GET request"}
@@ -52,12 +53,16 @@ class PasswordReset(Resource):
 
 
         user_data.set_password(password)
+        db.session.commit()
 
         return {"Message":"Password Reset"}
 
-@api.route('/email')
+@api.route('/email/')
 class SendResetEmail(Resource):
 
+    
+    
+    
     @api.expect(reset_email_data)
     def post(self):
 
@@ -74,7 +79,7 @@ class SendResetEmail(Resource):
         if not user_data or user_data is None:
             return {"Message":"No user with this email found"}
 
-        token = jwt.encode({'username': user_data.username, "email":user_data.email}, "SECRET_KEY")
+        token = jwt.encode({"email":user_data.email}, "SECRET_KEY")
         link = site + endpoint_name + token.decode('utf-8')
 
         subject = "[Roomster] Password Reset"
@@ -84,7 +89,7 @@ class SendResetEmail(Resource):
         msg = Message(subject=subject, sender="roomsterhelp@gmail.com", body=body, recipients=recipients)
 
         try:
-            mail.send_message(msg)
+            mail.send(msg)
         except:
             return {"Message":"Something went wrong when sending the email"}
 

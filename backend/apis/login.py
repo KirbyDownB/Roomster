@@ -6,7 +6,7 @@ import jwt
 api = Namespace('login', description='Login related operations')
 
 user_login_data = api.model('user_login_data', {
-    'identifier': fields.String(description="User email or username"),
+    'email': fields.String(description="User email or username"),
     'password': fields.String(description="User password")
 })
 
@@ -21,25 +21,31 @@ class Login(Resource):
     @api.expect(user_login_data)
     def post(self):
         data = api.payload
-        identifier = data.get('identifier')
+        identifier = data.get('email')
 
         password = data.get('password')
 
 
-        if identifier.find('@') > -1:
+        if identifier.find('@') > -1:        
             user_data = User.query.filter_by(email=identifier).first()
-        
         else:
-            user_data = User.query.filter_by(username=identifier).first()
+            return {"Message":"This is not a valid email"}
+
 
         
         if not user_data:
             return {"Message":"This user does not exist"}
 
-        if user_data.check_password_hash(password):
-            token = jwt.encode({'username':user_data.username, 'email':user_data.email}, "SECRET_KEY")
-            token.decode('utf-8')
-            return {"Message":"Login Successful", "token":token}
+        if user_data.check_password(password):
+            token = jwt.encode({'email':user_data.email}, "SECRET_KEY")
+            token = token.decode('utf-8')
+
+
+            user_profile_data = user_data.__dict__
+            del user_profile_data['_sa_instance_state']
+
+            return {"Message":"Login Successful", "token":token, "user":user_profile_data}
 
         else:
             return {"Message":"Incorrect Password"}
+
