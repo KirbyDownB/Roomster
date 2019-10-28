@@ -92,6 +92,7 @@ class Login extends Component {
                   <Form onSubmit={this.handleSubmit} className="login__form">
                     <div className="login__title">Welcome back.</div>
                     <Item className="login__item">
+                      <div className="login__input--caption">Email</div>
                       <Input
                         className="login__input login__username"
                         name="username"
@@ -100,6 +101,7 @@ class Login extends Component {
                       />
                     </Item>
                     <Item className="login__item">
+                      <div className="login__input--caption">Password</div>
                       <Input
                         className="login__input login__password"
                         name="password"

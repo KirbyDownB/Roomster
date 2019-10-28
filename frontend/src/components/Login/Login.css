@@ -92,3 +92,9 @@
   text-align: center;
   margin-top: -16px;
 }
+
+.login__input--caption {
+  font-weight: bold;
+  font-family: "Asap", sans-serif;
+  margin-bottom: -12px;
+}
