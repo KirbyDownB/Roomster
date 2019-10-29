@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Form, Icon, Input, Button, Alert } from 'antd';
 import logo from '../../assets/imgs/roomster-logo.svg';
 import spinner from '../../assets/tail-spin.svg';
@@ -11,8 +12,8 @@ class ForgotPassword extends Component {
   state = {
     isForgotPasswordLoading: false,
     alertMessage: "",
-    successMessage: "",
-    messageType: ""
+    messageType: "",
+    redirectLogin: false
   }
 
   handleSubmit = e => {
@@ -24,7 +25,6 @@ class ForgotPassword extends Component {
     if (password1 !== password2){
       this.setState({
         alertMessage: "Your passwords do not match!",
-        successMessage: "",
         messageType: "warning"
       });
     }
@@ -32,7 +32,6 @@ class ForgotPassword extends Component {
       this.setState({ 
         isForgotPasswordLoading: true,
         alertMessage: "",
-        successMessage: "",
         messageType: ""
       });
 
@@ -51,16 +50,16 @@ class ForgotPassword extends Component {
           console.log(resp)
           this.setState({
             isForgotPasswordLoading: false,
-            successMessage: "Your password has been successfully reset!",
-            alertMessage: "",
+            alertMessage: "Your password has been successfully reset! You'll be redirected to the home page in 2 seconds.",
             messageType: "success"
           });
+
+          setTimeout(() => this.setState({ redirectLogin: true }), 2000);
         })
         .catch(error => {
           console.error(error);
           this.setState({
             isForgotPasswordLoading: false,
-            successMessage: "",
             alertMessage: "Something went wrong!",
             messageType: "warning"
           });
@@ -73,6 +72,10 @@ class ForgotPassword extends Component {
   }
 
   render(){
+    if (this.state.redirectLogin) {
+      return <Redirect push to="/login" />
+    }
+
     return (
       <div className="forgotPassword__container">
         <div className="forgotPassword__formBox">

@@ -4,6 +4,21 @@ import { Form, Input, Button, Icon } from 'antd';
 import { inputIconColor } from '../../../constants';
 
 class FirstSignupPage extends Component {
+  state = {
+    email: "",
+    password1: "",
+    password2: "",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    address: ""
+  }
+
+  componentDidMount = () => {
+    console.log(this.props.firstSignupInfo)
+    const { email, password1, password2, firstName, lastName, phoneNumber, address } = this.props.firstSignupInfo;
+    this.setState({ email, password1, password2, firstName, lastName, phoneNumber, address });
+  }
 
   handleFirstPageSignupSubmit = e => {
     e.preventDefault();
@@ -29,6 +44,10 @@ class FirstSignupPage extends Component {
     this.setState({ dob: dateString });
   }
 
+  handleFirstInputChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
   render() {
     return (
       <div className="firstSignupPage__container">
@@ -41,6 +60,8 @@ class FirstSignupPage extends Component {
                   <Input
                     name="email"
                     placeholder="Username / Email"
+                    onChange={this.handleFirstInputChange}
+                    value={this.state.email}
                     prefix={<Icon type="mail" style={inputIconColor} />}
                   />
                 </div>
@@ -55,6 +76,8 @@ class FirstSignupPage extends Component {
                     name="password1"
                     type="password"
                     placeholder="Password"
+                    onChange={this.handleFirstInputChange}
+                    value={this.state.password1}
                     prefix={<Icon type="lock" style={inputIconColor} />}
                   />
                 </div>
@@ -67,6 +90,8 @@ class FirstSignupPage extends Component {
                     name="password2"
                     type="password"
                     placeholder="Password"
+                    onChange={this.handleFirstInputChange}
+                    value={this.state.password2}
                     prefix={<Icon type="lock" style={inputIconColor} />}
                   />
                 </div>
@@ -79,6 +104,8 @@ class FirstSignupPage extends Component {
                   <Input
                     name="firstName"
                     placeholder="First Name"
+                    onChange={this.handleFirstInputChange}
+                    value={this.state.firstName}
                     prefix={<Icon type="user" style={inputIconColor} />}
                   />
                 </div>
@@ -90,6 +117,8 @@ class FirstSignupPage extends Component {
                   <Input
                     name="lastName"
                     placeholder="Last Name"
+                    onChange={this.handleFirstInputChange}
+                    value={this.state.lastName}
                     prefix={<Icon type="user" style={inputIconColor} />}
                   />
                 </div>
@@ -102,6 +131,8 @@ class FirstSignupPage extends Component {
                   <Input
                     name="phoneNumber"
                     placeholder="Phone Number"
+                    onChange={this.handleFirstInputChange}
+                    value={this.state.phoneNumber}
                     prefix={<Icon type="phone" style={inputIconColor} />}
                   />
                 </div>
@@ -115,6 +146,8 @@ class FirstSignupPage extends Component {
               <Input
                 name="address"
                 placeholder="Address"
+                onChange={this.handleFirstInputChange}
+                value={this.state.address}
                 prefix={<Icon type="bank" style={inputIconColor} />}
               />
             </div>

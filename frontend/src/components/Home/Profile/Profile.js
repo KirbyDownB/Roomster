@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './Profile.css';
-import { Input, Icon, Form, Slider, Button } from 'antd';
+import { Input, Icon, Form, Slider, Button, Alert } from 'antd';
 import  { BASE_URL } from '../../../constants';
-import { mockProfileInfo } from '../../../mocks';
 
 const { Item } = Form;
 
@@ -21,7 +20,9 @@ class Profile extends Component {
     numRoommates: null,
     priceLow: null,
     priceHigh: null,
-    token: null
+    token: null,
+    alertMessage: "",
+    messageType: "warning"
   }
 
   componentDidMount = () => {
@@ -85,11 +86,15 @@ class Profile extends Component {
           price_range_min: priceLow 
         } = user;
 
-        this.setState({ email, firstName, lastName, phoneNumber, address, age, location, ethnicity, numRoommates, priceRange: [priceLow, priceHigh], isLoading: false });
+        this.setState({ email, firstName, lastName, phoneNumber, address, age, location, ethnicity, numRoommates, priceRange: [priceLow, priceHigh], isLoading: false, alertMessage: "Your profile has been successfully updated!", messageType: "success" });
       })
       .catch(error => {
         console.error("Got an error", error);
-        this.setState({ isLoading: false });
+        this.setState({
+          isLoading: false,
+          alertMessage: "Something went wrong!",
+          messageType: "warning"
+        });
       })
   }
 
@@ -294,6 +299,17 @@ class Profile extends Component {
               </Button>
             </div>
           </Form>}
+          {/* <div className="profile__alertMessage--container">
+            <div className="row justify-content-center">
+              {this.state.alertMessage && this.state.messageType && <Alert
+                className="profile__alertMessage"
+                message={this.state.alertMessage}
+                type={this.state.messageType}
+                closable
+                afterClose={this.handleAlertClose}
+              />}
+            </div>
+          </div> */}
         </div>
       </div>
     )

@@ -18,8 +18,9 @@ class Login extends Component {
     showForgotPassword: false,
     isPasswordResetSubmitting: false,
     alertMessage: "",
+    messageType: "warning",
     resetEmail: "",
-    redirectHome: false
+    redirectHome: false,
   }
 
   handleSubmit = e => {
@@ -30,10 +31,16 @@ class Login extends Component {
     let password = e.target.password.value;
 
     if (!username) {
-      this.setState({ alertMessage: "You forgot to enter your username!" });
+      this.setState({
+        alertMessage: "You forgot to enter your username!",
+        messageType: "warning"          
+      });
       return;
     } else if (!password) {
-      this.setState({ alertMessage: "You forgot to enter your password!" });
+      this.setState({
+        alertMessage: "You forgot to enter your password!",
+        messageType: "warning"        
+      });
       return;
     } else {
       this.props.userLoginFetch(username, password)
@@ -76,11 +83,21 @@ class Login extends Component {
       })
         .then(resp => resp.json())
         .then(data => {
-          this.setState({ isPasswordResetSubmitting: false });
+          this.setState({
+            isPasswordResetSubmitting: false,
+            showForgotPassword: false,
+            alertMessage: "An email to reset your password has been sent to you.",
+            messageType: "success"
+          });
         })
         .catch(error => {
           console.error(error);
-          this.setState({ isPasswordResetSubmitting: false });
+          this.setState({
+            isPasswordResetSubmitting: false,
+            showForgotPassword: false,
+            alertMessage: "Something went wrong!",
+            messageType: "warning"
+          });
         })
     }
   }
@@ -190,10 +207,10 @@ class Login extends Component {
                 </div>
                 <div className="row justify-content-center">
                   <div className="login__userfeedback">
-                    {this.state.alertMessage.length > 0 && <Alert
+                    {this.state.alertMessage && this.state.messageType && <Alert
                       className="login__alert"
                       message={this.state.alertMessage}
-                      type="warning"
+                      type={this.state.messageType}
                       closable
                       afterClose={this.handleAlertClose}
                     />}

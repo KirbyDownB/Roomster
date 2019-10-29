@@ -11,7 +11,8 @@ class SignupRoot extends Component {
   state = {
     pageOne: true,
     pageTwo: false,
-    signupInfo: null
+    firstSignupInfo: {},
+    secondSignupInfo: {}
   }
 
   setPageOne = () => {
@@ -29,12 +30,11 @@ class SignupRoot extends Component {
   }
 
   setFirstSignupInfo = firstSignupInfo => {
-    const currentSignupInfo = this.state.signupInfo;
-    this.setState({ signupInfo: {...currentSignupInfo, ...firstSignupInfo} });
+    this.setState({ firstSignupInfo: {...this.state.firstSignupInfo, ...firstSignupInfo} });
   }
 
   handleFinalSubmit = secondSignupInfo => {
-    const allInfo = { ...this.state.signupInfo, ...secondSignupInfo };
+    const allInfo = { ...this.state.firstSignupInfo, ...secondSignupInfo };
     console.log("Got all info", allInfo)
     this.props.userRegisterFetch(allInfo)
   }
@@ -52,7 +52,7 @@ class SignupRoot extends Component {
               </div>
               <div className="col-6 signupRoot__removePadding">
                 <h1 className="signupRoot__formTitle">Rooming made easy for you.</h1>
-                {this.state.pageOne && <FirstSignupPage setPageTwo={this.setPageTwo} setFirstSignupInfo={this.setFirstSignupInfo} />}
+                {this.state.pageOne && <FirstSignupPage firstSignupInfo={this.state.firstSignupInfo} setPageTwo={this.setPageTwo} setFirstSignupInfo={this.setFirstSignupInfo} setInput={this.setInput} />}
                 {this.state.pageTwo && <SecondSignupPage setPageOne={this.setPageOne} handleFinalSubmit={this.handleFinalSubmit} />}
               </div>
             </div>

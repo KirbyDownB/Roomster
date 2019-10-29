@@ -22,7 +22,7 @@
 
 .profile__button--submit {
   margin-top: 32px;
-  margin-bottom: 64px;
+  margin-bottom: 32px;
 }
 
 .profile__button--bold {
@@ -34,4 +34,9 @@
   font-family:"Asap", sans-serif;
   font-weight: bold;
   margin-bottom: -8px;
+}
+
+.profile__alertMessage {
+  width: 450px;
+  margin-bottom: 64px;
 }
