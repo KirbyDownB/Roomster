@@ -13,9 +13,12 @@ import {
   EMPTY_INPUT_ERROR,
   PHONE_ERROR,
   NO_IMAGE_ERROR,
+  SIGNUP_SUCCESS,
+  SIGNUP_ERROR,
   durations,
   ethnicities,
-  dummyRequest
+  dummyRequest,
+  loginRedirect
 } from '../../constants';
 
 const phone = require('phone');
@@ -30,11 +33,14 @@ class Signup extends Component {
     images: [],
     profileImage: null,
     duration: durations[0],
-    ethnicity: ethnicities[0]
+    ethnicity: ethnicities[0],
+    isSignupLoading: false
   }
 
   handleSubmit = e => {
     e.preventDefault();
+
+    this.setState({ isSignupLoading: true });
 
     const profileImage = this.state.profileImage;
     if (!profileImage) {
@@ -87,7 +93,17 @@ class Signup extends Component {
       duration
     };
     
-    this.props.userRegisterFetch(allInfo);
+    this.props.userRegisterFetch(allInfo)
+      .then(() => {
+        this.setState({ isSignupLoading: false });
+        showSuccessMessage(SIGNUP_SUCCESS);
+        setTimeout(loginRedirect, 3000);
+      })
+      .catch(error => {
+        console.error(error);
+        showErrorMessage(SIGNUP_ERROR);
+        this.setState({ isSignupLoading: false });
+      });
   }
 
   handlePriceRangeChange = priceRange => {
@@ -103,13 +119,13 @@ class Signup extends Component {
   handleEthnicityChange = value => this.setState({ ethnicity: value });
 
   handleFileChange = info => {
-    const { file: { status } } = info;
+    const { file: { status, name, originFileObj } } = info;
 
     if (status === 'done') {
-      showSuccessMessage(`${info.file.name} has successfully been uploaded!`);
-      this.setState({ profileImage: info.file.originFileObj });
+      showSuccessMessage(`${name} has successfully been uploaded!`);
+      this.setState({ profileImage: originFileObj });
     } else if (status === 'error') {
-      showErrorMessage(`${info.file.name} couldn't be uploaded.`);
+      showErrorMessage(`${name} couldn't be uploaded.`);
     }
   }
 
@@ -303,6 +319,7 @@ class Signup extends Component {
                           htmlType="submit"
                           className="signup__submitButton"
                           type="primary"
+                          loading={this.state.isSignupLoading}
                         >
                           SUBMIT
                         </Button>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './Listings.css';
+import './Feed.css';
 import { Button, Icon, Popover } from 'antd';
 import Item from './Item/Item';
 
-class Listings extends Component {
+class Feed extends Component {
   state = {
     isFilterOpen: false
   }
@@ -14,7 +14,7 @@ class Listings extends Component {
     this.setState({ isFilterOpen: true });
   }
 
-  hide = () => {
+  hideFilter = () => {
     this.setState({
       isFilterOpen: false
     })
@@ -26,14 +26,14 @@ class Listings extends Component {
 
   render() {
     return (
-      <div className="listings__container">
+      <div className="feed__container">
         <div className="row justify-content-center">
           <div className="col-10">
-            <h2 className="listings__title">Listings</h2>
+            <h2 className="feed__title">Feed</h2>
           </div>
           <div className="col-2">
             <Popover
-              content={<a onClick={this.hide}>Close</a>}
+              content={<a onClick={this.hideFilter}>Close</a>}
               trigger="click"
               visible={this.state.isFilterOpen}
               placement="bottom"
@@ -41,7 +41,7 @@ class Listings extends Component {
             >
               <Button
                 type="default"
-                className="listings__filter--button"
+                className="feed__filter--button"
                 onClick={this.showFilter}
                 size="large"
               >
@@ -51,7 +51,7 @@ class Listings extends Component {
             </Popover>
           </div>
         </div>
-        <div className="listings__items--container">
+        <div className="feed__items--container">
           <div className="row">
             <Item />
           </div>
@@ -61,4 +61,4 @@ class Listings extends Component {
   }
 }
 
-export default Listings;
+export default Feed;

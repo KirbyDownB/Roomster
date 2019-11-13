@@ -1,0 +1,25 @@
+.menu__logo--container {
+  text-align: center;
+}
+
+.menu__logo {
+  width: 40%;
+  margin-top: 20%;
+  margin-bottom: 30%;
+}
+
+.menu__text {
+  font-family: "Asap", sans-serif;
+  font-weight: bold;
+}
+
+.menu__logout--container {
+  text-align: center;
+  margin-top: 450px;
+}
+
+.menu__logout {
+  font-family: "Asap", sans-serif;
+  font-weight: bold;
+  letter-spacing: 8px;
+}

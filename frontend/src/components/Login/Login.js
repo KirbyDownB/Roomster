@@ -4,11 +4,12 @@ import logo from '../../assets/imgs/roomster-logo.svg';
 import { userLoginFetch } from '../../redux/action';
 import spinner from '../../assets/tail-spin.svg';
 import people from '../../assets/imgs/people-1.svg';
-import { Form, Icon, Input, Button, Alert, Popover } from 'antd';
+import { Form, Icon, Input, Button, Popover } from 'antd';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { BASE_URL,
+import {
+  BASE_URL,
   EMPTY_INPUT_ERROR,
   showErrorMessage,
   showSuccessMessage,
