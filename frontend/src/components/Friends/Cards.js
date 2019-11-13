@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Icon } from 'antd';
+import { Button, Icon, Popconfirm } from 'antd';
 import './Cards.css';
 
 class Cards extends Component {
+
+  deleteCard = () => {
+    this.props.handleDelete(this.props.email)
+  }
+
   render(){
     return(
       <div className="cards__bg">
@@ -17,7 +22,15 @@ class Cards extends Component {
         <div className="cards__footer">
           <Button className="cards__button-left" icon="user">Profile</Button>
           <div style={{border: '0.5px solid #BEBEBE'}}></div>
-          <Button className="cards__button-right" icon="user-delete">Delete</Button>
+          <Popconfirm
+            title="Are you sure？"
+            onConfirm={this.deleteCard}
+            okText="Yes"
+            cancelText="No"
+            icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
+          >
+            <Button className="cards__button-right" icon="user-delete">Delete</Button>
+          </Popconfirm>
         </div>
       </div>
     )

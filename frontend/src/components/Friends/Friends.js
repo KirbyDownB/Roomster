@@ -10,6 +10,7 @@ const { Search } = Input;
 const eric = require("../../assets/eric.jpg")
 const aditya = require("../../assets/aditya.jpg")
 
+
 const content = (
   <div>
     <Requests />
@@ -20,21 +21,69 @@ const content = (
 class Friends extends Component {
 
   state = {
-    friendsList: null
+    friendsList: [
+      {
+        "Email": "eeong18@ucr.edu",
+        "Image": eric,
+        "Name": "Eric Ong"
+      },
+      {
+        "Email": "aacha002@ucr.edu",
+        "Image": aditya,
+        "Name": "Aditya Acharya1"
+      },
+      {
+        "Email": "aacha003@ucr.edu",
+        "Image": aditya,
+        "Name": "Aditya Acharya2"
+      },
+      {
+        "Email": "aacha004@ucr.edu",
+        "Image": aditya,
+        "Name": "Aditya Acharya3"
+      },
+      {
+        "Email": "aacha005@ucr.edu",
+        "Image": aditya,
+        "Name": "Aditya Acharya4"
+      },
+    ],
+    bool: false
   }
 
   handleSearch = () => {
     fetch(`${BASE_URL}/friends/_list`)
   }
 
-  convertList = () => {
-    temp = []
-    for (var i = 0; i < this.state.friendsList.length(); ++i){
-      temp.push(<div className="col-3 friends__col"><Cards img={eric} name={"Eric Ong"}/></div>)
-    }
-  }
-
   fetchFriends = () => {
+  // let temp =       {
+  //           "Email": "eeong18@ucr.edu",
+  //           "Image": eric,
+  //           "Name": "Eric Ong"
+  //         },
+  //         {
+  //           "Email": "aacha002@ucr.edu",
+  //           "Image": aditya,
+  //           "Name": "Aditya Acharya"
+  //         },
+  //         {
+  //           "Email": "aacha002@ucr.edu",
+  //           "Image": aditya,
+  //           "Name": "Aditya Acharya"
+  //         },
+  //         {
+  //           "Email": "aacha002@ucr.edu",
+  //           "Image": aditya,
+  //           "Name": "Aditya Acharya"
+  //         },
+  //         {
+  //           "Email": "aacha002@ucr.edu",
+  //           "Image": aditya,
+  //           "Name": "Aditya Acharya"
+  //         }
+  //   this.setState({
+  //     friendsList: temp
+  //   })
     //const { img, name } = user;
     // fetch(`${BASE_URL}/friends/list`,{
     //   headers: {
@@ -44,15 +93,21 @@ class Friends extends Component {
     // })
     // .then(resp => resp.json())
     // .then(resp => console.log(resp))
-    let temp = []
-    temp.push(<Cards img={eric}, name={"Eric Ong"} />)
-    this.setState({
-      friendsList: temp
-    })
+    //let temp = []
+    // temp.push(<Cards img={eric}, name={"Eric Ong"} />)
+    // this.setState({
+    //   friendsList: temp
+    // })
   }
 
   componentDidMount() {
     this.fetchFriends()
+  }
+
+  handleDelete = (email) => {
+    this.setState({
+      friendsList: this.state.friendsList.filter(user => user.Email != email)
+    })
   }
 
   render(){
@@ -88,33 +143,15 @@ class Friends extends Component {
                 </button>
               </div>
             </div>
+
             <div className="row friends__list-container">
-              <div className="col-3 friends__col">
-                <Cards img={eric} name={"Eric Ong"}/>
-              </div>
-              <div className="col-3 friends__col">
-                <Cards img={eric} name={"Eric Ong"}/>
-              </div>
-              <div className="col-3 friends__col">
-                <Cards img={eric} name={"Eric Ong"}/>
-              </div>
-              <div className="col-3 friends__col">
-                <Cards img={eric} name={"Eric Ong"}/>
-              </div>
-            </div>
-            <div className="row friends__list-container">
-              <div className="col-3 friends__col">
-                <Cards img={aditya} name={"Aditya Acharya"}/>
-              </div>
-              <div className="col-3 friends__col">
-                <Cards img={aditya} name={"Aditya Acharya"}/>
-              </div>
-              <div className="col-3 friends__col">
-                <Cards img={aditya} name={"Aditya Acharya"}/>
-              </div>
-              <div className="col-3 friends__col">
-                <Cards img={aditya} name={"Aditya Acharya"}/>
-              </div>
+              {this.state.friendsList.map(({ Image, Name, Email }, index) => {
+                return (
+                  <div className="col-3 friends__col">
+                    <Cards handleDelete={this.handleDelete} email={Email} img={Image} name={Name}/>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>
