@@ -9,6 +9,7 @@ import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Home from './components/Home/Home';
 import ForgotPassword from './components/PasswordReset/ForgotPassword';
+import Friends from './components/Friends/Friends';
 
 function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
   return (
@@ -43,6 +44,7 @@ class App extends Component {
             </Route>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
+            <Route exact path="/friends" component={Friends} />
             <PrivateRoute
               path="/home"
               component={Home}
