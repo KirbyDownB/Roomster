@@ -5,6 +5,7 @@ from .models import User
 from . import site,endpoint_name, mail, db
 from sqlalchemy import exc
 import jwt
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 api = Namespace('passwordreset', description='Password Reset operations related operations')
@@ -32,7 +33,7 @@ class PasswordReset(Resource):
         password = data.get('new_password')
         if password is None:
             return {"Message":"New password is missing"}
-        user_data = None
+       
         args = parser.parse_args()
         token = args['Authorization']
 
@@ -45,15 +46,12 @@ class PasswordReset(Resource):
 
 
         user_email = decToken['email']
-        if user_email.find('@') > -1:
-            user_data = User.query.filter_by(email=user_email).first()
+        user_data = User.objects(email=user_email)
 
-        if not user_data or user_data is None:
+        if len(user_data) != 1:
             return {"Message":"This user does not exist or an invalid email was sent"}
-
-
-        user_data.set_password(password)
-        db.session.commit()
+        if user_email.find('@') > -1:
+            User.objects(email=user_email).update_one(password_hash=generate_password_hash(password))
 
         return {"Message":"Password Reset"}
 
@@ -74,9 +72,9 @@ class SendResetEmail(Resource):
         user_data = None
 
         if email.find('@') > -1:
-            user_data = User.query.filter_by(email=email).first()
+            user_data = User.objects(email=email)
 
-        if not user_data or user_data is None:
+        if len(user_data) != 1:
             return {"Message":"No user with this email found"}
 
         token = jwt.encode({"email":user_data.email}, "SECRET_KEY")
