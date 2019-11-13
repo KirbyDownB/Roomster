@@ -6,7 +6,7 @@ import './App.css';
 
 import Landing from './components/Landing/Landing';
 import Login from './components/Login/Login';
-import SignupRoot from './components/SignupRoot/SignupRoot';
+import Signup from './components/Signup/Signup';
 import Home from './components/Home/Home';
 import ForgotPassword from './components/PasswordReset/ForgotPassword';
 import Friends from './components/Friends/Friends';
@@ -43,7 +43,7 @@ class App extends Component {
               <Redirect to="/login"/>
             </Route>
             <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={SignupRoot} />
+            <Route exact path="/signup" component={Signup} />
             <Route exact path="/friends" component={Friends} />
             <PrivateRoute
               path="/home"
