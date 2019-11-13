@@ -9,6 +9,7 @@
     "customize-cra": "^0.8.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
+    "phone": "^2.4.2",
     "react": "^16.10.2",
     "react-animated-css": "^1.2.1",
     "react-app-rewired": "^2.1.3",
