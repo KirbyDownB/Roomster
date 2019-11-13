@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 import { Button, Icon } from 'antd';
 import './Cards.css';
 
-const eric = require("../../assets/eric.jpg")
-
 class Cards extends Component {
   render(){
     return(
       <div className="cards__bg">
         <div className="cards__profile-wrapper">
-          <img src={eric} className="cards__profile-pic">
+          <img src={this.props.img} className="cards__profile-pic">
           </img>
-          <p className="cards__profile-name">Eric Ong</p>
+          <p className="cards__profile-name">{this.props.name}</p>
         </div>
         <div className="cards__profile-title">
           <p className="cards__profile-inner">Student</p>

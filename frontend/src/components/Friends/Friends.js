@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import Cards from './Cards';
+import Requests from './Requests/Requests';
 import { Input, Select, Radio, Icon, Popover } from 'antd';
 import { BASE_URL } from '../../constants.js';
 
 import './Friends.css';
 
 const { Search } = Input;
+const eric = require("../../assets/eric.jpg")
+const aditya = require("../../assets/aditya.jpg")
+
 const content = (
   <div>
-    <p>Eric Ong</p>
-    <p>Aditya Acharya</p>
+    <Requests />
+    <Requests />
   </div>
 )
 
@@ -44,7 +48,7 @@ class Friends extends Component {
                 <button className="friends__search-filter-inner1">
                   All
                 </button>
-                <Popover placement="bottom" content={content} className="friends__search-filter-inner2">
+                <Popover title="Friend Requests" placement="bottom" content={content} className="friends__search-filter-inner2" trigger="click">
                   Requests
                 </Popover>
                 <button className="friends__search-filter-inner3">
@@ -54,16 +58,30 @@ class Friends extends Component {
             </div>
             <div className="row friends__list-container">
               <div className="col-3 friends__col">
-                <Cards />
+                <Cards img={eric} name={"Eric Ong"}/>
               </div>
               <div className="col-3 friends__col">
-                <Cards />
+                <Cards img={eric} name={"Eric Ong"}/>
               </div>
               <div className="col-3 friends__col">
-                <Cards />
+                <Cards img={eric} name={"Eric Ong"}/>
               </div>
               <div className="col-3 friends__col">
-                <Cards />
+                <Cards img={eric} name={"Eric Ong"}/>
+              </div>
+            </div>
+            <div className="row friends__list-container">
+              <div className="col-3 friends__col">
+                <Cards img={aditya} name={"Aditya Acharya"}/>
+              </div>
+              <div className="col-3 friends__col">
+                <Cards img={aditya} name={"Aditya Acharya"}/>
+              </div>
+              <div className="col-3 friends__col">
+                <Cards img={aditya} name={"Aditya Acharya"}/>
+              </div>
+              <div className="col-3 friends__col">
+                <Cards img={aditya} name={"Aditya Acharya"}/>
               </div>
             </div>
           </div>
