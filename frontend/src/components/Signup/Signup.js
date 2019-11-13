@@ -58,18 +58,18 @@ class Signup extends Component {
     const email = e.target.email.value;
     const firstName = e.target.firstName.value;
     const lastName = e.target.lastName.value;
-    const age = this.state.age;
     const location = e.target.location.value;
+    if (!email || !firstName || !lastName || !phoneNumber || !location) {
+      showErrorMessage(EMPTY_INPUT_ERROR);
+      return;
+    }
+
+    const age = this.state.age;
     const numRoommates = this.state.numRoommates;
     const priceMin = this.state.priceRange[0];
     const priceMax = this.state.priceRange[1];
     const duration = this.state.duration;
     const ethnicity = this.state.ethnicity;
-
-    if (!email || !firstName || !lastName || !phoneNumber || !location) {
-      showErrorMessage(EMPTY_INPUT_ERROR);
-      return;
-    }
 
     const allInfo = {
       email,
@@ -94,32 +94,23 @@ class Signup extends Component {
     this.setState({ priceRange });
   }
 
-  handleNumRoommatesChange = numRoommates => {
-    this.setState({ numRoommates });
-  }
+  handleNumRoommatesChange = numRoommates => this.setState({ numRoommates });
 
-  handleAgeChange = age => {
-    this.setState({ age });
-  }
+  handleAgeChange = age => this.setState({ age });
+
+  handleDurationChange = value => this.setState({ duration: value });
+
+  handleEthnicityChange = value => this.setState({ ethnicity: value });
 
   handleFileChange = info => {
-    const { status } = info.file;
+    const { file: { status } } = info;
 
     if (status === 'done') {
       showSuccessMessage(`${info.file.name} has successfully been uploaded!`);
-      console.log(info.file.originFileObj)
       this.setState({ profileImage: info.file.originFileObj });
     } else if (status === 'error') {
       showErrorMessage(`${info.file.name} couldn't be uploaded.`);
     }
-  }
-
-  handleDurationChange = value => {
-    this.setState({ duration: value });
-  }
-
-  handleEthnicityChange = value => {
-    this.setState({ ethnicity: value });
   }
 
   render(){

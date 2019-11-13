@@ -6,6 +6,9 @@ const PASSWORD_MATCH_ERROR = "Your passwords don't match!";
 const EMPTY_INPUT_ERROR = "You left an input field empty!";
 const NO_IMAGE_ERROR = "You forgot to upload an image!";
 const PHONE_ERROR = "Your phone number is invalid.";
+const EMAIL_RESET_MESSAGE = "A password reset link has been sent to your email.";
+const LOGIN_ERROR = "Sorry, we had trouble loggin you in!";
+const GENERAL_ERROR = "Something went wrong!";
 const durations = ["0 - 6 months", "6 months - 1 year", "1 year +"];
 const ethnicities = [
   "American Indian or Alaska Native",
@@ -29,6 +32,9 @@ export {
   EMPTY_INPUT_ERROR,
   NO_IMAGE_ERROR,
   PHONE_ERROR,
+  LOGIN_ERROR,
+  EMAIL_RESET_MESSAGE,
+  GENERAL_ERROR,
   durations,
   ethnicities,
   dummyRequest

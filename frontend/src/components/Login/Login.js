@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import './Login.css';
 import logo from '../../assets/imgs/roomster-logo.svg';
 import { userLoginFetch } from '../../redux/action';
 import spinner from '../../assets/tail-spin.svg';
@@ -7,8 +8,14 @@ import { Form, Icon, Input, Button, Alert, Popover } from 'antd';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { BASE_URL } from '../../constants';
-import './Login.css';
+import { BASE_URL,
+  EMPTY_INPUT_ERROR,
+  showErrorMessage,
+  showSuccessMessage,
+  EMAIL_RESET_MESSAGE,
+  LOGIN_ERROR,
+  GENERAL_ERROR
+} from '../../constants';
 
 const { Item } = Form;
 
@@ -17,8 +24,6 @@ class Login extends Component {
     isLoginLoading: false,
     showForgotPassword: false,
     isPasswordResetSubmitting: false,
-    alertMessage: "",
-    messageType: "warning",
     resetEmail: "",
     redirectHome: false,
   }
@@ -27,35 +32,26 @@ class Login extends Component {
     e.preventDefault();
     this.setState({ isLoginLoading: true });
 
-    let username = e.target.username.value;
-    let password = e.target.password.value;
+    const username = e.target.username.value;
+    const password = e.target.password.value;
 
-    if (!username) {
-      this.setState({
-        alertMessage: "You forgot to enter your username!",
-        messageType: "warning"          
-      });
+    if (!username || !password) {
+      showErrorMessage(EMPTY_INPUT_ERROR);
       return;
-    } else if (!password) {
-      this.setState({
-        alertMessage: "You forgot to enter your password!",
-        messageType: "warning"        
-      });
-      return;
-    } else {
-      this.props.userLoginFetch(username, password)
+    }
+
+    this.props.userLoginFetch(username, password)
       .then(resp => {
         this.setState({
           redirectHome: true,
           isLoginLoading: false
         })
       })
-      this.setState({ alertMessage: "" });
-    }
-  }
-
-  handleAlertClose = () => {
-    this.setState({ alertMessage: "" });
+      .catch(error => {
+        console.error(error);
+        showErrorMessage(LOGIN_ERROR);
+        this.setState({ isLoginLoading: false });
+      });
   }
 
   handleForgotPassword = () => {
@@ -69,49 +65,49 @@ class Login extends Component {
   handlePasswordResetSubmit = e => {
     e.preventDefault();
 
-    this.setState({ isPasswordResetSubmitting: true });
+    const resetEmail = this.state.resetEmail;
 
-    if (this.state.resetEmail) {
+    if (resetEmail) {
+      this.setState({ isPasswordResetSubmitting: true });
+
       fetch(`${ BASE_URL }/api/reset/email/`, {
         headers: {
           "Content-Type": "application/json"
         },
         method: "POST",
         body: JSON.stringify({
-          email: this.state.resetEmail
+          email: resetEmail
         }),
       })
         .then(resp => resp.json())
         .then(data => {
+          showSuccessMessage(EMAIL_RESET_MESSAGE);
           this.setState({
             isPasswordResetSubmitting: false,
             showForgotPassword: false,
-            alertMessage: "An email to reset your password has been sent to you.",
-            messageType: "success"
           });
         })
         .catch(error => {
           console.error(error);
+          showErrorMessage(GENERAL_ERROR);
           this.setState({
             isPasswordResetSubmitting: false,
             showForgotPassword: false,
-            alertMessage: "Something went wrong!",
-            messageType: "warning"
           });
-        })
+        });
     }
   }
 
   handlePasswordResetChange = e => {
     e.preventDefault();
-
     this.setState({ resetEmail: e.target.value });
   }
 
   render() {
-    if (this.state.redirectHome){
+    if (this.state.redirectHome) {
       return <Redirect push to= "/home" />
     }
+
     return (
       <Fragment>
         <div className="container-fluid">
@@ -207,13 +203,6 @@ class Login extends Component {
                 </div>
                 <div className="row justify-content-center">
                   <div className="login__userfeedback">
-                    {this.state.alertMessage && this.state.messageType && <Alert
-                      className="login__alert"
-                      message={this.state.alertMessage}
-                      type={this.state.messageType}
-                      closable
-                      afterClose={this.handleAlertClose}
-                    />}
                     {this.state.isLoginLoading && <img className="login__spinner" src={spinner} alt=""/> }
                   </div>
                 </div>
