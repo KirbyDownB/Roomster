@@ -7,6 +7,7 @@
   background-color: #F57676;
   height: 100vh;
 }
+
 .signup__removePadding {
   padding-left: 0;
   padding-right: 0;
@@ -20,95 +21,6 @@
 .signup__logoBox {
   text-align: center;
   padding-top: 8%;
-}
-
-.signupRoot__formBox {
-  height: 100%;
-  width: 100%;
-  padding-top: 8%;
-  padding-right: 8%;
-  padding-left: 8%;
-  padding-bottom: 4%;
-}
-
-.signup__formTitle {
-  font-weight: 700;
-  font-size: 45px;
-  color: #F57676;
-  margin-bottom: -8%;
-  margin-top: 6%;
-  font-family: "Asap", sans-serif;
-  text-align: center;
-}
-
-.signupRoot__formBody {
-  font-size: 16px;
-  margin: 0;
-  font-family: "Asap", sans-serif;
-  margin-bottom: -4px;
-}
-
-.signupRoot__inputBox {
-  display: flex;
-  padding-top: 6%;
-  font-family: "Asap", sans-serif;
-}
-
-.signupRoot__inputBox {
-  display: flex;
-  padding-top: 2%;
-  font-family: "Asap", sans-serif;
-}
-
-.signupRoot__inputWrap {
-  width: 100%;
-  height: 80px;
-}
-
-.signupRoot__footer {
-  background-color: #F4F4F4;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 10%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.signupRoot__prevButton {
-  color: #F57676;
-  border-radius: 8px;
-  border: 1px solid #F57676;
-  width: 120px;
-  padding: 6px;
-  transition: 0.4s;
-  font-family: "Asap", sans-serif;
-}
-
-.signupRoot__prevButton:hover {
-  background-color: rgba(255, 255, 255, .1);
-}
-
-.signupRoot__nextButton {
-  width: 120px;
-  padding: 6px;
-  border-radius: 10px;
-  background-color: #F57676;
-  transition: 0.4s;
-  border: 1px solid transparent;
-  font-family: "Asap", sans-serif;
-}
-
-.signupRoot__buttonWrapper {
-  margin: 0 auto;
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
-.signupRoot__buttonWrapper2 {
-  margin-top: auto;
-  margin-bottom: auto;
-  padding-right: 12%;
 }
 
 button:focus {
@@ -132,20 +44,6 @@ button:focus:active {
   height: 100vh;
 }
 
-.signup__suLeft {
-  background-color: #F57676;
-  height: 100vh;
-}
-.signup__removePadding {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.signup__removeMargin {
-  margin-left: 0;
-  margin-right: 0;
-}
-
 .signup__logoBox {
   text-align: center;
   padding-top: 8%;
@@ -164,7 +62,7 @@ button:focus:active {
   font-weight: 700;
   font-size: 45px;
   color: #F57676;
-  margin-bottom: -8%;
+  margin-bottom: -4%;
   margin-top: 6%;
   font-family: "Asap", sans-serif;
   text-align: center;
@@ -175,12 +73,7 @@ button:focus:active {
   margin: 0;
   font-family: "Asap", sans-serif;
   font-weight: bold;
-}
-
-.signup__inputBox {
-  display: flex;
-  padding-top: 6%;
-  font-family: "Asap", sans-serif;
+  margin-bottom: -4%;
 }
 
 .signup__inputBox {
@@ -270,10 +163,6 @@ button:focus:active {
   margin-bottom: 24%;
 }
 
-.signup__formBody {
-  margin-bottom: -4%;
-}
-
 .signup__priceRange--title {
   margin-bottom: 0;
 }
@@ -284,5 +173,4 @@ button:focus:active {
   outline: none;
   border-radius: 4px;
   font-family: "Asap", sans-serif;
-  width: 100px;
 }
