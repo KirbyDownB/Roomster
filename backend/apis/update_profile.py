@@ -48,8 +48,8 @@ class update_profile(Resource):
             print(user_profile_data)
             del user_profile_data['_sa_instance_state']
             del user_profile_data['password_hash']
-
-            return {"Message":"Data retrieval successful", "user": user_profile_data }
+            # token = token.decode('utf-8')
+            return {"Message":"Data retrieval successful", "user": user_profile_data , "token":token}
 
         return {"Message":"You sent a GET request"}
 
