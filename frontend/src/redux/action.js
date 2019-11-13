@@ -26,29 +26,16 @@ export const userLoginFetch = (email, password) => {
 }
 
 export const userRegisterFetch = (user) => {
-  console.log(user)
+  const formData = new FormData();
+
+  Object.entries(user).forEach(item => {
+    formData.append(item[0], item[1]);
+  });
+
   return dispatch => {
-    return fetch(`${ BASE_URL }/api/signup/`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
+    return fetch(`${BASE_URL}/api/signup/`, {
       method: "POST",
-      body: JSON.stringify({
-        email: user.email,
-        password: user.passwordOne,
-        first_name: user.firstName,
-        last_name: user.lastName,
-        address: user.address,
-        phone_number: user.phoneNumber,
-        age: user.age,
-        range: "",
-        location_of_interest: user.location,
-        ethnicity: user.ethnicity,
-        range_max: user.priceRange[1],
-        range_min: user.priceRange[0],
-        num_roommates: user.numRoommates,
-        duration: ""
-      })
+      body: formData
     })
     .then(resp => resp.json())
     .then(resp => console.log(resp))
