@@ -53,14 +53,17 @@
 
 .friends__search-filter-inner1:hover {
   opacity: 0.4;
+  cursor: pointer;
 }
 
 .friends__search-filter-inner2:hover {
   opacity: 0.4;
+  cursor: pointer;
 }
 
 .friends__search-filter-inner3:hover {
   opacity: 0.4;
+  cursor: pointer;
 }
 
 .friends__search-filter-inner1 {

@@ -19,8 +19,40 @@ const content = (
 
 class Friends extends Component {
 
+  state = {
+    friendsList: null
+  }
+
   handleSearch = () => {
     fetch(`${BASE_URL}/friends/_list`)
+  }
+
+  convertList = () => {
+    temp = []
+    for (var i = 0; i < this.state.friendsList.length(); ++i){
+      temp.push(<div className="col-3 friends__col"><Cards img={eric} name={"Eric Ong"}/></div>)
+    }
+  }
+
+  fetchFriends = () => {
+    //const { img, name } = user;
+    // fetch(`${BASE_URL}/friends/list`,{
+    //   headers: {
+    //     "Content": "application/json"
+    //   },
+    //   method: "POST"
+    // })
+    // .then(resp => resp.json())
+    // .then(resp => console.log(resp))
+    let temp = []
+    temp.push(<Cards img={eric}, name={"Eric Ong"} />)
+    this.setState({
+      friendsList: temp
+    })
+  }
+
+  componentDidMount() {
+    this.fetchFriends()
   }
 
   render(){
