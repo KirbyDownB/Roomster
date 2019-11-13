@@ -11,12 +11,11 @@ import Home from './components/Home/Home';
 import ForgotPassword from './components/PasswordReset/ForgotPassword';
 
 function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
-  console.log(isAuthenticated);
   return (
     <Route
       {...rest}
       render={props =>
-        isAuthenticated.id ? (
+        true === true ? (
           <Component {...props} />
         ) : (
           <Redirect
@@ -32,7 +31,9 @@ class App extends Component {
   componentDidMount = () => {
     this.props.tokenRefresh();
   };
+
   render() {
+    console.log(this.props.user)
     return (
       <div className="App">
         <BrowserRouter>
