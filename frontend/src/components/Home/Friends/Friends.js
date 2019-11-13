@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Cards from './Cards';
 import { Input, Select, Radio, Icon, Popover } from 'antd';
-import { BASE_URL } from '../../constants.js';
+import { BASE_URL } from '../../../constants.js';
 
 import './Friends.css';
 
@@ -32,7 +32,7 @@ class Friends extends Component {
               </div>
               <div style={{width: '50%'}}>
                 <Input
-                  prefix=<Icon type="search"/>
+                  prefix={<Icon type="search"/>}
                   placeholder="Search for your friends"
                   className="friends__search-input"
                   onPressEnter={this.handleSearch}

@@ -1,55 +1,28 @@
 import React, { Component } from 'react';
-import { Button, Icon } from 'antd'
 import './Home.css';
-import Listings from './Listings/Listings';
+import Sidebar from './Sidebar/Sidebar';
+import Feed from './Feed/Feed';
 import Profile from './Profile/Profile';
+import Friends from './Friends/Friends';
 
 class Home extends Component {
   state = {
-    activePage: "profile"
+    activeInterface: "profile",
   }
 
-  handleProfileClick = e => {
-    e.preventDefault();
-    this.setState({ activePage: "profile" });
-  }
-
-  handleListingsClick = e => {
-    e.preventDefault();
-    this.setState({ activePage: "listings" });
-  }
+  setActiveInterface = value => this.setState({ activeInterface: value });
 
   render() {
     return (
       <div className="home__container">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-2 home__sideMenu">
-              <div
-                className="home__innerMenu"
-                onClick={e => {
-                  e.preventDefault();
-                  this.setState({ activePage: "profile" });
-                }}
-              >
-                <Icon className="home__icon" type="user" />
-                <p className="home__menu_text">Profile</p>
-              </div>
-              <div
-                className="home__innerMenu"
-                onClick={e => {
-                  e.preventDefault();
-                  this.setState({ activePage: "listings" });
-                }}
-              >
-                <Icon className="home__icon" type="menu" />
-                <p className="home__menu_text">Listings</p>
-              </div>
-            </div>
-            <div className="col-10 home__main">
-              {this.state.activePage === "listings" && <Listings />}
-              {this.state.activePage === "profile" && <Profile />}
-            </div>
+        <div className="row">
+          <div className="col-2">
+            <Sidebar setActiveInterface={this.setActiveInterface} />
+          </div>
+          <div className="col-8">
+            {this.state.activeInterface === "profile" && <Profile />}
+            {this.state.activeInterface === "feed" && <Feed />}
+            {this.state.activeInterface === "friends" && <Friends />}
           </div>
         </div>
       </div>
