@@ -3,7 +3,7 @@ import { BASE_URL } from '../constants.js';
 
 export const userLoginFetch = (email, password) => {
   return dispatch => {
-    return fetch(`${ BASE_URL }/api/login/`, {
+    return fetch(`${BASE_URL}/api/login/`, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -58,25 +58,29 @@ export const userRegisterFetch = (user) => {
 export const tokenRefresh = () => {
   return dispatch => {
     if (localStorage.token) {
-      return fetch(`${ BASE_URL}/api/token/`, {
+      return fetch(`${BASE_URL}/api/update_profile/`, {
         headers: {
           "Content-Type": "application/json",
-          "Token": localStorage.token
+          "Authorization": localStorage.token
         },
         method: "GET",
       })
       .then(resp => resp.json())
       .then(resp => {
-        if (resp.message === "Invalid"){
-          //response message could change this is just placeholder
-          localStorage.removeItem("token")
+        console.log(resp)
+        if (resp.Message === "Data retrieval successful"){
+          console.log("refreshed")
+          dispatch(loginUser(resp.user)); //backend needs to return user as well
         }
         else {
-          localStorage.setItem("token", resp.token) //token time refreshed
+          localStorage.removeItem("token")
           //need to incorporate redux-persist in a future pr
           //this can also be handled by backend
         }
       })
+    }
+    else {
+      console.log("no token")
     }
   }
 }
