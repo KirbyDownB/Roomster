@@ -5,11 +5,11 @@ from . import db
 
 class User(db.DynamicDocument):
 
-    email = db.EmailField(required = True)
+    email = db.EmailField(unique = True,required = True)
     password_hash = db.StringField(required=True)
     first_name = db.StringField()
     last_name = db.StringField()
-    address = db.StringField()
+    # address = db.StringField()
     phone_number = db.StringField()
     date_of_birth = db.StringField()
     range = db.StringField()

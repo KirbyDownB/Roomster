@@ -14,21 +14,22 @@ api = Namespace('signup', description='Signup related operations')
 
 
 upload_parser = api.parser()
-upload_parser.add_argument('file', location='files',
+upload_parser.add_argument('profileImage', location='files',
                            type=FileStorage, required=True)
 
 upload_parser.add_argument('email', type=str, help='The User\'s email')
 upload_parser.add_argument('password', type=str, help='The User\'s password')
-upload_parser.add_argument('first_name', type=str, help='The User\'s first name')
-upload_parser.add_argument('last_name', type=str, help='The User\'s last name')
-upload_parser.add_argument('address', type=str, help='The User\'s address')
-upload_parser.add_argument('phone_number', type=str, help='The User\'s phone number')
+upload_parser.add_argument('firstName', type=str, help='The User\'s first name')
+upload_parser.add_argument('lastName', type=str, help='The User\'s last name')
+# upload_parser.add_argument('address', type=str, help='The User\'s address')
+upload_parser.add_argument('phoneNumber', type=str, help='The User\'s phone number')
+upload_parser.add_argument('age', type=str, help='The User\'s age')
 upload_parser.add_argument('range', type=str, help='The User\'s range')
-upload_parser.add_argument('location_of_interest', type=str, help='The User\'s location of interest')
+upload_parser.add_argument('location', type=str, help='The User\'s location of interest')
 upload_parser.add_argument('ethnicity', type=str, help='The User\'s ethnicity')
-upload_parser.add_argument('range_min', type=str, help='The User\'s min range')
-upload_parser.add_argument('range_max', type=str, help='The User\'s max range')
-upload_parser.add_argument('num_roommates', type=str, help='The User\'s preferred number of roommates')
+upload_parser.add_argument('priceMin', type=str, help='The User\'s min range')
+upload_parser.add_argument('priceMax', type=str, help='The User\'s max range')
+upload_parser.add_argument('numRoommates', type=str, help='The User\'s preferred number of roommates')
 upload_parser.add_argument('duration', type=str, help='The User\'s preferred duration for the lease')
 
 
@@ -49,13 +50,16 @@ class Signup(Resource):
         print(request.files)
         # print(api)
         
-        uploaded_file = data['file']
+        uploaded_file = data['profileImage']
 
+
+        if len(User.objects(email=data.get('email'))) > 0:
+            return  {"Message":"Sorry! Another user has already used that email to sign up. Please try using a different one to get started with Roomster."}
 
         user_data = User(email=data.get('email'), first_name=data.get('first_name'),\
-        last_name=data.get('last_name'), address=data.get('address'), phone_number=data.get('phone_number'), \
-        age=data.get('age'), range=data.get('range'), ethnicity=data.get('ethnicity'), location_of_interest=data.get('location_of_interest')\
-            ,price_range_min=data.get('range_min'), price_range_max=data.get('range_max'), number_of_roommates=data.get('number_of_roommmates'), duration=data.get('duration'))
+        last_name=data.get('last_name'), phone_number=data.get('phone_number'), \
+        age=data.get('age'), range=data.get('range'), ethnicity=data.get('ethnicity'), location_of_interest=data.get('location')\
+            ,price_range_min=data.get('priceMin'), price_range_max=data.get('priceMax'), number_of_roommates=data.get('numRoomates'), duration=data.get('duration'))
 
         
             
