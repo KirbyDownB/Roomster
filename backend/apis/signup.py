@@ -42,13 +42,7 @@ class Signup(Resource):
     def post(self):
     
         data = upload_parser.parse_args()
-        print(data)
-        #data = api.form 
-        print(request.form)
-        print(request.get_json())
-        print(request.json)
-        print(request.files)
-        # print(api)
+ 
         
         uploaded_file = data['profileImage']
 
@@ -56,8 +50,8 @@ class Signup(Resource):
         if len(User.objects(email=data.get('email'))) > 0:
             return  {"Message":"Sorry! Another user has already used that email to sign up. Please try using a different one to get started with Roomster."}
 
-        user_data = User(email=data.get('email'), first_name=data.get('first_name'),\
-        last_name=data.get('last_name'), phone_number=data.get('phone_number'), \
+        user_data = User(email=data.get('email'), first_name=data.get('firstName'),\
+        last_name=data.get('lastName'), phone_number=data.get('phoneNumber'), \
         age=data.get('age'), range=data.get('range'), ethnicity=data.get('ethnicity'), location_of_interest=data.get('location')\
             ,price_range_min=data.get('priceMin'), price_range_max=data.get('priceMax'), number_of_roommates=data.get('numRoomates'), duration=data.get('duration'))
 
@@ -85,8 +79,10 @@ class Signup(Resource):
 
         try:
             user_data.save()
-        except Exception:
-            return {"Message":"Something went wrong when signing up the user"}
+            print(user_data)
+        except Exception as e:
+            print(e)
+            return {"Message":"Something went wrong when signing up the user"}, 400
 
 
 
@@ -95,7 +91,7 @@ class Signup(Resource):
         try:
             mail.send(msg)
         except:
-            return {"Message":"Something went wrong when sending the email"}
+            return {"Message":"Something went wrong when sending the email"}, 400
         
 
         
