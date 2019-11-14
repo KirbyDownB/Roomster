@@ -184,3 +184,7 @@ button:focus:active {
 .ant-upload-list-item-name {
   font-family: "Asap", sans-serif;
 }
+
+.signup__priceRange--title {
+  margin-bottom: 0;
+}

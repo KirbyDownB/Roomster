@@ -1,23 +1,23 @@
 import { message } from 'antd';
 
-const BASE_URL = 'http://70a8f60d.ngrok.io';
-const inputIconColor = { color: 'rgba(0, 0, 0)' };
-const PASSWORD_MATCH_ERROR = "Your passwords don't match!";
-const EMPTY_INPUT_ERROR = "You left an input field empty!";
-const NO_IMAGE_ERROR = "You forgot to upload an image!";
-const PHONE_ERROR = "Your phone number is invalid.";
-const EMAIL_RESET_MESSAGE = "A password reset link has been sent to your email.";
-const SIGNUP_SUCCESS= "You've successfully signed up! You'll be redirected to the login page in 3 seconds";
-const NEW_POST_SUCCESS = "Your post has successfully been submitted!";
-const NEW_POST_ERROR = "Sorry, we weren't able to submit your post!";
-const SIGNUP_ERROR = "An issue occurred when trying to sign you up.";
-const LOGIN_ERROR = "Sorry, we had trouble logging you in!";
-const GENERAL_ERROR = "Something went wrong!";
-const NUM_IMAGE_UPLOAD_ERROR = "Please upload no more than 5 images!";
-const FEED_ERROR = "Sorry, we had trouble loading your feed!";
-const REACTION_ERROR = "An issue occurred when trying to record your reaction.";
-const durations = ["0 - 6 months", "6 months - 1 year", "1 year +"];
-const ethnicities = [
+export const BASE_URL = 'http://70a8f60d.ngrok.io';
+export const inputIconColor = { color: 'rgba(0, 0, 0)' };
+export const PASSWORD_MATCH_ERROR = "Your passwords don't match!";
+export const EMPTY_INPUT_ERROR = "You left an input field empty!";
+export const NO_IMAGE_ERROR = "You forgot to upload an image!";
+export const PHONE_ERROR = "Your phone number is invalid.";
+export const EMAIL_RESET_MESSAGE = "A password reset link has been sent to your email.";
+export const SIGNUP_SUCCESS= "You've successfully signed up! You'll be redirected to the login page in 3 seconds";
+export const NEW_POST_SUCCESS = "Your post has successfully been submitted!";
+export const NEW_POST_ERROR = "Sorry, we weren't able to submit your post!";
+export const SIGNUP_ERROR = "An issue occurred when trying to sign you up.";
+export const LOGIN_ERROR = "Sorry, we had trouble logging you in!";
+export const GENERAL_ERROR = "Something went wrong!";
+export const NUM_IMAGE_UPLOAD_ERROR = "Please upload no more than 5 images!";
+export const FEED_ERROR = "Sorry, we had trouble loading your feed!";
+export const REACTION_ERROR = "An issue occurred when trying to record your reaction.";
+export const durations = ["0 - 6 months", "6 months - 1 year", "1 year +"];
+export const ethnicities = [
   "American Indian or Alaska Native",
   "Asian",
   "Black or African-American",
@@ -25,7 +25,50 @@ const ethnicities = [
   "Native Hawaiian or Other Pacific Islander",
   "White"
 ];
-const postTags = [
+export const occupations = [
+  "Accountant",
+  "Actor/Actress",
+  "Architect",
+  "Author",
+  "Baker",
+  "Carpenter",
+  "Chef",
+  "Cleaner",
+  "Cook",
+  "Dentist",
+  "Designer",
+  "Doctor",
+  "Engineer",
+  "Factory Worker",
+  "Farmer",
+  "Fire Fighter",
+  "Fisherman",
+  "Florist",
+  "Gardener",
+  "Journalist",
+  "Judge",
+  "Lawyer",
+  "Lecturer",
+  "Librarian",
+  "Mechanic",
+  "Model",
+  "Nurse",
+  "Pharmacist",
+  "Photographer",
+  "Pilot",
+  "Politician",
+  "Policeman/Policewoman",
+  "Real Estate Agent",
+  "Receptionist",
+  "Scientist",
+  "Secretary",
+  "Soldier",
+  "Student",
+  "Taxi Driver",
+  "Teacher",
+  "Waiter/Waitress"
+]
+export const postTags = [
   "outdoors",
   "insipirational",
   "fun",
@@ -36,7 +79,7 @@ const postTags = [
 
 // possible categories: listing, meetup, 
 
-const mockPosts = [
+export const mockPosts = [
   {
     name: "Eric Ong",
     date: "November 13, 2019",
@@ -89,34 +132,7 @@ const mockPosts = [
   }
 ]
 
-const showErrorMessage = text => message.error(text);
-const showSuccessMessage = text => message.success(text);
-const dummyRequest = ({ file, onSuccess }) => setTimeout(() => onSuccess("ok"), 0);
-const loginRedirect = () => window.location.href =  "/login";
-
-export {
-  BASE_URL,
-  inputIconColor,
-  showErrorMessage,
-  showSuccessMessage,
-  PASSWORD_MATCH_ERROR,
-  EMPTY_INPUT_ERROR,
-  NO_IMAGE_ERROR,
-  PHONE_ERROR,
-  LOGIN_ERROR,
-  EMAIL_RESET_MESSAGE,
-  GENERAL_ERROR,
-  NUM_IMAGE_UPLOAD_ERROR,
-  SIGNUP_SUCCESS,
-  SIGNUP_ERROR,
-  NEW_POST_SUCCESS,
-  NEW_POST_ERROR,
-  FEED_ERROR,
-  REACTION_ERROR,
-  durations,
-  ethnicities,
-  dummyRequest,
-  loginRedirect,
-  mockPosts,
-  postTags
-};
+export const showErrorMessage = text => message.error(text);
+export const showSuccessMessage = text => message.success(text);
+export const dummyRequest = ({ file, onSuccess }) => setTimeout(() => onSuccess("ok"), 0);
+export const loginRedirect = () => window.location.href =  "/login";

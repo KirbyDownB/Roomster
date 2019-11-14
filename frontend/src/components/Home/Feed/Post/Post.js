@@ -25,7 +25,8 @@ class Post extends Component {
         "Content-Type": "application/json",
         "Authorization": token
       },
-      method: "POST"
+      method: "POST",
+      body: JSON.stringify({ posterEmail })
     })
       .then(response => response.json())
       .then(data => {
@@ -40,7 +41,7 @@ class Post extends Component {
 
   handlePostDislike = (e, posterEmail) => {
     e.preventDefault();
-    
+
     if (this.state.numDislikes === 0) {
       return;
     }
@@ -52,7 +53,8 @@ class Post extends Component {
         "Content-Type": "application/json",
         "Authorization": token
       },
-      method: "POST"
+      method: "POST",
+      body: JSON.stringify({ posterEmail })
     })
       .then(response => response.json())
       .then(data => {
