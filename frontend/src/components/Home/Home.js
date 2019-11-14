@@ -15,16 +15,32 @@ class Home extends Component {
   render() {
     return (
       <div className="home__container">
-        <div className="row">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-2">
+            	<Sidebar setActiveInterface={this.setActiveInterface} />
+            </div>
+            <div className="col-10">
+              <div className="home__right--wrapper">
+                {this.state.activeInterface === "profile" && <Profile />}
+                {this.state.activeInterface === "feed" && <Feed />}
+                {this.state.activeInterface === "friends" && <Friends />}
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <div className="row">
           <div className="col-2" style={{padding: '0', paddingLeft: '20px'}}>
             <Sidebar setActiveInterface={this.setActiveInterface} />
           </div>
-          <div className="col-8" style={{padding: '0'}}>
-            {this.state.activeInterface === "profile" && <Profile />}
-            {this.state.activeInterface === "feed" && <Feed />}
-            {this.state.activeInterface === "friends" && <Friends />}
+          <div className="col-10">
+            <div className="home__right--wrapper">
+              {this.state.activeInterface === "profile" && <Profile />}
+              {this.state.activeInterface === "feed" && <Feed />}
+              {this.state.activeInterface === "friends" && <Friends />}
+            </div>
           </div>
-        </div>
+        </div> */}
       </div>
     )
   }

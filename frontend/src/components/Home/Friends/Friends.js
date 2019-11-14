@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Cards from './Cards';
 import Requests from './Requests/Requests';
-import { Modal, Input, Select, Radio, Icon, Popover } from 'antd';
+import { Modal, Input, Select, Radio, Icon, Popover, Button } from 'antd';
 import { BASE_URL } from '../../../constants.js';
 
 import './Friends.css';
@@ -109,40 +109,38 @@ class Friends extends Component {
   render(){
     console.log(this.state.requestsList.length)
     return(
-      <div className="container-fluid friends__bg">
-        <div className="row">
-          <div className="col-10 friends__right">
-            <div className="row friends__search-container">
-              <div style={{width: '20%'}}>
-                <h1 className="friends__remove">Friends</h1>
-              </div>
-              <div style={{width: '50%'}}>
-                <Input
-                  prefix=<Icon type="search"/>
-                  placeholder="Search for your friends"
-                  className="friends__search-input"
-                  onPressEnter={this.handleSearch}
-                />
-              </div>
+      <div className="friends__container">
+        <div className="container-fluid">
+          <div className="row justify-content-center">
+            <div className="col-2">
+              <h2 className="friends__title">Friends</h2>
             </div>
-            <div className="row friends__search-filter">
-              <div className="friends__search-parent">
-                <button className="friends__search-filter-inner1">
-                  All
-                </button>
-                <Popover title="Friend Requests" placement="bottom" content={this.mapRequests()} className="friends__search-filter-inner2" trigger="click">
-                  Requests
-                </Popover>
-                <button className="friends__search-filter-inner3">
-                  Block
-                </button>
-              </div>
+            <div className="col-10">
+              <Input
+                prefix={<Icon type="search"/>}
+                placeholder="Search for your friends"
+                className="friends__search-input"
+                onPressEnter={this.handleSearch}
+              />
             </div>
-
-            <div className="row friends__list-container">
+          </div>
+          <div className="row">
+            <div className="col-4">
+              <Popover
+                title="Friend Requests"
+                placement="bottom"
+                content={this.mapRequests()}
+                trigger="click"
+              >
+                <Button type="primary">Requests </Button>
+              </Popover>
+            </div>
+          </div>
+          <div className="friends__list--container">
+            <div className="row">
               {this.state.friendsList.map(({ Image, Name, Email }, index) => {
                 return (
-                  <div className="col-3 friends__col">
+                  <div className="col-3">
                     <Cards handleDelete={this.handleDelete} email={Email} img={Image} name={Name}/>
                   </div>
                 )
