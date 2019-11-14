@@ -17,9 +17,9 @@ class Sidebar extends Component {
     return (
       <Menu
         onSelect={this.handleMenuSelect}
-        style={{ height: "100vh" }}
+        style={{ height: "100vh", width: 256, marginLeft: -15 }}
         defaultSelectedKeys={["feed"]}
-        mode="vertical"
+        mode="inline"
       >
         <div className="menu__logo--container">
           <img className="menu__logo" src={logo} alt=""/>

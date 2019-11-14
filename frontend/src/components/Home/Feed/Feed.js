@@ -27,33 +27,30 @@ class Feed extends Component {
   render() {
     return (
       <div className="feed__container">
-        <div className="row justify-content-center">
-          <div className="col-10">
-            <h2 className="feed__title">Feed</h2>
-          </div>
-          <div className="col-2">
-            <Popover
-              content={<a onClick={this.hideFilter}>Close</a>}
-              trigger="click"
-              visible={this.state.isFilterOpen}
-              placement="bottom"
-              onVisibleChange={this.handleVisibleChange}
-            >
-              <Button
-                type="default"
-                className="feed__filter--button"
-                onClick={this.showFilter}
-                size="large"
+        <div className="container-fluid">
+          <div className="row justify-content-center">
+            <div className="col-10">
+              <h2 className="feed__title">Feed</h2>
+            </div>
+            <div className="col-2">
+              <Popover
+                content={<a onClick={this.hideFilter}>Close</a>}
+                trigger="click"
+                visible={this.state.isFilterOpen}
+                placement="bottom"
+                onVisibleChange={this.handleVisibleChange}
               >
-                <Icon type="control" />
-                Filter
-              </Button>
-            </Popover>
-          </div>
-        </div>
-        <div className="feed__items--container">
-          <div className="row">
-            <Item />
+                <Button
+                  type="default"
+                  className="feed__filter--button"
+                  onClick={this.showFilter}
+                  size="large"
+                >
+                  <Icon type="control" />
+                  Filter
+                </Button>
+              </Popover>
+            </div>
           </div>
         </div>
       </div>

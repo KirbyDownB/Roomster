@@ -1,13 +1,25 @@
-.ant-input-affix-wrapper .ant-input:not(:first-child){
-  border-radius: 15px !important;
-  width: 100%;
-}
-
 .friends__remove {
   float: left;
   margin: 0;
   font-size: 30px;
   font-weight: 350;
+}
+
+.friends__title {
+  font-family: "Asap", sans-serif;
+  color: #505050;
+  font-weight: bold;
+}
+
+/* This is set because the bootstrap row creates a left margin of -15px */
+.friends__container {
+  margin-left: 15px;
+}
+
+.friends__container {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 4%;
 }
 
 .friends__bg {
@@ -34,7 +46,6 @@
   display: flex;
   background-color: white;
   box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.12);
-  width: 70%;
   padding: 8px;
   border-radius: 15px;
 }
@@ -43,7 +54,7 @@
   color: white;
   border-radius: 10px;
   padding: 5px;
-  width: 12%;
+  width: 100%;
   text-align: center;
   border: none !important;
   -webkit-transition : opacity 500ms ease;
@@ -78,11 +89,6 @@
 .friends__search-filter-inner3 {
   background-color: rgba(245, 118, 118, 0.5);
   margin-left: 2%;
-}
-
-.friends__list-container {
-  padding-left: 4%;
-  margin-bottom: 4%;
 }
 
 .friends__col {
