@@ -15,13 +15,13 @@ api = Namespace('signup', description='Signup related operations')
 
 upload_parser = api.parser()
 upload_parser.add_argument('profileImage', location='files',
-                           type=FileStorage, required=True)
+                           type=FileStorage, required=True,)
 
 upload_parser.add_argument('email', type=str, help='The User\'s email')
 upload_parser.add_argument('password', type=str, help='The User\'s password')
 upload_parser.add_argument('firstName', type=str, help='The User\'s first name')
 upload_parser.add_argument('lastName', type=str, help='The User\'s last name')
-# upload_parser.add_argument('address', type=str, help='The User\'s address')
+upload_parser.add_argument('occupation', type=str, help='The User\'s occupation')
 upload_parser.add_argument('phoneNumber', type=str, help='The User\'s phone number')
 upload_parser.add_argument('age', type=str, help='The User\'s age')
 upload_parser.add_argument('range', type=str, help='The User\'s range')
@@ -53,7 +53,8 @@ class Signup(Resource):
         user_data = User(email=data.get('email'), first_name=data.get('firstName'),\
         last_name=data.get('lastName'), phone_number=data.get('phoneNumber'), \
         age=data.get('age'), range=data.get('range'), ethnicity=data.get('ethnicity'), location_of_interest=data.get('location')\
-            ,price_range_min=data.get('priceMin'), price_range_max=data.get('priceMax'), number_of_roommates=data.get('numRoomates'), duration=data.get('duration'))
+            ,price_range_min=data.get('priceMin'), price_range_max=data.get('priceMax'), number_of_roommates=data.get('numRoomates'),\
+                 duration=data.get('duration'),occupation=data.get('occupation'))
 
         
             

@@ -1,5 +1,5 @@
 from . import db
-
+from datetime import datetime
 
 
 
@@ -24,6 +24,23 @@ class User(db.DynamicDocument):
     duration = db.StringField()
     friend_requests = db.ListField()
     friends = db.ListField()
+    occupation = db.StringField()
+
+class Posting(db.DynamicDocument):
+
+    name = db.StringField()
+    poster_email = db.EmailField()
+    date = db.DateTimeField(default=datetime.now())
+    content = db.StringField()
+    tags = db.ListField()
+    numLikes = db.IntField(default=0)
+    likedEmails = db.ListField()
+    numDislikes = db.IntField(default=0)
+    dislikedEmails = db.ListField()
+    images = db.ListField()
+
+
+
 
 
     # def set_password(self, password):
