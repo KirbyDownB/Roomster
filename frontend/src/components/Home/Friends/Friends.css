@@ -1,5 +1,5 @@
 .ant-input-affix-wrapper .ant-input:not(:first-child){
-  /* border-radius: 15px !important; */
+  border-radius: 15px !important;
   width: 100%;
 }
 
@@ -53,14 +53,17 @@
 
 .friends__search-filter-inner1:hover {
   opacity: 0.4;
+  cursor: pointer;
 }
 
 .friends__search-filter-inner2:hover {
   opacity: 0.4;
+  cursor: pointer;
 }
 
 .friends__search-filter-inner3:hover {
   opacity: 0.4;
+  cursor: pointer;
 }
 
 .friends__search-filter-inner1 {
@@ -79,8 +82,10 @@
 
 .friends__list-container {
   padding-left: 4%;
+  margin-bottom: 4%;
 }
 
 .friends__col {
   padding: 0;
+  margin-bottom: 4%;
 }

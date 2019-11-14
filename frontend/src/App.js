@@ -9,7 +9,7 @@ import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Home from './components/Home/Home';
 import ForgotPassword from './components/PasswordReset/ForgotPassword';
-import Friends from './components/Friends/Friends';
+import Friends from './components/Home/Friends/Friends';
 
 function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
   return (

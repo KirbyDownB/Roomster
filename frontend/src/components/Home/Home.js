@@ -7,7 +7,7 @@ import Friends from './Friends/Friends';
 
 class Home extends Component {
   state = {
-    activeInterface: "profile",
+    activeInterface: "feed",
   }
 
   setActiveInterface = value => this.setState({ activeInterface: value });
@@ -16,10 +16,10 @@ class Home extends Component {
     return (
       <div className="home__container">
         <div className="row">
-          <div className="col-2">
+          <div className="col-2" style={{padding: '0', paddingLeft: '20px'}}>
             <Sidebar setActiveInterface={this.setActiveInterface} />
           </div>
-          <div className="col-8">
+          <div className="col-8" style={{padding: '0'}}>
             {this.state.activeInterface === "profile" && <Profile />}
             {this.state.activeInterface === "feed" && <Feed />}
             {this.state.activeInterface === "friends" && <Friends />}

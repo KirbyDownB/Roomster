@@ -1,24 +1,68 @@
 import React, { Component } from 'react';
-import { Button, Icon } from 'antd';
+import { Modal, Button, Icon, Popconfirm } from 'antd';
 import './Cards.css';
 
-const eric = require("../../../assets/eric.jpg")
-
 class Cards extends Component {
+  state = {
+    visible: false
+  }
+
+  deleteCard = () => {
+    this.props.handleDelete(this.props.email)
+  }
+
+  handleModal = () => {
+    this.setState({
+      visible: true
+    })
+  }
+
+  handleCancel = () => {
+    this.setState({
+      visible: false
+    })
+  }
+
   render(){
     return(
       <div className="cards__bg">
         <div className="cards__profile-wrapper">
-          <img src={eric} className="cards__profile-pic" alt="" />
-          <p className="cards__profile-name">Eric Ong</p>
+          <img src={this.props.img} className="cards__profile-pic">
+          </img>
+          <p className="cards__profile-name">{this.props.name}</p>
         </div>
         <div className="cards__profile-title">
           <p className="cards__profile-inner">Student</p>
         </div>
         <div className="cards__footer">
-          <Button className="cards__button-left" icon="user">Profile</Button>
+          <Button className="cards__button-left" onClick={this.handleModal} icon="user">Profile</Button>
+          <Modal
+             title={this.props.name}
+             visible={this.state.visible}
+             onOk={this.handleOk}
+             onCancel={this.handleCancel}
+             footer={[
+                        <Button key="back" onClick={this.handleCancel}>
+                          Return
+                        </Button>
+                      ]}
+          >
+            <div>
+              <div className="cards__modal-container">
+                <img className="cards__modal-img" src={this.props.img}></img>
+              </div>
+            </div>
+           </Modal>
           <div style={{border: '0.5px solid #BEBEBE'}}></div>
-          <Button className="cards__button-right" icon="user-delete">Delete</Button>
+          <Popconfirm
+            title="Are you sure？"
+            onConfirm={this.deleteCard}
+            okText="Yes"
+            cancelText="No"
+            icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
+          >
+            <Button className="cards__button-right" icon="user-delete">Delete</Button>
+          </Popconfirm>
         </div>
       </div>
     )

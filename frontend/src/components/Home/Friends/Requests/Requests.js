@@ -2,7 +2,7 @@
 import { Button, Icon } from 'antd';
 import './Requests.css'
 
-const eric = require("../../../assets/eric.jpg")
+const eric = require("../../../../assets/eric.jpg")
 
 
 class Requests extends Component {
