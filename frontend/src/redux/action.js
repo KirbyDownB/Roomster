@@ -53,7 +53,6 @@ export const tokenRefresh = () => {
       })
       .then(resp => resp.json())
       .then(resp => {
-        console.log(resp)
         if (resp.Message === "Data retrieval successful"){
           console.log("refreshed")
           dispatch(loginUser(resp.user)); //backend needs to return user as well

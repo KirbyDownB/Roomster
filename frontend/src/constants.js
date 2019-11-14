@@ -14,6 +14,7 @@ const SIGNUP_ERROR = "An issue occurred when trying to sign you up.";
 const LOGIN_ERROR = "Sorry, we had trouble logging you in!";
 const GENERAL_ERROR = "Something went wrong!";
 const NUM_IMAGE_UPLOAD_ERROR = "Please upload no more than 5 images!";
+const ADD_FRIEND_ERROR = "Sorry, we had trouble finding a user with that email";
 const durations = ["0 - 6 months", "6 months - 1 year", "1 year +"];
 const ethnicities = [
   "American Indian or Alaska Native",
@@ -32,7 +33,7 @@ const postTags = [
   "searching"
 ]
 
-// possible categories: listing, meetup, 
+// possible categories: listing, meetup,
 
 const mockPosts = [
   {
@@ -68,6 +69,7 @@ export {
   SIGNUP_ERROR,
   NEW_POST_SUCCESS,
   NEW_POST_ERROR,
+  ADD_FRIEND_ERROR,
   durations,
   ethnicities,
   dummyRequest,

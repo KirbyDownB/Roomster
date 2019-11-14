@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Cards from './Cards';
 import Requests from './Requests/Requests';
 import { Modal, Input, Select, Radio, Icon, Popover, Button } from 'antd';
-import { BASE_URL } from '../../../constants.js';
+import { BASE_URL, ADD_FRIEND_ERROR, showErrorMessage } from '../../../constants.js';
 
 import './Friends.css';
 
@@ -14,33 +14,7 @@ const aditya = require("../../../assets/aditya.jpg")
 class Friends extends Component {
 
   state = {
-    friendsList: [
-      {
-        "Email": "eeong18@ucr.edu",
-        "Image": eric,
-        "Name": "Eric Ong"
-      },
-      {
-        "Email": "aacha002@ucr.edu",
-        "Image": aditya,
-        "Name": "Aditya Acharya1"
-      },
-      {
-        "Email": "aacha003@ucr.edu",
-        "Image": aditya,
-        "Name": "Aditya Acharya2"
-      },
-      {
-        "Email": "aacha004@ucr.edu",
-        "Image": aditya,
-        "Name": "Aditya Acharya3"
-      },
-      {
-        "Email": "aacha005@ucr.edu",
-        "Image": aditya,
-        "Name": "Aditya Acharya4"
-      },
-    ],
+    friendsList: [],
     requestsList: [
       {
         "Email": "ericong18@ucr.edu",
@@ -54,32 +28,28 @@ class Friends extends Component {
         "Name": "Aditya Acharya",
         "Title": "Uber Driver"
       }
-    ]
-  }
-
-  handleSearch = () => {
-    fetch(`${BASE_URL}/friends/_list`)
+    ],
+    email: "",
+    visible: false,
+    loading: false
   }
 
   fetchFriends = () => {
-    //const { img, name } = user;
-    // fetch(`${BASE_URL}/friends/list`,{
-    //   headers: {
-    //     "Content": "application/json"
-    //   },
-    //   method: "POST"
-    // })
-    // .then(resp => resp.json())
-    // .then(resp => console.log(resp))
-    //let temp = []
-    // temp.push(<Cards img={eric}, name={"Eric Ong"} />)
-    // this.setState({
-    //   friendsList: temp
-    // })
-  }
+    fetch(`${BASE_URL}/api/friends/friends_list/`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.token
+      },
+      method: "POST",
+      body: JSON.stringify({})
+    })
+    .then(resp => resp.json())
+    .then(resp => {
+      this.setState({
+        friendsList: resp.friends
+      })
+    })
 
-  componentDidMount() {
-    this.fetchFriends()
   }
 
   handleDeleteRequests = (email) => {
@@ -94,6 +64,58 @@ class Friends extends Component {
     })
   }
 
+  handleInput = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  handleModal = () => {
+    this.setState({
+      visible: true
+    })
+  }
+
+  handleCancel = () => {
+    this.setState({
+      visible: false
+    })
+  }
+
+  handleSearch = () => {
+    fetch(`${BASE_URL}/friends/_list`)
+  }
+
+  handleAdd = () => {
+    const email = this.state.email;
+    if (email) {
+      this.setState({
+        loading: true
+      })
+
+      fetch(`${BASE_URL}/api/friends/add/`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": localStorage.token
+        },
+        method: "POST",
+        body: JSON.stringify({
+          friend: this.state.email
+        })
+      })
+      .then(resp => resp.json())
+      .then(resp => {
+        if (resp.Message === "Friend email DNE"){
+          showErrorMessage(ADD_FRIEND_ERROR)
+        }
+        this.setState({
+          loading: false
+        })
+      })
+      .catch(err => console.log(err))
+    }
+  }
+
   mapRequests = () => {
     return(
       <div>
@@ -106,8 +128,12 @@ class Friends extends Component {
     )
   }
 
+  componentDidMount() {
+    this.fetchFriends()
+  }
+
   render(){
-    console.log(this.state.requestsList.length)
+    console.log(this.state.friendsList)
     return(
       <div className="friends__container">
         <div className="container-fluid">
@@ -132,16 +158,33 @@ class Friends extends Component {
                 content={this.mapRequests()}
                 trigger="click"
               >
-                <Button type="primary">Requests </Button>
+                <Button className="friends__requests-button" type="primary">Requests </Button>
               </Popover>
+              <Button type="primary" onClick={this.handleModal} className="friends__add-button">Add Friends </Button>
+              <Modal
+                 title={"Add Friends"}
+                 visible={this.state.visible}
+                 onOk={this.handleOk}
+                 onCancel={this.handleCancel}
+                 footer={[
+                            <Button type="primary" loading={this.state.loading} onClick={this.handleAdd}>
+                              Add
+                            </Button>
+                          ]}
+              >
+                <div>
+                  <Input autocomplete="off" onChange={this.handleInput} name="email" value={this.state.email} placeholder="Enter email"></Input>
+                </div>
+              </Modal>
             </div>
           </div>
           <div className="friends__list--container">
             <div className="row">
-              {this.state.friendsList.map(({ Image, Name, Email }, index) => {
+              {this.state.friendsList.map(({ pf_pic, occupation, name, email }, index) => {
+                console.log(email)
                 return (
                   <div className="col-3">
-                    <Cards handleDelete={this.handleDelete} email={Email} img={Image} name={Name}/>
+                    <Cards handleDelete={this.handleDelete} title={occupation} email={email} img={pf_pic} name={name}/>
                   </div>
                 )
               })}

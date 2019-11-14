@@ -33,7 +33,7 @@ class Cards extends Component {
           <p className="cards__profile-name">{this.props.name}</p>
         </div>
         <div className="cards__profile-title">
-          <p className="cards__profile-inner">Student</p>
+          <p className="cards__profile-inner">{this.props.title}</p>
         </div>
         <div className="cards__footer">
           <Button className="cards__button-left" onClick={this.handleModal} icon="user">Profile</Button>
