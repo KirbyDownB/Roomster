@@ -2,6 +2,8 @@ from flask import Flask
 from flask_restplus import Resource, Api, fields, Namespace
 from .models import User
 import jwt
+from werkzeug.security import generate_password_hash, check_password_hash
+import json
 
 api = Namespace('login', description='Login related operations')
 
@@ -27,7 +29,7 @@ class Login(Resource):
 
 
         if identifier.find('@') > -1:        
-            user_data = User.query.filter_by(email=identifier).first()
+            user_data = User.objects(email=identifier)
         else:
             return {"Message":"This is not a valid email"}
 
@@ -36,13 +38,12 @@ class Login(Resource):
         if not user_data:
             return {"Message":"This user does not exist"}
 
-        if user_data.check_password(password):
-            token = jwt.encode({'email':user_data.email}, "SECRET_KEY")
+        if check_password_hash(user_data[0].password_hash,password):
+            token = jwt.encode({'email':user_data[0].email}, "SECRET_KEY")
             token = token.decode('utf-8')
 
 
-            user_profile_data = user_data.__dict__
-            del user_profile_data['_sa_instance_state']
+            user_profile_data = json.loads(user_data.to_json())
 
             return {"Message":"Login Successful", "token":token, "user":user_profile_data}
 

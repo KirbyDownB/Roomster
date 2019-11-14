@@ -163,14 +163,24 @@ button:focus:active {
   margin-bottom: 24%;
 }
 
-.signup__priceRange--title {
-  margin-bottom: 0;
-}
-
-.signup__inputNumber {
+.signup__inputNumber, .ant-select-selection {
   background-color: #F4F4F4;
   border: none;
   outline: none;
   border-radius: 4px;
+  font-family: "Asap", sans-serif;
+}
+
+.signup__slider {
+  margin-bottom: 8%;
+}
+
+.signup__profileImage--title {
+  margin-bottom: 1%;
+}
+
+.signup__profileUpload--caption,
+.signup__profileUpload--button,
+.ant-upload-list-item-name {
   font-family: "Asap", sans-serif;
 }

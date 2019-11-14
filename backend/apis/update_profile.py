@@ -4,6 +4,7 @@ from . import db
 from sqlalchemy import exc
 from .models import User
 import jwt
+from werkzeug.security import generate_password_hash, check_password_hash
 
 api = Namespace('update_profile', description='Profile update related operations')
 parser = api.parser()
@@ -48,8 +49,8 @@ class update_profile(Resource):
             print(user_profile_data)
             del user_profile_data['_sa_instance_state']
             del user_profile_data['password_hash']
-
-            return {"Message":"Data retrieval successful", "user": user_profile_data }
+            # token = token.decode('utf-8')
+            return {"Message":"Data retrieval successful", "user": user_profile_data , "token":token}
 
         return {"Message":"You sent a GET request"}
 
@@ -88,61 +89,67 @@ class update_profile(Resource):
 
 
         user_email = decToken['email']
-        user_data = User.query.filter_by(email=user_email).first()
 
-        if password is not "":
+        user_data = User.object(email=user_email)
+
+
+        # user_data = User.query.filter_by(email=user_email).first()
+
+        # if password is not "":
                 
-            try:
-                user_data.set_password(data.get('password'))
-                db.session.add(user_data)
-                db.session.commit()
+        #     try:
+        #         user_data.set_password(data.get('password'))
+        #         db.session.add(user_data)
+        #         db.session.commit()
 
-            except exc.SQLAlchemyError as e:
-                print(e)
-                return {"Message":"Something went wrong when updating your profile"}
+        #     except exc.SQLAlchemyError as e:
+        #         print(e)
+        #         return {"Message":"Something went wrong when updating your profile"}
 
-
-
-        if email is not "":
-            user_data.email = email
-
-        if first_name is not "":
-            user_data.first_name = first_name
-
-        if last_name is not "":
-            user_data.last_name =  last_name
-
-        if phone_number is not "":
-            user_data.phone_number = phone_number
-
-        if address is not "":
-            user_data.address = address
-
-        if age is not "":
-            user_data.age = age
-
-        if location_of_interest is not "":
-            user_data.location_of_interest = location_of_interest
-        
-        if ethnicity is not "":
-            user_data.ethnicity = ethnicity
-
-        if number_of_roommates is not "":
-            user_data.number_of_roommates = number_of_roommates
-
-        if price_range_min is not "":
-            user_data.price_range_min = price_range_min
-
-        if price_range_max is not "":
-            user_data.price_range_max = price_range_max
-
-        
 
         try:
-            db.session.commit()
-        except exc.SQLAlchemyError as e:
-            print(e)
-            return {"Message":"Something went wrong when inserting into the DB"}
+
+            if email is not "":
+
+                u = User.object(email=email)
+                if len(u) == 0:
+                    user_data.update(email=email)
+                else:
+                    {"Message":"Unfortunately, that email is already taken. Please use a different one"}
+
+
+            if first_name is not "":
+                user_data.update(first_name=first_name)
+
+            if last_name is not "":
+                user_data.update(last_name=last_name)
+
+            if phone_number is not "":
+                user_data.update(phone_number=phone_number)
+
+            if address is not "":
+                user_data.update(address=address)
+
+            if age is not "":
+                user_data.update(age=age)
+
+            if location_of_interest is not "":
+                user_data.update(location_of_interest=location_of_interest)
+            
+            if ethnicity is not "":
+                user_data.update(ethnicity=ethnicity)
+
+            if number_of_roommates is not "":
+                user_data.update(number_of_roommates=number_of_roommates)
+
+            if price_range_min is not "":
+                user_data.update(price_range_min=price_range_min)
+
+            if price_range_max is not "":
+                user_data.update(price_range_max=price_range_max)
+
+        except:
+            return {"Message":"Something went wrong when updating your profile. Please try again."}
 
         return {"Message":"Profile updated successfully"}
 
