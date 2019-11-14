@@ -17,9 +17,8 @@ export const userLoginFetch = (email, password) => {
     .then(resp => {
       if (resp.Message === "Login Successful"){
         localStorage.setItem("token", resp.token)
+        console.log(resp.user)
         dispatch(loginUser(resp.user)); //backend needs to return user as well
-      }
-      else {
       }
     })
   }
