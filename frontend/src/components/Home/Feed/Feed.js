@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Feed.css';
+import Post from './Post/Post';
 import { Button, Icon, Popover, Input, Modal, Select, Form, Upload } from 'antd';
 import {
   showSuccessMessage,
@@ -8,7 +9,9 @@ import {
   dummyRequest,
   BASE_URL,
   NEW_POST_SUCCESS,
-  NEW_POST_ERROR
+  NEW_POST_ERROR,
+  FEED_ERROR,
+  mockPosts
 } from '../../../constants';
 
 const { Option } = Select;
@@ -22,7 +25,34 @@ class Feed extends Component {
     isNewPostModalOpen: false,
     selectedTags: [],
     isNewPostLoading: false,
-    images: []
+    images: [],
+    posts: [],
+    isFeedLoading: false
+  }
+
+  componentDidMount = () => {
+    this.setState({ isFeedLoading: true });
+    const token = localStorage.getItem("token");
+
+    fetch(`${BASE_URL}/api/posting/all/`, {
+      headers: {
+        "Authorization": token
+      },
+      method: "POST",
+    })
+      .then(response => response.json())
+      .then(({ postings }) => {
+        console.log("Got Feed data in componentDidMount", postings);
+        this.setState({
+          isFeedLoading: false,
+          posts: postings
+        });
+      })
+      .catch(error => {
+        console.error(error);
+        showErrorMessage(FEED_ERROR);
+        this.setState({ isFeedLoading: false });
+      });
   }
 
   showFilter = e => {
@@ -146,6 +176,15 @@ class Feed extends Component {
                 New Post
               </Button>
             </div>
+          </div>
+          <div className="row">
+            {this.state.posts.length > 0 && this.state.posts.map(post => {
+              return (
+                <div className="col-6">
+                  <Post {...post} />
+                </div>
+              )
+            })}
           </div>
           <Modal
             visible={this.state.isNewPostModalOpen}

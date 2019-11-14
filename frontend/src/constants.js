@@ -14,6 +14,8 @@ const SIGNUP_ERROR = "An issue occurred when trying to sign you up.";
 const LOGIN_ERROR = "Sorry, we had trouble logging you in!";
 const GENERAL_ERROR = "Something went wrong!";
 const NUM_IMAGE_UPLOAD_ERROR = "Please upload no more than 5 images!";
+const FEED_ERROR = "Sorry, we had trouble loading your feed!";
+const REACTION_ERROR = "An issue occurred when trying to record your reaction.";
 const durations = ["0 - 6 months", "6 months - 1 year", "1 year +"];
 const ethnicities = [
   "American Indian or Alaska Native",
@@ -38,11 +40,52 @@ const mockPosts = [
   {
     name: "Eric Ong",
     date: "November 13, 2019",
-    content: "Post content",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     tags: ["tag1", "tag2"],
-    images: ["url1", "url2"],
+    images: ["https://firebasestorage.googleapis.com/v0/b/cs180profilepictures.appspot.com/o/Eric%20Ong11%2F13%2F20190?alt=media", "https://firebasestorage.googleapis.com/v0/b/cs180profilepictures.appspot.com/o/Eric%20Ong11%2F13%2F20190?alt=media"],
     numLikes: 1,
     numDislikes: 1,
+    posterEmail: "eric4ong@gmail.com"
+  },
+  {
+    name: "Eric Ong",
+    date: "November 13, 2019",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    tags: ["tag1", "tag2"],
+    images: [],
+    numLikes: 1,
+    numDislikes: 1,
+    posterEmail: "eric4ong@gmail.com"
+  },
+  {
+    name: "Eric Ong",
+    date: "November 13, 2019",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    tags: ["tag1", "tag2"],
+    images: [],
+    numLikes: 1,
+    numDislikes: 1,
+    posterEmail: "eric4ong@gmail.com"
+  },
+  {
+    name: "Eric Ong",
+    date: "November 13, 2019",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    tags: ["tag1", "tag2"],
+    images: [],
+    numLikes: 1,
+    numDislikes: 1,
+    posterEmail: "eric4ong@gmail.com"
+  },
+  {
+    name: "Eric Ong",
+    date: "November 13, 2019",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    tags: ["tag1", "tag2"],
+    images: [],
+    numLikes: 1,
+    numDislikes: 1,
+    posterEmail: "eric4ong@gmail.com"
   }
 ]
 
@@ -68,6 +111,8 @@ export {
   SIGNUP_ERROR,
   NEW_POST_SUCCESS,
   NEW_POST_ERROR,
+  FEED_ERROR,
+  REACTION_ERROR,
   durations,
   ethnicities,
   dummyRequest,
