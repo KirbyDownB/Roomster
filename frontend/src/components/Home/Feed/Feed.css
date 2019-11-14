@@ -1,17 +1,16 @@
 .feed__container {
+  width: 90%;
   margin: 0 auto;
-  width: 85%;
+  margin-top: 4%;
 }
 
 .feed__title {
-  margin-top: 4%;
   font-family: "Asap", sans-serif;
   color: #505050;
   font-weight: bold;
 }
 
 .feed__filter--button {
-  margin-top: 25%;
   background-color: white;
   color: #F57676;
   font-family: "Asap", sans-serif;
@@ -19,12 +18,46 @@
   box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.12);
   border-radius: 10px;
   font-weight: 400;
-  float: right;
-  margin-right: -14px;
   font-weight: bold;
 }
 
+.feed__newPost--button {
+  box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.12);
+  border-radius: 10px;
+  font-weight: 400;
+  font-weight: bold;
+  font-family: "Asap", sans-serif;
+  margin-left: -48%;
+}
 
 .anticon {
   vertical-align: 0;
+}
+
+.newPost__title {
+  font-family: "Asap", sans-serif;
+  font-weight: bold;
+  color: #F57676;
+  text-align: center;
+  font-size: 200%;
+}
+
+.newPost__caption {
+  font-weight: bold;
+  font-family: "Asap", sans-serif;
+  margin-bottom: -8px;
+}
+
+.newPost__submit {
+  font-family: "Asap", sans-serif;
+  font-weight: bold;
+  display: flex;
+  margin: 0 auto;
+  letter-spacing: 8px;
+  margin-bottom: -16px;
+}
+
+.newPost__upload--description {
+  font-family: "Asap", sans-serif;
+  font-weight: bold;
 }

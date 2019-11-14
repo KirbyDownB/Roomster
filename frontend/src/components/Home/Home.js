@@ -29,18 +29,6 @@ class Home extends Component {
             </div>
           </div>
         </div>
-        {/* <div className="row">
-          <div className="col-2" style={{padding: '0', paddingLeft: '20px'}}>
-            <Sidebar setActiveInterface={this.setActiveInterface} />
-          </div>
-          <div className="col-10">
-            <div className="home__right--wrapper">
-              {this.state.activeInterface === "profile" && <Profile />}
-              {this.state.activeInterface === "feed" && <Feed />}
-              {this.state.activeInterface === "friends" && <Friends />}
-            </div>
-          </div>
-        </div> */}
       </div>
     )
   }
