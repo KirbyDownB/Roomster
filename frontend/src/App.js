@@ -16,7 +16,7 @@ function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
     <Route
       {...rest}
       render={props =>
-        true === true ? (
+        isAuthenticated[0] ? (
           <Component {...props} />
         ) : (
           <Redirect
@@ -34,7 +34,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.props.user)
     return (
       <div className="App">
         <BrowserRouter>
@@ -59,7 +58,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
+  user: state.user
 });
 
 const mapDispatchToProps = dispatch => ({

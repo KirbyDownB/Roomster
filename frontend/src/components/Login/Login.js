@@ -106,6 +106,7 @@ class Login extends Component {
 
   render() {
     if (this.state.redirectHome) {
+      console.log("redirect home")
       return <Redirect push to= "/home" />
     }
 

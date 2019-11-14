@@ -1,6 +1,6 @@
 import { message } from 'antd';
 
-const BASE_URL = 'http://cfa448ec.ngrok.io';
+const BASE_URL = 'http://70a8f60d.ngrok.io';
 const inputIconColor = { color: 'rgba(0, 0, 0)' };
 const PASSWORD_MATCH_ERROR = "Your passwords don't match!";
 const EMPTY_INPUT_ERROR = "You left an input field empty!";

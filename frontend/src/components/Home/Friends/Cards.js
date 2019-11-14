@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Icon, Popconfirm } from 'antd';
+import ProfileModal from './ProfileModal/ProfileModal';
 import './Cards.css';
 
 class Cards extends Component {
@@ -47,11 +48,7 @@ class Cards extends Component {
                         </Button>
                       ]}
           >
-            <div>
-              <div className="cards__modal-container">
-                <img className="cards__modal-img" src={this.props.img}></img>
-              </div>
-            </div>
+            <ProfileModal email={this.props.email} />
            </Modal>
           <div style={{border: '0.5px solid #BEBEBE'}}></div>
           <Popconfirm
