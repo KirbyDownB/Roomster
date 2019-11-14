@@ -1,0 +1,41 @@
+.requests__row {
+  display: flex;
+  width: 32vw;
+  margin-bottom: 4%;
+  padding-bottom: 2%;
+  border-bottom: 1px solid #BEBEBE;
+}
+.requests__img {
+  width: 45px;
+  height: 45px;
+  border: 1px solid white;
+  box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.6);
+  border-radius: 50%;
+}
+
+.requests__body {
+  padding-left: 6%;
+  padding-right: 10%;
+  width: 50%;
+}
+
+.requests__button-add {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.requests__button-remove {
+  margin-left: 3%;
+  margin-top: auto;
+  margin-bottom: auto;
+  border: 1px solid #F57676;
+}
+
+.requests__text, .requests__text-title {
+  margin: 0;
+}
+
+.requests__text-title {
+  color: #F57676;
+  font-weight: 600;
+}

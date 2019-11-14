@@ -17,7 +17,7 @@ class Sidebar extends Component {
     return (
       <Menu
         onSelect={this.handleMenuSelect}
-        style={{ width: 200, height: "100vh" }}
+        style={{ height: "100vh" }}
         defaultSelectedKeys={["feed"]}
         mode="vertical"
       >
