@@ -14,10 +14,13 @@ class ProfileModal extends Component {
         "Content": "application/json",
         "Authorization": token
       },
-      method: "POST"
+      method: "GET"
     })
     .then(resp => resp.json())
-    .then(resp => console.log(resp))
+    .then(resp => {
+      console.log("hey");
+      console.log(resp);
+    })
   }
 
   componentDidMount(){

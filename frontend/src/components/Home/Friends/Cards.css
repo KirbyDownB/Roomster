@@ -24,6 +24,7 @@
 .cards__profile-name {
   padding-top: 3%;
   font-size: 14px;
+  font-weight: 500;
 }
 
 .cards__profile-title {
@@ -34,6 +35,7 @@
   color: #F57676;
   padding: 0;
   margin: auto;
+  letter-spacing: 2px;
 }
 
 .cards__profile-inner {
