@@ -64,12 +64,20 @@
   border-radius: 0px 0px 15px 0px;
   background-color: #FBFCFF;
 }
+
 .cards__footer-split {
   width: 100%;
   text-align: center;
   display: flex;
-  /* justify-content: center;
-  align-content: center;
-  flex-direction: column;
-  color: #BAC4CE; */
+}
+
+.cards__model-container {
+  width: 100%;
+}
+
+.cards__modal-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: auto;
 }

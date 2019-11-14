@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
-import { Button, Icon, Popconfirm } from 'antd';
+import { Modal, Button, Icon, Popconfirm } from 'antd';
 import './Cards.css';
 
 class Cards extends Component {
+  state = {
+    visible: false
+  }
 
   deleteCard = () => {
     this.props.handleDelete(this.props.email)
+  }
+
+  handleModal = () => {
+    this.setState({
+      visible: true
+    })
+  }
+
+  handleCancel = () => {
+    this.setState({
+      visible: false
+    })
   }
 
   render(){
@@ -20,7 +35,24 @@ class Cards extends Component {
           <p className="cards__profile-inner">Student</p>
         </div>
         <div className="cards__footer">
-          <Button className="cards__button-left" icon="user">Profile</Button>
+          <Button className="cards__button-left" onClick={this.handleModal} icon="user">Profile</Button>
+          <Modal
+             title={this.props.name}
+             visible={this.state.visible}
+             onOk={this.handleOk}
+             onCancel={this.handleCancel}
+             footer={[
+                        <Button key="back" onClick={this.handleCancel}>
+                          Return
+                        </Button>
+                      ]}
+          >
+            <div>
+              <div className="cards__modal-container">
+                <img className="cards__modal-img" src={this.props.img}></img>
+              </div>
+            </div>
+           </Modal>
           <div style={{border: '0.5px solid #BEBEBE'}}></div>
           <Popconfirm
             title="Are you sure？"
