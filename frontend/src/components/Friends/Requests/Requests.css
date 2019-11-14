@@ -1,6 +1,6 @@
 .requests__row {
   display: flex;
-  width: 28vw;
+  width: 32vw;
   margin-bottom: 4%;
   padding-bottom: 2%;
   border-bottom: 1px solid #BEBEBE;
@@ -16,6 +16,7 @@
 .requests__body {
   padding-left: 6%;
   padding-right: 10%;
+  width: 50%;
 }
 
 .requests__button-add {

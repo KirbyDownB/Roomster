@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Cards from './Cards';
 import Requests from './Requests/Requests';
-import { Input, Select, Radio, Icon, Popover } from 'antd';
+import { Modal, Input, Select, Radio, Icon, Popover } from 'antd';
 import { BASE_URL } from '../../constants.js';
 
 import './Friends.css';
@@ -10,13 +10,6 @@ const { Search } = Input;
 const eric = require("../../assets/eric.jpg")
 const aditya = require("../../assets/aditya.jpg")
 
-
-const content = (
-  <div>
-    <Requests />
-    <Requests />
-  </div>
-)
 
 class Friends extends Component {
 
@@ -48,7 +41,20 @@ class Friends extends Component {
         "Name": "Aditya Acharya4"
       },
     ],
-    bool: false
+    requestsList: [
+      {
+        "Email": "ericong18@ucr.edu",
+        "Image": eric,
+        "Name": "Eric Ong",
+        "Title": "Lyft Driver"
+      },
+      {
+        "Email": "aacha002@ucr.edu",
+        "Image": aditya,
+        "Name": "Aditya Acharya",
+        "Title": "Uber Driver"
+      }
+    ]
   }
 
   handleSearch = () => {
@@ -56,34 +62,6 @@ class Friends extends Component {
   }
 
   fetchFriends = () => {
-  // let temp =       {
-  //           "Email": "eeong18@ucr.edu",
-  //           "Image": eric,
-  //           "Name": "Eric Ong"
-  //         },
-  //         {
-  //           "Email": "aacha002@ucr.edu",
-  //           "Image": aditya,
-  //           "Name": "Aditya Acharya"
-  //         },
-  //         {
-  //           "Email": "aacha002@ucr.edu",
-  //           "Image": aditya,
-  //           "Name": "Aditya Acharya"
-  //         },
-  //         {
-  //           "Email": "aacha002@ucr.edu",
-  //           "Image": aditya,
-  //           "Name": "Aditya Acharya"
-  //         },
-  //         {
-  //           "Email": "aacha002@ucr.edu",
-  //           "Image": aditya,
-  //           "Name": "Aditya Acharya"
-  //         }
-  //   this.setState({
-  //     friendsList: temp
-  //   })
     //const { img, name } = user;
     // fetch(`${BASE_URL}/friends/list`,{
     //   headers: {
@@ -104,13 +82,32 @@ class Friends extends Component {
     this.fetchFriends()
   }
 
+  handleDeleteRequests = (email) => {
+    this.setState({
+      requestsList: this.state.requestsList.filter(user => user.Email != email)
+    })
+  }
+
   handleDelete = (email) => {
     this.setState({
       friendsList: this.state.friendsList.filter(user => user.Email != email)
     })
   }
 
+  mapRequests = () => {
+    return(
+      <div>
+        {this.state.requestsList.map(({ Email, Image, Name, Title }, index) => {
+          return(
+            <Requests handleDeleteRequests={this.handleDeleteRequests} email={Email} img={Image} name={Name} title={Title} />
+          )
+        })}
+      </div>
+    )
+  }
+
   render(){
+    console.log(this.state.requestsList.length)
     return(
       <div className="container-fluid friends__bg">
         <div className="row">
@@ -135,7 +132,7 @@ class Friends extends Component {
                 <button className="friends__search-filter-inner1">
                   All
                 </button>
-                <Popover title="Friend Requests" placement="bottom" content={content} className="friends__search-filter-inner2" trigger="click">
+                <Popover title="Friend Requests" placement="bottom" content={this.mapRequests()} className="friends__search-filter-inner2" trigger="click">
                   Requests
                 </Popover>
                 <button className="friends__search-filter-inner3">
