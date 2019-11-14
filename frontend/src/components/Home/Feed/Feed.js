@@ -51,22 +51,28 @@ class Feed extends Component {
     const tags = this.state.selectedTags;
     const images = this.state.images;
 
-    const data = { content, tags, images };
+    const formData = new FormData();
+    formData.append("content", content);
+    formData.append("tags", tags);
+    images.forEach(image => formData.append("images", image));
+
+    const token = localStorage.getItem("token");
 
     fetch(`${BASE_URL}/api/posting/add/`, {
       headers: {
-        "Content-Type": "application/json",
-        'Authorization': this.props.match.params.token
+        "Authorization": token
       },
       method: "POST",
-      body: JSON.stringify({ ...data }),
+      body: formData,
     })
       .then(response => response.json())
       .then(data => {
         console.log("Got response after submitting post", data);
         this.setState({
           isNewPostLoading: false,
-          isNewPostModalOpen: false
+          isNewPostModalOpen: false,
+          images: [],
+          selectedTags: []
         });
         showSuccessMessage(NEW_POST_SUCCESS);
       })
