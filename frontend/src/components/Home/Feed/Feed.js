@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Feed.css';
+import Post from './Post/Post';
 import { Button, Icon, Popover, Input, Modal, Select, Form, Upload } from 'antd';
 import {
   showSuccessMessage,
@@ -8,8 +9,10 @@ import {
   dummyRequest,
   BASE_URL,
   NEW_POST_SUCCESS,
-  NEW_POST_ERROR
+  NEW_POST_ERROR,
+  FEED_ERROR,
 } from '../../../constants';
+import { mockPosts, mockLikedEmails, mockDislikedEmails } from '../../../mocks';
 
 const { Option } = Select;
 const { Item } = Form;
@@ -22,7 +25,41 @@ class Feed extends Component {
     isNewPostModalOpen: false,
     selectedTags: [],
     isNewPostLoading: false,
-    images: []
+    images: [],
+    posts: [],
+    likedEmails: [],
+    dislikedEmails: [],
+    isFeedLoading: false
+  }
+
+  componentDidMount = () => {
+    this.setState({
+      posts: mockPosts,
+      likedEmails: mockLikedEmails,
+      dislikedEmails: mockDislikedEmails
+    });
+    // this.setState({ isFeedLoading: true });
+    // const token = localStorage.getItem("token");
+
+    // fetch(`${BASE_URL}/api/posting/all/`, {
+    //   headers: {
+    //     "Authorization": token
+    //   },
+    //   method: "POST",
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log("Got Feed data in componentDidMount", data);
+    //     this.setState({
+    //       isFeedLoading: false,
+    //       posts: data.postings
+    //     });
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //     showErrorMessage(FEED_ERROR);
+    //     this.setState({ isFeedLoading: false });
+    //   });
   }
 
   showFilter = e => {
@@ -146,6 +183,15 @@ class Feed extends Component {
                 New Post
               </Button>
             </div>
+          </div>
+          <div className="row">
+            {this.state.posts.length > 0 && this.state.posts.map(post => {
+              return (
+                <div className="col-6">
+                  <Post {...post} likedEmails={this.state.likedEmails} dislikedEmails={this.state.dislikedEmails} />
+                </div>
+              )
+            })}
           </div>
           <Modal
             visible={this.state.isNewPostModalOpen}

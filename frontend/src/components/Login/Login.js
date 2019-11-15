@@ -105,7 +105,7 @@ class Login extends Component {
   }
 
   render() {
-    if (this.state.redirectHome) {
+    if (localStorage.token) {
       console.log("redirect home")
       return <Redirect push to= "/home" />
     }

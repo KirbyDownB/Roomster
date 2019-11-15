@@ -45,7 +45,6 @@ class Friends extends Component {
     })
     .then(resp => resp.json())
     .then(resp => {
-      console.log(resp)
       this.setState({
         friendsList: resp.friends
       })
@@ -179,7 +178,7 @@ class Friends extends Component {
               </Modal>
             </div>
           </div>
-          <div className="friends__list--container">
+          {this.state.friendsList.length > 0 &&  <div className="friends__list--container">
             <div className="row">
               {this.state.friendsList.map(item => {
                 return (
@@ -190,6 +189,7 @@ class Friends extends Component {
               })}
             </div>
           </div>
+        }
         </div>
       </div>
     )

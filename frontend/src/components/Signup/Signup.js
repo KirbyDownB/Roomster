@@ -17,6 +17,7 @@ import {
   SIGNUP_ERROR,
   durations,
   ethnicities,
+  occupations,
   dummyRequest,
   loginRedirect
 } from '../../constants';
@@ -34,13 +35,12 @@ class Signup extends Component {
     profileImage: null,
     duration: durations[0],
     ethnicity: ethnicities[0],
-    isSignupLoading: false
+    isSignupLoading: false,
+    occupation: occupations[0]
   }
 
   handleSubmit = e => {
     e.preventDefault();
-
-    this.setState({ isSignupLoading: true });
 
     const profileImage = this.state.profileImage;
     if (!profileImage) {
@@ -70,12 +70,15 @@ class Signup extends Component {
       return;
     }
 
+    this.setState({ isSignupLoading: true });
+
     const age = this.state.age;
     const numRoommates = this.state.numRoommates;
     const priceMin = this.state.priceRange[0];
     const priceMax = this.state.priceRange[1];
     const duration = this.state.duration;
     const ethnicity = this.state.ethnicity;
+    const occupation = this.state.occupation;
 
     const allInfo = {
       email,
@@ -90,7 +93,8 @@ class Signup extends Component {
       priceMin,
       priceMax,
       profileImage,
-      duration
+      duration,
+      occupation
     };
     
     this.props.userRegisterFetch(allInfo)
@@ -106,18 +110,6 @@ class Signup extends Component {
       });
   }
 
-  handlePriceRangeChange = priceRange => {
-    this.setState({ priceRange });
-  }
-
-  handleNumRoommatesChange = numRoommates => this.setState({ numRoommates });
-
-  handleAgeChange = age => this.setState({ age });
-
-  handleDurationChange = value => this.setState({ duration: value });
-
-  handleEthnicityChange = value => this.setState({ ethnicity: value });
-
   handleFileChange = info => {
     const { file: { status, name, originFileObj } } = info;
 
@@ -128,6 +120,18 @@ class Signup extends Component {
       showErrorMessage(`${name} couldn't be uploaded.`);
     }
   }
+
+  handlePriceRangeChange = priceRange => this.setState({ priceRange });
+
+  handleNumRoommatesChange = numRoommates => this.setState({ numRoommates });
+
+  handleAgeChange = age => this.setState({ age });
+
+  handleDurationChange = duration => this.setState({ duration });
+
+  handleOccupationChange = occupation => this.setState({ occupation });
+
+  handleEthnicityChange = ethnicity => this.setState({ ethnicity });
 
   render(){
     return(
@@ -277,6 +281,21 @@ class Signup extends Component {
                           </Item>
                         </div>
                         <div className="col-6">
+                          <Item>
+                            <p className="signup__formBody">Occupation <span className="signup__red">*</span></p>
+                            <Select
+                              showSearch
+                              className="signup__duration"
+                              defaultValue={occupations[0]}
+                              onChange={this.handleOccupationChange}
+                            >
+                              {occupations.map(occupationOption => <Option value={occupationOption}>{occupationOption}</Option>)}
+                            </Select>
+                          </Item>
+                        </div>
+                      </div>
+                      <div className="row justify-content-center">
+                        <div className="col-12">
                           <Item>
                             <p className="signup__formBody signup__priceRange--title">Price Range <span className="signup__red">*</span></p>
                             <Slider
