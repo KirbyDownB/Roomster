@@ -5,3 +5,6 @@ migrations/
 __pycache__/*
 __pycache__/
 keys.py 
+flask.pem
+.DS_Store
+apis/__init__.pyc

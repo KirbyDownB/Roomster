@@ -5,6 +5,7 @@ from sqlalchemy import exc
 from .models import User
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
+import json
 
 api = Namespace('update_profile', description='Profile update related operations')
 parser = api.parser()
@@ -41,13 +42,14 @@ class update_profile(Resource):
         except:
             return {"Message":"Failed to decode token"}
 
+        print(decToken)
 
-        user_data = User.query.filter_by(email=decToken['email']).first()
+        user_data = User.objects(email=decToken['email'])
         
-        if user_data is not None:
-            user_profile_data = user_data.__dict__
+        if len(user_data) == 1:
+            user_profile_data = json.loads(user_data[0].to_json())
             print(user_profile_data)
-            del user_profile_data['_sa_instance_state']
+           
             del user_profile_data['password_hash']
             # token = token.decode('utf-8')
             return {"Message":"Data retrieval successful", "user": user_profile_data , "token":token}
@@ -88,7 +90,9 @@ class update_profile(Resource):
 
 
 
-        user_email = decToken['email']
+        user_email = decToken.get('email')
+        if user_email is None:
+            return {"Message":"Token machine BROKE"}
 
         user_data = User.object(email=user_email)
 

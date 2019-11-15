@@ -41,6 +41,12 @@ from .passwordreset import api as ns_passwordreset
 from .listings import api as ns_listings
 from .update_profile import api as ns_update_profile
 from .search import api as ns_search
+from .friends import api as ns_friends
+from .retrieve_profile import api as ns_retrieve_profile
+from .posting import api as ns_posting
+from .like import api as ns_like
+from .dislike import api as ns_dislike
+
 
 api.add_namespace(ns_login, path='/api/login')
 api.add_namespace(ns_signup, path='/api/signup')
@@ -48,3 +54,8 @@ api.add_namespace(ns_passwordreset, path="/api/reset")
 api.add_namespace(ns_listings, path='/api/listings')
 api.add_namespace(ns_update_profile, path='/api/update_profile')
 api.add_namespace(ns_search, path='/api/search')
+api.add_namespace(ns_friends,path='/api/friends')
+api.add_namespace(ns_retrieve_profile, path='/api/retrieve_profile')
+api.add_namespace(ns_posting, path='/api/posting')
+api.add_namespace(ns_like, path='/api/like')
+api.add_namespace(ns_dislike, path='/api/dislike')
