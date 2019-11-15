@@ -93,7 +93,7 @@ python-http-client==3.1.0
 python-jwt==2.0.1
 python-slugify==3.0.6
 pytz==2019.3
-PyYAML==3.13
+PyYAML==5.1
 requests==2.22.0
 requests-aws4auth==0.9
 requests-toolbelt==0.7.0
