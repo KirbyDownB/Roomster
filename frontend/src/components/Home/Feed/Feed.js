@@ -11,12 +11,13 @@ import {
   NEW_POST_SUCCESS,
   NEW_POST_ERROR,
   FEED_ERROR,
+  FEED_SEARCH_ERROR
 } from '../../../constants';
 import { mockPosts, mockLikedEmails, mockDislikedEmails } from '../../../mocks';
 
 const { Option } = Select;
 const { Item } = Form;
-const { TextArea } = Input;
+const { TextArea, Search } = Input;
 const { Dragger } = Upload;
 
 class Feed extends Component {
@@ -27,39 +28,42 @@ class Feed extends Component {
     isNewPostLoading: false,
     images: [],
     posts: [],
-    likedEmails: [],
-    dislikedEmails: [],
-    isFeedLoading: false
+    likedIds: [],
+    dislikedIds: [],
+    isFeedLoading: false,
+    isFeedSearchLoading: false
   }
 
   componentDidMount = () => {
-    this.setState({
-      posts: mockPosts,
-      likedEmails: mockLikedEmails,
-      dislikedEmails: mockDislikedEmails
-    });
-    // this.setState({ isFeedLoading: true });
-    // const token = localStorage.getItem("token");
+    // this.setState({
+    //   posts: mockPosts,
+    //   likedEmails: mockLikedEmails,
+    //   dislikedEmails: mockDislikedEmails
+    // });
+    this.setState({ isFeedLoading: true });
+    const token = localStorage.getItem("token");
 
-    // fetch(`${BASE_URL}/api/posting/all/`, {
-    //   headers: {
-    //     "Authorization": token
-    //   },
-    //   method: "POST",
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log("Got Feed data in componentDidMount", data);
-    //     this.setState({
-    //       isFeedLoading: false,
-    //       posts: data.postings
-    //     });
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //     showErrorMessage(FEED_ERROR);
-    //     this.setState({ isFeedLoading: false });
-    //   });
+    fetch(`${BASE_URL}/api/posting/all/`, {
+      headers: {
+        "Authorization": token
+      },
+      method: "POST",
+    })
+      .then(response => response.json())
+      .then(({ postings, likedIds, dislikedIds }) => {
+        console.log("Got Feed data in componentDidMount", postings, likedIds, dislikedIds);
+        this.setState({
+          isFeedLoading: false,
+          posts: postings,
+          likedIds,
+          dislikedIds
+        });
+      })
+      .catch(error => {
+        console.error(error);
+        showErrorMessage(FEED_ERROR);
+        this.setState({ isFeedLoading: false });
+      });
   }
 
   showFilter = e => {
@@ -137,6 +141,33 @@ class Feed extends Component {
     }
   }
 
+  handleFeedSearch = query => {
+    this.setState({ isFeedSearchLoading: true });
+
+    fetch(`${BASE_URL}/api/search/content_and_tags/`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        content_and_tags_data: query
+      })
+    })
+      .then(response => response.json())
+      .then(({ results }) => {
+        console.log("Response after SEARCHING FEED", results);
+        this.setState({
+          isFeedSearchLoading: false,
+          posts: results
+        });
+      })
+      .catch(error => {
+        console.error(error);
+        showErrorMessage(FEED_SEARCH_ERROR);
+        this.setState({ isFeedSearchLoading: false });
+      })
+  }
+
   render() {
     return (
       <div className="feed__container">
@@ -146,12 +177,7 @@ class Feed extends Component {
               <h2 className="feed__title">Feed</h2>
             </div>
             <div className="col-10">
-              <Input
-                prefix={<Icon type="search"/>}
-                placeholder="Search for posts"
-                className="feed__search-input"
-                onPressEnter={this.handleSearch}
-              />
+              <Search onSearch={this.handleFeedSearch} loading enterButton />
             </div>
           </div>
           <div className="row">
@@ -188,7 +214,7 @@ class Feed extends Component {
             {this.state.posts.length > 0 && this.state.posts.map(post => {
               return (
                 <div className="col-6">
-                  <Post {...post} likedEmails={this.state.likedEmails} dislikedEmails={this.state.dislikedEmails} />
+                  <Post {...post} likedIds={this.state.likedIds} dislikedIds={this.state.dislikedIds} />
                 </div>
               )
             })}

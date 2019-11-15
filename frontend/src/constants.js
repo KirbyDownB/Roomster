@@ -16,6 +16,7 @@ export const GENERAL_ERROR = "Something went wrong!";
 export const NUM_IMAGE_UPLOAD_ERROR = "Please upload no more than 5 images!";
 export const ADD_FRIEND_ERROR = "Sorry, we had trouble finding a user with that email";
 export const FEED_ERROR = "Sorry, we had trouble loading your feed!";
+export const FEED_SEARCH_ERROR = "Sorry, we had trouble with searching!";
 export const REACTION_ERROR = "An issue occurred when trying to record your reaction.";
 export const durations = ["0 - 6 months", "6 months - 1 year", "1 year +"];
 export const ethnicities = [
@@ -76,6 +77,11 @@ export const postTags = [
   "new beginnings",
   "happy",
   "searching"
+]
+export const genders = [
+  "Male",
+  "Female",
+  "Other"
 ]
 
 export const showErrorMessage = text => message.error(text);

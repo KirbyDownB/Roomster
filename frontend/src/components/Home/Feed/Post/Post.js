@@ -3,46 +3,50 @@ import { Carousel, Tag, Icon, Tooltip} from 'antd';
 import './Post.css';
 import { BASE_URL, showErrorMessage, REACTION_ERROR } from '../../../../constants';
 
+const moment = require('moment');
+
 class Post extends Component {
   state = {
     numLikes: 0,
     numDislikes: 0,
-    likedEmails: [],
-    dislikedEmails: []
+    likedIds: [],
+    dislikedIds: []
   }
 
   componentDidMount = () => {
     this.setState({
-      numLikes: this.props.numLikes,
-      numDislikes: this.props.numDislikes,
-      likedEmails: this.props.likedEmails,
-      dislikedEmails: this.props.dislikedEmails
+      numLikes: this.props.likedEmails.length,
+      numDislikes: this.props.dislikedEmails.length,
+      likedIds: this.props.likedIds,
+      dislikedIds: this.props.dislikedIds
     });
   }
 
-  handlePostLike = (e, posterEmail, likedEmails) => {
+  handlePostLike = (e, postId, likedIds) => {
     e.preventDefault();
 
-    if (likedEmails.includes(posterEmail)) {
+    if (likedIds.includes(postId)) {
       return;
     }
 
     const token = localStorage.getItem("token");
 
-    fetch(`${BASE_URL}/api/postings/dislike/`, {
+    fetch(`${BASE_URL}/api/like/`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": token
       },
       method: "POST",
-      body: JSON.stringify({ posterEmail })
+      body: JSON.stringify({
+        posting_id: postId
+      })
     })
       .then(response => response.json())
       .then(data => {
         console.log("Response after LIKING post", data);
         this.setState({
           numLikes: this.state.numLikes + 1,
-          likedEmails: [...this.state.likedEmails, posterEmail]
+          likedIds: [...this.state.likedIds, postId]
         });
       })
       .catch(error => {
@@ -51,29 +55,31 @@ class Post extends Component {
       });
   }
 
-  handlePostDislike = (e, posterEmail, dislikedEmails) => {
+  handlePostDislike = (e, postId, dislikedIds) => {
     e.preventDefault();
 
-    if (dislikedEmails.includes(posterEmail) || this.state.numDislikes === 0) {
+    if (dislikedIds.includes(postId)) {
       return;
     }
 
     const token = localStorage.getItem("token");
 
-    fetch(`${BASE_URL}/api/postings/dislike/`, {
+    fetch(`${BASE_URL}/api/dislike/`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": token
       },
       method: "POST",
-      body: JSON.stringify({ posterEmail })
+      body: JSON.stringify({
+        posting_id: postId
+      })
     })
       .then(response => response.json())
       .then(data => {
         console.log("Response after DISLIKING post", data);
         this.setState({
-          numDislikes: this.state.numDislikes - 1,
-          dislikedEmails: [...this.state.dislikedEmails, posterEmail]
+          numDislikes: this.state.numDislikes + 1,
+          dislikedIds: [...this.state.dislikedIds, postId]
         });
       })
       .catch(error => {
@@ -83,13 +89,13 @@ class Post extends Component {
   }
 
   render() {
-    const { name, date, content, images, tags, poster_email: posterEmail } = this.props;
-    const { numLikes, numDislikes, likedEmails, dislikedEmails } = this.state;
+    const { name, date, content, images, tags, posting_id: postId } = this.props;
+    const { numLikes, numDislikes, likedIds, dislikedIds } = this.state;
 
-    return (
+    return (  
       <div className="post__container">
         <div className="post__name">{name}</div>
-        <div className="post__date">{date}</div>
+        <div className="post__date">{moment(date).format('MMMM Do, YYYY')}</div>
         <div className="post__images">
           {
             images.length > 0 &&
@@ -99,7 +105,7 @@ class Post extends Component {
               effect="fade"
               autoplay
             >
-              {images.map(image => <img className="post__image" src={image} alt=""/>)}
+              {images.map(url => <img className="post__image" src={url} alt=""/>)}
             </Carousel>
           }
         </div>
@@ -112,8 +118,8 @@ class Post extends Component {
             <Icon
               className="post__react"
               type="like"
-              theme={likedEmails.includes(posterEmail) ? "filled" : "outlined"}
-              onClick={e => this.handlePostLike(e, posterEmail, likedEmails)}
+              theme={likedIds.includes(postId) ? "filled" : "outlined"}
+              onClick={e => this.handlePostLike(e, postId, likedIds)}
             />
           </Tooltip>
           <span className="post__react--count">{numLikes}</span>
@@ -121,8 +127,8 @@ class Post extends Component {
             <Icon
               className="post__react"
               type="dislike"
-              theme={dislikedEmails.includes(posterEmail) ? "filled" : "outlined"}
-              onClick={e => this.handlePostDislike(e, posterEmail, dislikedEmails)}
+              theme={dislikedIds.includes(postId) ? "filled" : "outlined"}
+              onClick={e => this.handlePostDislike(e, postId, dislikedIds)}
             />
           </Tooltip>
           <span className="post__react--count">{numDislikes}</span>

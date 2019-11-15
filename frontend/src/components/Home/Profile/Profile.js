@@ -115,6 +115,8 @@ class Profile extends Component {
   }
 
   render() {
+    console.log(this.state.priceLow)
+
     return (
       <div className="profile__container">
         <div className="container-fluid">
