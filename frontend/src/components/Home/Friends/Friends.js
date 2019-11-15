@@ -45,6 +45,7 @@ class Friends extends Component {
     })
     .then(resp => resp.json())
     .then(resp => {
+      console.log(resp)
       this.setState({
         friendsList: resp.friends
       })
@@ -180,11 +181,10 @@ class Friends extends Component {
           </div>
           <div className="friends__list--container">
             <div className="row">
-              {this.state.friendsList.map(({ pf_pic, occupation, name, email }, index) => {
-                console.log(email)
+              {this.state.friendsList.map(item => {
                 return (
                   <div className="col-3">
-                    <Cards handleDelete={this.handleDelete} title={occupation} email={email} img={pf_pic} name={name}/>
+                    <Cards handleDelete={this.handleDelete} {...item}/>
                   </div>
                 )
               })}

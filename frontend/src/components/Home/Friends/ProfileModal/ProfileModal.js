@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { Button, Icon } from 'antd';
+import './ProfileModal.css';
 import { BASE_URL } from '../../../../constants.js';
+
 
 class ProfileModal extends Component {
 
@@ -7,30 +10,67 @@ class ProfileModal extends Component {
 
   }
 
-  fetchProfile = () => {
-    const token = localStorage.token
-    fetch(`${BASE_URL}/api/retrieve_profile/`, {
-      headers: {
-        "Content": "application/json",
-        "Authorization": token
-      },
-      method: "GET"
-    })
-    .then(resp => resp.json())
-    .then(resp => {
-      console.log("hey");
-      console.log(resp);
-    })
-  }
-
-  componentDidMount(){
-    this.fetchProfile()
-  }
-
   render(){
+    console.log(this.props)
     return(
       <div>
-        {this.props.email}
+        <div className="profilemodal__header">
+          <div className="profilemodal__image-container">
+            <img className="profilemodal__image" src={this.props.pf_pic}></img>
+          </div>
+          <div className="profilemodal__header-text">
+            <h4 className="profilemodal__header-name">{this.props.name}</h4>
+            <h6 className="profilemodal__header-occupation">{this.props.occupation}</h6>
+          </div>
+          <div className="profilemodal__button-container">
+            <Button className="profilemodal__button-1" icon="user" type="primary">Posts</Button>
+            <Button className="profilemodal__button-2" icon="user" type="primary">Lorem</Button>
+          </div>
+        </div>
+        <div className="container-fluid profilemodal__body">
+          <div className="row profilemodal__body-container">
+            <div className="col-6 profilemodal__col">
+              <div className="profilemodal__icon-container">
+                <Icon className="profilemodal__icon" type="mail"/>
+                <p className="profilemodal__icon-text"style={{margin: '0'}}>{this.props.email}</p>
+              </div>
+            </div>
+            <div className="col-6 profilemodal__col">
+              <div className="profilemodal__icon-container">
+                <Icon className="profilemodal__icon" type="user"/>
+                <p className="profilemodal__icon-text"style={{margin: '0'}}>{this.props.ethnicity}</p>
+              </div>
+            </div>
+          </div>
+          <div className="row profilemodal__body-container">
+            <div className="col-6 profilemodal__col">
+              <div className="profilemodal__icon-container">
+                <Icon className="profilemodal__icon" type="environment"/>
+                <p className="profilemodal__icon-text"style={{margin: '0'}}>{this.props.location_of_interest}</p>
+              </div>
+            </div>
+            <div className="col-6 profilemodal__col">
+              <div className="profilemodal__icon-container">
+                <Icon className="profilemodal__icon" type="calendar"/>
+                <p className="profilemodal__icon-text"style={{margin: '0'}}>{this.props.duration}</p>
+              </div>
+            </div>
+          </div>
+          <div className="row profilemodal__body-container">
+            <div className="col-6 profilemodal__col">
+              <div className="profilemodal__icon-container">
+                <Icon className="profilemodal__icon" type="phone"/>
+                <p className="profilemodal__icon-text"style={{margin: '0'}}>{this.props.phone_number}</p>
+              </div>
+            </div>
+            <div className="col-6 profilemodal__col">
+              <div className="profilemodal__icon-container">
+                <Icon className="profilemodal__icon" type="home"/>
+                <p className="profilemodal__icon-text"style={{margin: '0'}}>{this.props.address}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
