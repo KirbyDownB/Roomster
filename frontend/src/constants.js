@@ -1,6 +1,6 @@
 import { message } from 'antd';
 
-export const BASE_URL = 'http://70a8f60d.ngrok.io';
+export const BASE_URL = "http://06f004f5.ngrok.io";
 export const inputIconColor = { color: 'rgba(0, 0, 0)' };
 export const PASSWORD_MATCH_ERROR = "Your passwords don't match!";
 export const EMPTY_INPUT_ERROR = "You left an input field empty!";
@@ -75,61 +75,6 @@ export const postTags = [
   "new beginnings",
   "happy",
   "searching"
-]
-
-// possible categories: listing, meetup, 
-
-export const mockPosts = [
-  {
-    name: "Eric Ong",
-    date: "November 13, 2019",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    tags: ["tag1", "tag2"],
-    images: ["https://firebasestorage.googleapis.com/v0/b/cs180profilepictures.appspot.com/o/Eric%20Ong11%2F13%2F20190?alt=media", "https://firebasestorage.googleapis.com/v0/b/cs180profilepictures.appspot.com/o/Eric%20Ong11%2F13%2F20190?alt=media"],
-    numLikes: 1,
-    numDislikes: 1,
-    posterEmail: "eric4ong@gmail.com"
-  },
-  {
-    name: "Eric Ong",
-    date: "November 13, 2019",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    tags: ["tag1", "tag2"],
-    images: [],
-    numLikes: 1,
-    numDislikes: 1,
-    posterEmail: "eric4ong@gmail.com"
-  },
-  {
-    name: "Eric Ong",
-    date: "November 13, 2019",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    tags: ["tag1", "tag2"],
-    images: [],
-    numLikes: 1,
-    numDislikes: 1,
-    posterEmail: "eric4ong@gmail.com"
-  },
-  {
-    name: "Eric Ong",
-    date: "November 13, 2019",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    tags: ["tag1", "tag2"],
-    images: [],
-    numLikes: 1,
-    numDislikes: 1,
-    posterEmail: "eric4ong@gmail.com"
-  },
-  {
-    name: "Eric Ong",
-    date: "November 13, 2019",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    tags: ["tag1", "tag2"],
-    images: [],
-    numLikes: 1,
-    numDislikes: 1,
-    posterEmail: "eric4ong@gmail.com"
-  }
 ]
 
 export const showErrorMessage = text => message.error(text);

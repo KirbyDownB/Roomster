@@ -11,8 +11,8 @@ import {
   NEW_POST_SUCCESS,
   NEW_POST_ERROR,
   FEED_ERROR,
-  mockPosts
 } from '../../../constants';
+import { mockPosts, mockLikedEmails, mockDislikedEmails } from '../../../mocks';
 
 const { Option } = Select;
 const { Item } = Form;
@@ -27,32 +27,39 @@ class Feed extends Component {
     isNewPostLoading: false,
     images: [],
     posts: [],
+    likedEmails: [],
+    dislikedEmails: [],
     isFeedLoading: false
   }
 
   componentDidMount = () => {
-    this.setState({ isFeedLoading: true });
-    const token = localStorage.getItem("token");
+    this.setState({
+      posts: mockPosts,
+      likedEmails: mockLikedEmails,
+      dislikedEmails: mockDislikedEmails
+    });
+    // this.setState({ isFeedLoading: true });
+    // const token = localStorage.getItem("token");
 
-    fetch(`${BASE_URL}/api/posting/all/`, {
-      headers: {
-        "Authorization": token
-      },
-      method: "POST",
-    })
-      .then(response => response.json())
-      .then(({ postings }) => {
-        console.log("Got Feed data in componentDidMount", postings);
-        this.setState({
-          isFeedLoading: false,
-          posts: postings
-        });
-      })
-      .catch(error => {
-        console.error(error);
-        showErrorMessage(FEED_ERROR);
-        this.setState({ isFeedLoading: false });
-      });
+    // fetch(`${BASE_URL}/api/posting/all/`, {
+    //   headers: {
+    //     "Authorization": token
+    //   },
+    //   method: "POST",
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log("Got Feed data in componentDidMount", data);
+    //     this.setState({
+    //       isFeedLoading: false,
+    //       posts: data.postings
+    //     });
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //     showErrorMessage(FEED_ERROR);
+    //     this.setState({ isFeedLoading: false });
+    //   });
   }
 
   showFilter = e => {
@@ -181,7 +188,7 @@ class Feed extends Component {
             {this.state.posts.length > 0 && this.state.posts.map(post => {
               return (
                 <div className="col-6">
-                  <Post {...post} />
+                  <Post {...post} likedEmails={this.state.likedEmails} dislikedEmails={this.state.dislikedEmails} />
                 </div>
               )
             })}
