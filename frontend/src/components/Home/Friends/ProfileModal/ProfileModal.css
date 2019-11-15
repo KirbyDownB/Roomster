@@ -1,0 +1,81 @@
+.profilemodal__header {
+  padding-bottom: 4%;
+}
+
+.profilemodal__image {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.4);
+}
+
+.profilemodal__image-container {
+  padding-top: 8%;
+  text-align: center;
+  align-items: center;
+  margin: auto;
+  width: 65%;
+}
+
+.profilemodal__header-text {
+  text-align: center;
+  padding-top: 4%;
+}
+
+.profilemodal__header-name {
+  margin: 0;
+}
+
+.profilemodal__header-occupation {
+  color: #BEBEBE;
+  margin: 0;
+  padding-top: 2%;
+}
+
+.profilemodal__button-container {
+  text-align: center;
+  padding-top: 4%;
+}
+
+.profilemodal__button-1, .profilemodal__button-2 {
+  border-radius: 15px;
+  width: 40%;
+}
+
+.profilemodal__button-1 {
+  margin-right: 5px;
+}
+
+.profilemodal__button-2 {
+  margin-left: 5px;
+}
+
+.profilemodal__body-container {
+  padding-top: 2%;
+}
+
+.profilemodal__body-text {
+  font-weight: 600;
+  color: #F57676;
+  margin: 0;
+}
+
+.profilemodal__col {
+  display: flex;
+  text-align: center;
+}
+
+.profilemodal__icon-container {
+  display: flex;
+  align-items: center;
+}
+
+.profilemodal__icon {
+  color: #F57676;
+  padding-right: 10px !important;
+}
+
+.profilemodal__icon-text {
+  padding-bottom: 1.5px;
+}

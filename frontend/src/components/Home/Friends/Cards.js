@@ -25,20 +25,20 @@ class Cards extends Component {
   }
 
   render(){
+    console.log(this.props)
     return(
       <div className="cards__bg">
         <div className="cards__profile-wrapper">
-          <img src={this.props.img} className="cards__profile-pic">
+          <img src={this.props.pf_pic} className="cards__profile-pic">
           </img>
           <p className="cards__profile-name">{this.props.name}</p>
         </div>
         <div className="cards__profile-title">
-          <p className="cards__profile-inner">{this.props.title}</p>
+          <p className="cards__profile-inner">{this.props.occupation}</p>
         </div>
         <div className="cards__footer">
           <Button className="cards__button-left" onClick={this.handleModal} icon="user">Profile</Button>
           <Modal
-             title={this.props.name}
              visible={this.state.visible}
              onOk={this.handleOk}
              onCancel={this.handleCancel}
@@ -47,8 +47,9 @@ class Cards extends Component {
                           Return
                         </Button>
                       ]}
+            width="30vw"
           >
-            <ProfileModal email={this.props.email} />
+            <ProfileModal {...this.props} />
            </Modal>
           <div style={{border: '0.5px solid #BEBEBE'}}></div>
           <Popconfirm

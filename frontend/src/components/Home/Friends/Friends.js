@@ -178,18 +178,18 @@ class Friends extends Component {
               </Modal>
             </div>
           </div>
-          <div className="friends__list--container">
+          {this.state.friendsList.length > 0 &&  <div className="friends__list--container">
             <div className="row">
-              {this.state.friendsList.map(({ pf_pic, occupation, name, email }, index) => {
-                console.log(email)
+              {this.state.friendsList.map(item => {
                 return (
                   <div className="col-3">
-                    <Cards handleDelete={this.handleDelete} title={occupation} email={email} img={pf_pic} name={name}/>
+                    <Cards handleDelete={this.handleDelete} {...item}/>
                   </div>
                 )
               })}
             </div>
           </div>
+        }
         </div>
       </div>
     )
