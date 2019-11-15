@@ -32,9 +32,14 @@ class Friends extends Component {
     })
     .then(resp => resp.json())
     .then(resp => {
-      this.setState({
-        friendsList: resp.friends
-      })
+      if (resp.friends){
+        this.setState({
+          friendsList: resp.friends
+        })
+      }
+      else {
+        //error handling
+      }
     })
   }
 
