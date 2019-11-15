@@ -12,6 +12,7 @@ class User(db.DynamicDocument):
     # address = db.StringField()
     phone_number = db.StringField()
     date_of_birth = db.StringField()
+    gender = db.StringField()
     range = db.StringField()
     location_of_interest =db.StringField()
     age = db.StringField()
