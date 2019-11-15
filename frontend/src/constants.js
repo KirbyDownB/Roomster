@@ -14,6 +14,7 @@ export const SIGNUP_ERROR = "An issue occurred when trying to sign you up.";
 export const LOGIN_ERROR = "Sorry, we had trouble logging you in!";
 export const GENERAL_ERROR = "Something went wrong!";
 export const NUM_IMAGE_UPLOAD_ERROR = "Please upload no more than 5 images!";
+export const ADD_FRIEND_ERROR = "Sorry, we had trouble finding a user with that email";
 export const FEED_ERROR = "Sorry, we had trouble loading your feed!";
 export const REACTION_ERROR = "An issue occurred when trying to record your reaction.";
 export const durations = ["0 - 6 months", "6 months - 1 year", "1 year +"];
