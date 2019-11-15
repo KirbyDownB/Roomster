@@ -12,13 +12,26 @@ api = Namespace('search', description='Search related operations')
 name_data = api.model('name_data', {"name": fields.String(description="name data")})
 
 content_and_tags_data = api.model('content_and_tags_data', {"content_and_tags_data": fields.String(description="content and tags data")})
-
+search_data = api.model('search', {
+    'first_name': fields.String(description="First Name", default=""),
+    'last_name':fields.String(description="Last Name", default=""),
+    'address': fields.String(description="Address", default=""),
+    'phone_number':fields.String(description="Phone Number", default=""),
+    'age': fields.String(description="Age", default=""),
+    'range': fields.String(description="Range", default=""),
+    'location_of_interest': fields.String(description="Location", default=""),
+    'ethnicity' : fields.String(description='Ethnicity', default=""),
+    'range_max' : fields.String(description='Range Max', default=""),
+    'range_min':fields.String(description='Range Min', default=""),
+    'num_roommates': fields.String(description='Number of Roommates', default=""),
+    'duration' : fields.String(description='Duration', default="")
+})
 @api.route('/')
 class Search(Resource):
     def get(self):
         return {"Message":"You sent a GET request"}
 
-    @api.expect(name_data)
+    @api.expect(search_data)
     def post(self):
     
         data = api.payload
