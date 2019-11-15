@@ -52,12 +52,12 @@ class Feed extends Component {
       .then(response => response.json())
       .then(({ postings, likedIds, dislikedIds }) => {
         console.log("Got Feed data in componentDidMount", postings, likedIds, dislikedIds);
-        this.setState({
+        this.setState(prevState => ({
           isFeedLoading: false,
           posts: postings,
           likedIds,
           dislikedIds
-        });
+        }));
       })
       .catch(error => {
         console.error(error);
@@ -158,14 +158,24 @@ class Feed extends Component {
         console.log("Response after SEARCHING FEED", results);
         this.setState({
           isFeedSearchLoading: false,
-          posts: results
+          posts: []
         });
+        console.log(results);
+        this.setState(prevState => ({ posts: [...results] }));
       })
       .catch(error => {
         console.error(error);
         showErrorMessage(FEED_SEARCH_ERROR);
         this.setState({ isFeedSearchLoading: false });
       })
+  }
+
+  addLikedId = postId => {
+    this.setState(prevState => ({ likedIds: [...prevState.likedIds, postId] }))
+  }
+
+  addDislikedId = postId => {
+    this.setState(prevState => ({ dislikedIds: [...prevState.dislikedIds, postId] }))
   }
 
   render() {
@@ -212,9 +222,24 @@ class Feed extends Component {
           </div>
           <div className="row">
             {this.state.posts.length > 0 && this.state.posts.map(post => {
+              console.log("Mapping post", post);
+
+              const hasLiked = this.state.likedIds.includes(post.posting_id);
+              const hasDisliked = this.state.dislikedIds.includes(post.posting_id);
+
               return (
                 <div className="col-6">
-                  <Post {...post} likedIds={this.state.likedIds} dislikedIds={this.state.dislikedIds} />
+                  <Post
+                    likes={post.likedEmails.length}
+                    dislikes={post.dislikedEmails.length}
+                    {...post}
+                    likedIds={this.state.likedIds}
+                    dislikedIds={this.state.dislikedIds}
+                    hasLiked={hasLiked}
+                    hasDisliked={hasDisliked}
+                    addLikedId={this.addLikedId}
+                    addDislikedId={this.addDislikedId}
+                  />
                 </div>
               )
             })}

@@ -9,23 +9,24 @@ class Post extends Component {
   state = {
     numLikes: 0,
     numDislikes: 0,
-    likedIds: [],
-    dislikedIds: []
+    hasLiked: false,
+    hasDisliked: false
   }
 
   componentDidMount = () => {
+    console.log(this.props);
     this.setState({
-      numLikes: this.props.likedEmails.length,
-      numDislikes: this.props.dislikedEmails.length,
-      likedIds: this.props.likedIds,
-      dislikedIds: this.props.dislikedIds
+      numLikes: this.props.likes,
+      numDislikes: this.props.dislikes,
+      hasLiked: this.props.hasLiked,
+      hasDisliked: this.props.hasDisliked
     });
   }
 
-  handlePostLike = (e, postId, likedIds) => {
+  handlePostLike = (e, postId, hasLiked) => {
     e.preventDefault();
 
-    if (likedIds.includes(postId)) {
+    if (hasLiked) {
       return;
     }
 
@@ -44,10 +45,11 @@ class Post extends Component {
       .then(response => response.json())
       .then(data => {
         console.log("Response after LIKING post", data);
-        this.setState({
-          numLikes: this.state.numLikes + 1,
-          likedIds: [...this.state.likedIds, postId]
-        });
+        this.props.addLikedId(postId);
+        this.setState(prevState => ({
+          numLikes: prevState.numLikes + 1,
+          hasLiked: true
+        }));
       })
       .catch(error => {
         console.error(error);
@@ -55,10 +57,12 @@ class Post extends Component {
       });
   }
 
-  handlePostDislike = (e, postId, dislikedIds) => {
+  handlePostDislike = (e, postId, hasDisliked) => {
     e.preventDefault();
 
-    if (dislikedIds.includes(postId)) {
+    console.log("Got postId", postId);
+
+    if (hasDisliked) {
       return;
     }
 
@@ -77,10 +81,11 @@ class Post extends Component {
       .then(response => response.json())
       .then(data => {
         console.log("Response after DISLIKING post", data);
-        this.setState({
-          numDislikes: this.state.numDislikes + 1,
-          dislikedIds: [...this.state.dislikedIds, postId]
-        });
+        this.props.addDislikedId(postId);
+        this.setState(prevState => ({
+          numDislikes: prevState.numDislikes + 1,
+          hasDisliked: true
+        }));
       })
       .catch(error => {
         console.error(error);
@@ -90,7 +95,7 @@ class Post extends Component {
 
   render() {
     const { name, date, content, images, tags, posting_id: postId } = this.props;
-    const { numLikes, numDislikes, likedIds, dislikedIds } = this.state;
+    const { hasLiked, hasDisliked } = this.state;
 
     return (  
       <div className="post__container">
@@ -118,20 +123,20 @@ class Post extends Component {
             <Icon
               className="post__react"
               type="like"
-              theme={likedIds.includes(postId) ? "filled" : "outlined"}
-              onClick={e => this.handlePostLike(e, postId, likedIds)}
+              theme={hasLiked ? "filled" : "outlined"}
+              onClick={e => this.handlePostLike(e, postId, hasLiked)}
             />
           </Tooltip>
-          <span className="post__react--count">{numLikes}</span>
+          <span className="post__react--count">{this.state.numLikes}</span>
           <Tooltip title="Dislike">
             <Icon
               className="post__react"
               type="dislike"
-              theme={dislikedIds.includes(postId) ? "filled" : "outlined"}
-              onClick={e => this.handlePostDislike(e, postId, dislikedIds)}
+              theme={hasDisliked ? "filled" : "outlined"}
+              onClick={e => this.handlePostDislike(e, postId, hasDisliked)}
             />
           </Tooltip>
-          <span className="post__react--count">{numDislikes}</span>
+          <span className="post__react--count">{this.state.numDislikes}</span>
         </div>
       </div>
     )
