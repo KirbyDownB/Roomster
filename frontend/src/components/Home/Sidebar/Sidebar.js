@@ -17,7 +17,7 @@ class Sidebar extends Component {
     return (
       <Menu
         onSelect={this.handleMenuSelect}
-        style={{ height: "100vh", width: 256, marginLeft: -15 }}
+        style={{ height: "100vh", width: 256, marginLeft: -15, position: "fixed" }}
         defaultSelectedKeys={["feed"]}
         mode="inline"
       >
@@ -42,7 +42,7 @@ class Sidebar extends Component {
           className="menu__item"
           key="friends"
         >
-          <Icon type="user-add" />
+          <Icon type="team" />
           <span className="menu__text">Friends</span>
         </Item>
         <div className="menu__logout--container">
