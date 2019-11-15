@@ -48,7 +48,7 @@ class Signup(Resource):
 
 
         if len(User.objects(email=data.get('email'))) > 0:
-            return  {"Message":"Sorry! Another user has already used that email to sign up. Please try using a different one to get started with Roomster."}
+            return  {"Message":"Sorry! Another user has already used that email to sign up. Please try using a different one to get started with Roomster."}, 400
 
         user_data = User(email=data.get('email'), first_name=data.get('firstName'),\
         last_name=data.get('lastName'), phone_number=data.get('phoneNumber'), \

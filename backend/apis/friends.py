@@ -28,18 +28,19 @@ def tokenToEmail(args):
 
     return  decToken.get('email')
 
-def emailExists(email):
+def emailExists(email,option):
 
     u = User.objects(email=email)
 
     if len(u) != 1: # does not exist
         return False, {}
-    else:
+    elif len(u) == 1 and option == 1:
         return True, u[0]
+    elif len(u) ==1 and option == 2:
+        return True, u
 
 
-
-@api.route('/add/')
+@api.route('/request/')
 class FriendsAdd(Resource):
 
     @api.doc('Access Token and add friend' ,parser=parser,body=friend_data)
@@ -53,33 +54,90 @@ class FriendsAdd(Resource):
             return {"Message":"You cannot add yourself as a friend"}
         if user_email is None:
             return {"Message":"Token Machine Broke"}, 400
-        exists, user_obj = emailExists(user_email)
+        exists, user_obj = emailExists(user_email,2)
         if not exists:
             return {"Message":"Token email DNE"}, 400
-        exists, friend_obj = emailExists(data.get('friend'))
+        exists, friend_obj = emailExists(data.get('friend'),1)
         if not exists:
             return {"Message":"Friend email DNE"}, 400
 
-        user_obj.friend_requests.append(friend_obj.email)
+        
         
         try:
-            user_obj.save()
+            user_obj.update_one(add_to_set__friend_requests=friend_obj.email)
         except Exception as e:
             print(e)
             return {"Message":"Something went wrong when updating the friends list"}, 400
-        return {"Message":"Friends list updated successfully"}
+        return {"Message":"Friends request list updated successfully"}
 
-        return {"Message":"Hit POST" }
-@api.route('/delete/')
-class FriendsDelete(Resource):
-    @api.doc('Access Token and delete friend',parser=parser,body=friend_data)
-    def post(self):
+@api.route('/delete_friend_request/')
+class FriendRequestsDelete(Resource):
+    @api.doc('Access Token and delete friend request',parser=parser,body=friend_data)
+    def delete(self):
         data = api.payload
         args = parser.parse_args()
         user_email = tokenToEmail(args)
-        return {"Message":"Hit POST" }
+        if user_email is None:
+            return {"Message":"Token Machine BROKE"}, 400
 
-@api.route('/request/')
+        exists, user_obj = emailExists(user_email,2)
+
+        if not exists:
+            return {"Message":"The email in the token DNE"}, 400
+
+        exists, friend_obj = emailExists(data.get('friend'),2)
+
+        if not exists:
+            return {"Message":"The friend you tried to add DNE"}, 400
+
+        
+        if len(user_obj(friend_requests__all=[friend_obj.first().email])) < 1: #check this statment and other like it. It might be breaking things!!!!!!
+            return {"Message":"This person has to send you a request before you can delete it"}
+
+        
+        try:
+            user_obj.update_one(pull__friend_requests=friend_obj.first().email)
+        except Exception as e:
+            print(e)
+            return {"Message":"Something went wrong when try to delete the friend request"}, 400
+
+        return {"Message":"Friend request list updated successfully"}
+
+@api.route('/delete_friend/')
+class FriendsDelete(Resource):
+    @api.doc('Access Token and delete friend',parser=parser,body=friend_data)
+    def delete(self):
+        data = api.payload
+        args = parser.parse_args()
+        user_email = tokenToEmail(args)
+        if user_email is None:
+            return {"Message":"Token Machine BROKE"}, 400
+
+        exists, user_obj = emailExists(user_email,2)
+
+        if not exists:
+            return {"Message":"The email in the token DNE"}, 400
+
+        exists, friend_obj = emailExists(data.get('friend'),2)
+
+        if not exists:
+            return {"Message":"The friend you tried to add DNE"}, 400
+
+        
+        if len(user_obj(friends__all=[friend_obj.first().email])) < 1: #check this statment and other like it. It might be breaking things!!!!!!
+            return {"Message":"Somone has to be your friend before you can delete them"}
+
+        
+        try:
+            user_obj.update_one(pull__friends=friend_obj.first().email)
+            friend_obj.update_one(pull__friends=user_obj.first().email)
+        except Exception as e:
+            print(e)
+            return {"Message":"Something went wrong when try to delete the friend"}, 400
+
+        return {"Message":"Friend list updated successfully"}
+
+@api.route('/add_friend_request/')
 class FriendsRequest(Resource):
 
     @api.doc('Access Token and make friend request',parser=parser,body=friend_data)
@@ -87,21 +145,59 @@ class FriendsRequest(Resource):
         data = api.payload
         args = parser.parse_args()
         user_email = tokenToEmail(args)
+        if user_email == data.get('friend'):
+            return {"Message":"You cannot add yourself as a friend"}
+        if user_email is None:
+            return {"Message":"Token Machine Broke"}, 400
+        exists, user_obj = emailExists(user_email,2)
+        if not exists:
+            return {"Message":"Token email DNE"}, 400
+        exists, friend_obj = emailExists(data.get('friend'),2)
+        if not exists:
+            return {"Message":"Friend email DNE"}, 400
 
+        if len(user_obj(friend_requests__all=[friend_obj.first().email])) != 1:
+            return {"Message":"You have to send a friend request before you become someones friend"}
 
-    
+        
+        
+        try:
+            user_obj.update_one(add_to_set__friends=friend_obj.first().email)
+            user_obj.update_one(pull__friend_requests=friend_obj.first().email)
+            friend_obj.update_one(add_to_set__friends=user_obj.first().email)
+        except Exception as e:
+            print(e)
+            return {"Message":"Something went wrong when updating the friends list"}, 400
+        
+        return {"Message":"Friends list updated successfully"}
 
-
-
-        return {"Message":"Hit POST" }
 
 @api.route('/request_list/')
 class FriendsRequestList(Resource):
-    @api.doc('Access Token and get friend request list',parser=parser,body=friend_data)
+    @api.expect(parser=parser)
     def post(self):
         data = api.payload
         args = parser.parse_args()
         user_email = tokenToEmail(args)
+        exists, user_obj = emailExists(user_email,1)
+        if not exists:
+            return {"Message":"Email DNE"}, 400
+
+
+        friend_request_objs = (User.objects(email__in=user_obj.friend_requests))
+
+        if len(friend_request_objs) == 0:
+            return {"Message":"User has no friend requests"}, 200
+
+        friends = []
+        for friend in friend_request_objs:
+             f = json.loads(friend.to_json())
+             f['name'] = f['first_name'] + ' ' + f['last_name']
+             friends.append(f)
+
+
+        return {"Message":"Got back {} friends".format(len(friend_request_objs)), "friends":friends }
+
 
         return {"Message":"Hit POST" }
 
@@ -116,7 +212,7 @@ class FriendsList(Resource):
         print(args)
         user_email = tokenToEmail(args)
         print(args)
-        exists, user_obj = emailExists(user_email)
+        exists, user_obj = emailExists(user_email,1)
         if not exists:
             return {"Message":"Email DNE"}, 400
 
@@ -124,7 +220,7 @@ class FriendsList(Resource):
         friend_objs = (User.objects(email__in=user_obj.friends))
 
         if len(friend_objs) == 0:
-            return {"Message":"User has no friends"}
+            return {"Message":"User has no friends"}, 200
 
         friends = []
         for friend in friend_objs:

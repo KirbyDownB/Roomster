@@ -25,6 +25,8 @@ class User(db.DynamicDocument):
     friend_requests = db.ListField()
     friends = db.ListField()
     occupation = db.StringField()
+    likedPosts = db.ListField()
+    dislikedPosts = db.ListField()
 
 class Posting(db.DynamicDocument):
 
@@ -33,9 +35,7 @@ class Posting(db.DynamicDocument):
     date = db.DateTimeField(default=datetime.now())
     content = db.StringField()
     tags = db.ListField()
-    numLikes = db.IntField(default=0)
     likedEmails = db.ListField()
-    numDislikes = db.IntField(default=0)
     dislikedEmails = db.ListField()
     images = db.ListField()
 

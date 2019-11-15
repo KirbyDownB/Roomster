@@ -16,10 +16,10 @@ parser = api.parser()
 parser.add_argument('Authorization',type=str,location='headers',help='Bearer Access Token', required=True)
 
 parser.add_argument('images', location='files',
-                           type=FileStorage, required=True,action='append')
+                           type=FileStorage, required=False,action='append')
 
-parser.add_argument('content', type=str, help='The User\'s email')
-parser.add_argument('tags', type=str, help='The User\'s password')
+parser.add_argument('content', type=str, help='The User\'s email', required=False)
+parser.add_argument('tags', type=str, help='The User\'s password', required=False)
 
 def tokenToEmail(args):
 
@@ -87,9 +87,16 @@ class AddPosting(Resource):
 @api.route('/all/')
 class AllPosting(Resource):
 
-    @api.expect(parser)
     def post(self):
+        args = parser.parse_args()
+        user_email = tokenToEmail(args)
+        if user_email is None:
+            return {"Message":"Token machine BROKE"}, 400
+        exists, user_obj = emailExists(user_email)
+        if not exists:
+            return {"Message":"That user does not exist"}
 
+        
         # postings= (json.loads(Posting.objects.to_json()))
         postings = []
         for posting in Posting.objects:
@@ -97,8 +104,11 @@ class AllPosting(Resource):
              d = (str(p['date']['$date'])[:-3])
              d = int(d)
              p['date'] = (datetime.utcfromtimestamp(d).strftime('%Y-%m-%d %H:%M:%S'))
+             p['posting_id'] = p['_id']['$oid']
              postings.append(p)
              
         random.shuffle(postings)
 
-        return {"Message":"MEME","postings":postings}
+       
+
+        return {"Message":"MEME","postings":postings, "likedIds":user_obj.likedPosts, "dislikedIds": user_obj.dislikedPosts}
