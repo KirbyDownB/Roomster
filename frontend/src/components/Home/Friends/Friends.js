@@ -54,9 +54,14 @@ class Friends extends Component {
     })
     .then(resp => resp.json())
     .then(resp => {
-      this.setState({
-        requestsList: resp.friends
-      })
+      if (resp.friends){
+        this.setState({
+          requestsList: resp.friends
+        })
+      }
+      else {
+        //error handling
+      }
     })
   }
 
@@ -127,13 +132,17 @@ class Friends extends Component {
 
   mapRequests = () => {
     return(
-      <div>
-        {this.state.requestsList.map(({ email, pf_pic, name, occupation }, index) => {
-          return(
-            <Requests handleDeleteRequests={this.handleDeleteRequests} email={email} img={pf_pic} name={name} title={occupation} />
-          )
-        })}
-      </div>
+      <>{this.state.requestsList.length > 0 ?
+        <div>
+          {this.state.requestsList.map(({ email, pf_pic, name, occupation }, index) => {
+            return(
+              <Requests handleDeleteRequests={this.handleDeleteRequests} email={email} img={pf_pic} name={name} title={occupation} />
+            )
+          })}
+        </div>:
+        <div></div>
+      }
+    </>
     )
   }
 
@@ -142,7 +151,6 @@ class Friends extends Component {
   }
 
   render(){
-    console.log(this.state.requestsList)
     return(
       <div className="friends__container">
         <div className="container-fluid">

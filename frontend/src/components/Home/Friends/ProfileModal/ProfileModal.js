@@ -11,7 +11,6 @@ class ProfileModal extends Component {
   }
 
   render(){
-    console.log(this.props)
     return(
       <div>
         <div className="profilemodal__header">
@@ -37,8 +36,8 @@ class ProfileModal extends Component {
             </div>
             <div className="col-6 profilemodal__col">
               <div className="profilemodal__icon-container">
-                <Icon className="profilemodal__icon" type="user"/>
-                <p className="profilemodal__icon-text"style={{margin: '0'}}>{this.props.ethnicity}</p>
+                <Icon className="profilemodal__icon" type="phone"/>
+                <p className="profilemodal__icon-text"style={{margin: '0'}}>{this.props.phone_number}</p>
               </div>
             </div>
           </div>
@@ -57,16 +56,18 @@ class ProfileModal extends Component {
             </div>
           </div>
           <div className="row profilemodal__body-container">
-            <div className="col-6 profilemodal__col">
-              <div className="profilemodal__icon-container">
-                <Icon className="profilemodal__icon" type="phone"/>
-                <p className="profilemodal__icon-text"style={{margin: '0'}}>{this.props.phone_number}</p>
-              </div>
-            </div>
-            <div className="col-6 profilemodal__col">
+            <div className="col-12 profilemodal__col">
               <div className="profilemodal__icon-container">
                 <Icon className="profilemodal__icon" type="home"/>
                 <p className="profilemodal__icon-text"style={{margin: '0'}}>{this.props.address}</p>
+              </div>
+            </div>
+          </div>
+          <div className="row profilemodal__body-container">
+            <div className="col-12 profilemodal__col">
+              <div className="profilemodal__icon-container">
+                <Icon className="profilemodal__icon" type="user"/>
+                <p className="profilemodal__icon-text"style={{margin: '0'}}>{this.props.ethnicity}</p>
               </div>
             </div>
           </div>

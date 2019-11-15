@@ -1,17 +1,48 @@
  import React, { Component } from 'react';
 import { Button, Icon } from 'antd';
-import './Requests.css'
+import { BASE_URL } from '../../../../constants';
+import './Requests.css';
 
 const eric = require("../../../../assets/eric.jpg")
 
 
 class Requests extends Component {
-  handleAdd = () => {
-    //do something
+
+  handleAccept = () => {
+    fetch(`${BASE_URL}/api/friends/add_friend_request/`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.token
+      },
+      method: "POST",
+      body: JSON.stringify({
+        friend: this.props.email
+      })
+    })
+    .then(resp => resp.json())
+    .then(resp => {
+      console.log(resp);
+      this.props.handleDeleteRequests(this.props.email);
+    })
   }
 
   handleIgnore = () => {
-    this.props.handleDeleteRequests(this.props.email)
+    console.log(localStorage.token)
+    fetch(`${BASE_URL}/api/friends/delete_friend_request/`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.token
+      },
+      method: "DELETE",
+      body: JSON.stringify({
+        friend: this.props.email
+      })
+    })
+    .then(resp => resp.json())
+    .then(resp => {
+      console.log(resp);
+      this.props.handleDeleteRequests(this.props.email);
+    })
   }
 
   render(){
@@ -23,7 +54,7 @@ class Requests extends Component {
             <p className="requests__text">{this.props.name}</p>
             <p className="requests__text-title">{this.props.title}</p>
           </div>
-          <Button className="requests__button-add" onClick={this.handleAdd} type="primary" icon="user-add">
+          <Button className="requests__button-add" onClick={this.handleAccept} type="primary" icon="user-add">
              Add Friend
           </Button>
           <Button className="requests__button-remove" onClick={this.handleIgnore} icon="export">
