@@ -25,7 +25,6 @@ class Cards extends Component {
   }
 
   render(){
-    console.log(this.props)
     return(
       <div className="cards__bg">
         <div className="cards__profile-wrapper">

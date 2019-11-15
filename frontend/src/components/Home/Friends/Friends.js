@@ -15,20 +15,7 @@ class Friends extends Component {
 
   state = {
     friendsList: [],
-    requestsList: [
-      {
-        "Email": "ericong18@ucr.edu",
-        "Image": eric,
-        "Name": "Eric Ong",
-        "Title": "Lyft Driver"
-      },
-      {
-        "Email": "aacha002@ucr.edu",
-        "Image": aditya,
-        "Name": "Aditya Acharya",
-        "Title": "Uber Driver"
-      }
-    ],
+    requestsList: [],
     email: "",
     visible: false,
     loading: false
@@ -49,7 +36,23 @@ class Friends extends Component {
         friendsList: resp.friends
       })
     })
+  }
 
+  fetchRequests = () => {
+    fetch(`${BASE_URL}/api/friends/request_list/`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.token
+      },
+      method: "POST",
+      body: JSON.stringify({})
+    })
+    .then(resp => resp.json())
+    .then(resp => {
+      this.setState({
+        requestsList: resp.friends
+      })
+    })
   }
 
   handleDeleteRequests = (email) => {
@@ -93,7 +96,7 @@ class Friends extends Component {
         loading: true
       })
 
-      fetch(`${BASE_URL}/api/friends/add/`, {
+      fetch(`${BASE_URL}/api/friends/request/`, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": localStorage.token
@@ -105,6 +108,7 @@ class Friends extends Component {
       })
       .then(resp => resp.json())
       .then(resp => {
+        console.log(resp)
         if (resp.Message === "Friend email DNE"){
           showErrorMessage(ADD_FRIEND_ERROR)
         }
@@ -119,9 +123,9 @@ class Friends extends Component {
   mapRequests = () => {
     return(
       <div>
-        {this.state.requestsList.map(({ Email, Image, Name, Title }, index) => {
+        {this.state.requestsList.map(({ email, pf_pic, name, occupation }, index) => {
           return(
-            <Requests handleDeleteRequests={this.handleDeleteRequests} email={Email} img={Image} name={Name} title={Title} />
+            <Requests handleDeleteRequests={this.handleDeleteRequests} email={email} img={pf_pic} name={name} title={occupation} />
           )
         })}
       </div>
@@ -133,7 +137,7 @@ class Friends extends Component {
   }
 
   render(){
-    console.log(this.state.friendsList)
+    console.log(this.state.requestsList)
     return(
       <div className="friends__container">
         <div className="container-fluid">
@@ -158,7 +162,7 @@ class Friends extends Component {
                 content={this.mapRequests()}
                 trigger="click"
               >
-                <Button className="friends__requests-button" type="primary">Requests </Button>
+                <Button className="friends__requests-button" type="primary" onClick={this.fetchRequests}>Requests</Button>
               </Popover>
               <Button type="primary" onClick={this.handleModal} className="friends__add-button">Add Friends </Button>
               <Modal
