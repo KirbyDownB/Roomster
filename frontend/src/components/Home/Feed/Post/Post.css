@@ -69,5 +69,6 @@
 
 .post__date {
   margin-top: -2px;
-  color: #F57676
+  color: #F57676;
+  font-weight: bold;
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Feed.css';
 import Post from './Post/Post';
 import { Button, Icon, Popover, Input, Modal, Select, Form, Upload } from 'antd';
+import spinner from '../../../assets/tail-spin.svg';
 import {
   showSuccessMessage,
   showErrorMessage,
@@ -11,9 +12,10 @@ import {
   NEW_POST_SUCCESS,
   NEW_POST_ERROR,
   FEED_ERROR,
-  FEED_SEARCH_ERROR
+  FEED_SEARCH_ERROR,
+  sortOptions
 } from '../../../constants';
-import { mockPosts, mockLikedEmails, mockDislikedEmails } from '../../../mocks';
+import { mockPosts, mockLikedIds, mockDislikedIds } from '../../../mocks';
 
 const { Option } = Select;
 const { Item } = Form;
@@ -31,39 +33,40 @@ class Feed extends Component {
     likedIds: [],
     dislikedIds: [],
     isFeedLoading: false,
-    isFeedSearchLoading: false
+    isFeedSearchLoading: false,
+    sortBy: sortOptions[0]
   }
 
   componentDidMount = () => {
-    // this.setState({
-    //   posts: mockPosts,
-    //   likedEmails: mockLikedEmails,
-    //   dislikedEmails: mockDislikedEmails
-    // });
-    this.setState({ isFeedLoading: true });
-    const token = localStorage.getItem("token");
+    this.setState({
+      posts: mockPosts,
+      likedIds: mockLikedIds,
+      dislikedIds: mockDislikedIds
+    });
+    // this.setState({ isFeedLoading: true });
+    // const token = localStorage.getItem("token");
 
-    fetch(`${BASE_URL}/api/posting/all/`, {
-      headers: {
-        "Authorization": token
-      },
-      method: "POST",
-    })
-      .then(response => response.json())
-      .then(({ postings, likedIds, dislikedIds }) => {
-        console.log("Got Feed data in componentDidMount", postings, likedIds, dislikedIds);
-        this.setState(prevState => ({
-          isFeedLoading: false,
-          posts: postings,
-          likedIds,
-          dislikedIds
-        }));
-      })
-      .catch(error => {
-        console.error(error);
-        showErrorMessage(FEED_ERROR);
-        this.setState({ isFeedLoading: false });
-      });
+    // fetch(`${BASE_URL}/api/posting/all/`, {
+    //   headers: {
+    //     "Authorization": token
+    //   },
+    //   method: "POST",
+    // })
+    //   .then(response => response.json())
+    //   .then(({ postings, likedIds, dislikedIds }) => {
+    //     console.log("Got Feed data in componentDidMount", postings, likedIds, dislikedIds);
+    //     this.setState(prevState => ({
+    //       isFeedLoading: false,
+    //       posts: postings,
+    //       likedIds,
+    //       dislikedIds
+    //     }));
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //     showErrorMessage(FEED_ERROR);
+    //     this.setState({ isFeedLoading: false });
+    //   });
   }
 
   showFilter = e => {
@@ -170,13 +173,21 @@ class Feed extends Component {
       })
   }
 
-  addLikedId = postId => {
-    this.setState(prevState => ({ likedIds: [...prevState.likedIds, postId] }))
-  }
+  addLikedId = postId => this.setState(prevState => ({ likedIds: [...prevState.likedIds, postId] }));
 
-  addDislikedId = postId => {
-    this.setState(prevState => ({ dislikedIds: [...prevState.dislikedIds, postId] }))
-  }
+  addDislikedId = postId => this.setState(prevState => ({ dislikedIds: [...prevState.dislikedIds, postId] }));
+
+  handleSortByChange = sortBy => {
+    let sortedPosts = this.state.posts;
+
+    if (sortBy === "Most Recent") {
+      sortedPosts.sort((a, b) => a.date < b.date ? -1 : 1);
+    } else if (sortBy === "Most Tags") {
+      sortedPosts.sort((a, b) => a.tags.length > b.tags.length ? -1 : 1); 
+    }
+
+    this.setState(prevState => ({ posts: [...sortedPosts] }));
+  };
 
   render() {
     return (
@@ -187,7 +198,10 @@ class Feed extends Component {
               <h2 className="feed__title">Feed</h2>
             </div>
             <div className="col-10">
-              <Search onSearch={this.handleFeedSearch} loading enterButton />
+              <Search
+                onSearch={this.handleFeedSearch}
+                placeholder="Search your feed..."
+              />
             </div>
           </div>
           <div className="row">
@@ -219,30 +233,49 @@ class Feed extends Component {
                 New Post
               </Button>
             </div>
+            <div className="col-8">
+              <Select
+                defaultValue={sortOptions[0]}
+                onChange={this.handleSortByChange}
+                className="feed__sort"
+              >
+                {sortOptions.map(sortOption => <Option value={sortOption}>{sortOption}</Option>)}
+              </Select>
+            </div>
           </div>
           <div className="row">
-            {this.state.posts.length > 0 && this.state.posts.map(post => {
-              console.log("Mapping post", post);
-
-              const hasLiked = this.state.likedIds.includes(post.posting_id);
-              const hasDisliked = this.state.dislikedIds.includes(post.posting_id);
-
-              return (
-                <div className="col-6">
-                  <Post
-                    likes={post.likedEmails.length}
-                    dislikes={post.dislikedEmails.length}
-                    {...post}
-                    likedIds={this.state.likedIds}
-                    dislikedIds={this.state.dislikedIds}
-                    hasLiked={hasLiked}
-                    hasDisliked={hasDisliked}
-                    addLikedId={this.addLikedId}
-                    addDislikedId={this.addDislikedId}
-                  />
+            {
+              this.state.isFeedSearchLoading && 
+              <div className="col-12">
+                <div className="feed__loading--container">
+                  <img src={spinner} alt=""/>
                 </div>
-              )
-            })}
+              </div>
+            }
+            {
+              !this.state.isFeedSearchLoading && this.state.posts.length > 0 && this.state.posts.map(post => {
+                console.log("Mapping post", post);
+
+                const hasLiked = this.state.likedIds.includes(post.posting_id);
+                const hasDisliked = this.state.dislikedIds.includes(post.posting_id);
+
+                return (
+                  <div className="col-6">
+                    <Post
+                      likes={post.likedEmails.length}
+                      dislikes={post.dislikedEmails.length}
+                      {...post}
+                      likedIds={this.state.likedIds}
+                      dislikedIds={this.state.dislikedIds}
+                      hasLiked={hasLiked}
+                      hasDisliked={hasDisliked}
+                      addLikedId={this.addLikedId}
+                      addDislikedId={this.addDislikedId}
+                    />
+                  </div>
+                )
+              })
+            }
           </div>
           <Modal
             visible={this.state.isNewPostModalOpen}

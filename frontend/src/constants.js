@@ -83,6 +83,7 @@ export const genders = [
   "Female",
   "Other"
 ]
+export const sortOptions = ["Most Recent", "Most Tags"]
 
 export const showErrorMessage = text => message.error(text);
 export const showSuccessMessage = text => message.success(text);
