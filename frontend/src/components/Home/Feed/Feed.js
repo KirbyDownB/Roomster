@@ -184,6 +184,8 @@ class Feed extends Component {
       sortedPosts.sort((a, b) => a.date < b.date ? -1 : 1);
     } else if (sortBy === "Most Tags") {
       sortedPosts.sort((a, b) => a.tags.length > b.tags.length ? -1 : 1); 
+    } else if (sortBy === "Longest") {
+      sortedPosts.sort((a, b) => a.content.length > b.content.length ? -1 : 1);
     }
 
     this.setState(prevState => ({ posts: [...sortedPosts] }));
