@@ -39,11 +39,13 @@
 }
 
 .post__image {
-  height: 100% !important;
+  width: 40% !important;
+  border-radius: 10px;
 }
 
 .post__tags {
-  margin-top: 4%; 
+  margin-top: 4%;
+  font-family: "Asap", sans-serif;
 }
 
 .post__reactions {
@@ -67,5 +69,6 @@
 
 .post__date {
   margin-top: -2px;
-  color: #F57676
+  color: #F57676;
+  font-weight: bold;
 }

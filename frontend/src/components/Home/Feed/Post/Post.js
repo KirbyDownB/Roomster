@@ -3,47 +3,53 @@ import { Carousel, Tag, Icon, Tooltip} from 'antd';
 import './Post.css';
 import { BASE_URL, showErrorMessage, REACTION_ERROR } from '../../../../constants';
 
+const moment = require('moment');
+
 class Post extends Component {
   state = {
     numLikes: 0,
     numDislikes: 0,
-    likedEmails: [],
-    dislikedEmails: []
+    hasLiked: false,
+    hasDisliked: false
   }
 
   componentDidMount = () => {
+    console.log(this.props);
     this.setState({
-      numLikes: this.props.numLikes,
-      numDislikes: this.props.numDislikes,
-      likedEmails: this.props.likedEmails,
-      dislikedEmails: this.props.dislikedEmails
+      numLikes: this.props.likes,
+      numDislikes: this.props.dislikes,
+      hasLiked: this.props.hasLiked,
+      hasDisliked: this.props.hasDisliked
     });
   }
 
-  handlePostLike = (e, posterEmail, likedEmails) => {
+  handlePostLike = (e, postId, hasLiked) => {
     e.preventDefault();
 
-    if (likedEmails.includes(posterEmail)) {
+    if (hasLiked) {
       return;
     }
 
     const token = localStorage.getItem("token");
 
-    fetch(`${BASE_URL}/api/postings/dislike/`, {
+    fetch(`${BASE_URL}/api/like/`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": token
       },
       method: "POST",
-      body: JSON.stringify({ posterEmail })
+      body: JSON.stringify({
+        posting_id: postId
+      })
     })
       .then(response => response.json())
       .then(data => {
         console.log("Response after LIKING post", data);
-        this.setState({
-          numLikes: this.state.numLikes + 1,
-          likedEmails: [...this.state.likedEmails, posterEmail]
-        });
+        this.props.addLikedId(postId);
+        this.setState(prevState => ({
+          numLikes: prevState.numLikes + 1,
+          hasLiked: true
+        }));
       })
       .catch(error => {
         console.error(error);
@@ -51,30 +57,35 @@ class Post extends Component {
       });
   }
 
-  handlePostDislike = (e, posterEmail, dislikedEmails) => {
+  handlePostDislike = (e, postId, hasDisliked) => {
     e.preventDefault();
 
-    if (dislikedEmails.includes(posterEmail) || this.state.numDislikes === 0) {
+    console.log("Got postId", postId);
+
+    if (hasDisliked) {
       return;
     }
 
     const token = localStorage.getItem("token");
 
-    fetch(`${BASE_URL}/api/postings/dislike/`, {
+    fetch(`${BASE_URL}/api/dislike/`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": token
       },
       method: "POST",
-      body: JSON.stringify({ posterEmail })
+      body: JSON.stringify({
+        posting_id: postId
+      })
     })
       .then(response => response.json())
       .then(data => {
         console.log("Response after DISLIKING post", data);
-        this.setState({
-          numDislikes: this.state.numDislikes - 1,
-          dislikedEmails: [...this.state.dislikedEmails, posterEmail]
-        });
+        this.props.addDislikedId(postId);
+        this.setState(prevState => ({
+          numDislikes: prevState.numDislikes + 1,
+          hasDisliked: true
+        }));
       })
       .catch(error => {
         console.error(error);
@@ -83,13 +94,13 @@ class Post extends Component {
   }
 
   render() {
-    const { name, date, content, images, tags, poster_email: posterEmail } = this.props;
-    const { numLikes, numDislikes, likedEmails, dislikedEmails } = this.state;
+    const { name, date, content, images, tags, posting_id: postId } = this.props;
+    const { hasLiked, hasDisliked } = this.state;
 
-    return (
+    return (  
       <div className="post__container">
         <div className="post__name">{name}</div>
-        <div className="post__date">{date}</div>
+        <div className="post__date">{moment(date).format('MMMM Do, YYYY')}</div>
         <div className="post__images">
           {
             images.length > 0 &&
@@ -99,7 +110,7 @@ class Post extends Component {
               effect="fade"
               autoplay
             >
-              {images.map(image => <img className="post__image" src={image} alt=""/>)}
+              {images.map(url => <img className="post__image" src={url} alt=""/>)}
             </Carousel>
           }
         </div>
@@ -112,20 +123,20 @@ class Post extends Component {
             <Icon
               className="post__react"
               type="like"
-              theme={likedEmails.includes(posterEmail) ? "filled" : "outlined"}
-              onClick={e => this.handlePostLike(e, posterEmail, likedEmails)}
+              theme={hasLiked ? "filled" : "outlined"}
+              onClick={e => this.handlePostLike(e, postId, hasLiked)}
             />
           </Tooltip>
-          <span className="post__react--count">{numLikes}</span>
+          <span className="post__react--count">{this.state.numLikes}</span>
           <Tooltip title="Dislike">
             <Icon
               className="post__react"
               type="dislike"
-              theme={dislikedEmails.includes(posterEmail) ? "filled" : "outlined"}
-              onClick={e => this.handlePostDislike(e, posterEmail, dislikedEmails)}
+              theme={hasDisliked ? "filled" : "outlined"}
+              onClick={e => this.handlePostDislike(e, postId, hasDisliked)}
             />
           </Tooltip>
-          <span className="post__react--count">{numDislikes}</span>
+          <span className="post__react--count">{this.state.numDislikes}</span>
         </div>
       </div>
     )

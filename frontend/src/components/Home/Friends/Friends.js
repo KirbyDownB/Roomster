@@ -151,6 +151,7 @@ class Friends extends Component {
   }
 
   render(){
+    console.log(this.state.friendsList)
     return(
       <div className="friends__container">
         <div className="container-fluid">
