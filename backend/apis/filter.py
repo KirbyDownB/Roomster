@@ -21,6 +21,11 @@ def printData(user_data):
     for user in user_data:
         print(user.first_name)
 
+def existsData(user_data):
+    print(user_data)
+    if len(user_data) == 0:
+        return{"Message":"Sorry!, No matches with your filter"}
+
 
 @api.route('/')
 class Search(Resource):
@@ -29,7 +34,7 @@ class Search(Resource):
     def post(self):
         
         data = api.payload
-        print(data)
+        # print(data)
 
         gender = data.get('gender')
         location = data.get('location')
@@ -40,7 +45,7 @@ class Search(Resource):
         #     print(user.location_of_interest)
 
         if not gender and not location and not ethnicity and not duration: #nothing
-            return {"Message":"Nothing was sent in the filter body"}
+            return {"Message":"Nothing was sent in the search body"}
 
         elif gender and not location and not ethnicity and not duration: #gender
             user_data = User.objects(gender=gender)
@@ -48,15 +53,16 @@ class Search(Resource):
 
         elif location and not gender and not ethnicity and not duration: #location
             user_data = User.objects(location_of_interest=location)
+            # printData(user_data)
+            existsData(user_data)
             printData(user_data)
-            
 
         elif ethnicity and not gender and not location and not duration: #ethnicity
             user_data = User.objects(ethnicity=ethnicity)
             printData(user_data)
 
         elif duration and not gender and not location and not ethnicity: #duration
-            user_Data = User.objects(duration=duration)
+            user_data = User.objects(duration=duration)
             printData(user_data)
 
         elif gender and location and not ethnicity and not duration: #gender-location
