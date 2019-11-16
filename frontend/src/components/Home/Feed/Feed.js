@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Feed.css';
 import Post from './Post/Post';
 import { Button, Icon, Popover, Input, Modal, Select, Form, Upload } from 'antd';
+import spinner from '../../../assets/tail-spin.svg';
 import {
   showSuccessMessage,
   showErrorMessage,
@@ -11,12 +12,14 @@ import {
   NEW_POST_SUCCESS,
   NEW_POST_ERROR,
   FEED_ERROR,
+  FEED_SEARCH_ERROR,
+  sortOptions
 } from '../../../constants';
-import { mockPosts, mockLikedEmails, mockDislikedEmails } from '../../../mocks';
+import { mockPosts, mockLikedIds, mockDislikedIds } from '../../../mocks';
 
 const { Option } = Select;
 const { Item } = Form;
-const { TextArea } = Input;
+const { TextArea, Search } = Input;
 const { Dragger } = Upload;
 
 class Feed extends Component {
@@ -27,16 +30,18 @@ class Feed extends Component {
     isNewPostLoading: false,
     images: [],
     posts: [],
-    likedEmails: [],
-    dislikedEmails: [],
-    isFeedLoading: false
+    likedIds: [],
+    dislikedIds: [],
+    isFeedLoading: false,
+    isFeedSearchLoading: false,
+    sortBy: sortOptions[0]
   }
 
   componentDidMount = () => {
     this.setState({
       posts: mockPosts,
-      likedEmails: mockLikedEmails,
-      dislikedEmails: mockDislikedEmails
+      likedIds: mockLikedIds,
+      dislikedIds: mockDislikedIds
     });
     // this.setState({ isFeedLoading: true });
     // const token = localStorage.getItem("token");
@@ -48,12 +53,14 @@ class Feed extends Component {
     //   method: "POST",
     // })
     //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log("Got Feed data in componentDidMount", data);
-    //     this.setState({
+    //   .then(({ postings, likedIds, dislikedIds }) => {
+    //     console.log("Got Feed data in componentDidMount", postings, likedIds, dislikedIds);
+    //     this.setState(prevState => ({
     //       isFeedLoading: false,
-    //       posts: data.postings
-    //     });
+    //       posts: postings,
+    //       likedIds,
+    //       dislikedIds
+    //     }));
     //   })
     //   .catch(error => {
     //     console.error(error);
@@ -137,6 +144,53 @@ class Feed extends Component {
     }
   }
 
+  handleFeedSearch = query => {
+    this.setState({ isFeedSearchLoading: true });
+
+    fetch(`${BASE_URL}/api/search/content_and_tags/`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        content_and_tags_data: query
+      })
+    })
+      .then(response => response.json())
+      .then(({ results }) => {
+        console.log("Response after SEARCHING FEED", results);
+        this.setState({
+          isFeedSearchLoading: false,
+          posts: []
+        });
+        console.log(results);
+        this.setState(prevState => ({ posts: [...results] }));
+      })
+      .catch(error => {
+        console.error(error);
+        showErrorMessage(FEED_SEARCH_ERROR);
+        this.setState({ isFeedSearchLoading: false });
+      })
+  }
+
+  addLikedId = postId => this.setState(prevState => ({ likedIds: [...prevState.likedIds, postId] }));
+
+  addDislikedId = postId => this.setState(prevState => ({ dislikedIds: [...prevState.dislikedIds, postId] }));
+
+  handleSortByChange = sortBy => {
+    let sortedPosts = this.state.posts;
+
+    if (sortBy === "Most Recent") {
+      sortedPosts.sort((a, b) => a.date < b.date ? -1 : 1);
+    } else if (sortBy === "Most Tags") {
+      sortedPosts.sort((a, b) => a.tags.length > b.tags.length ? -1 : 1); 
+    } else if (sortBy === "Longest") {
+      sortedPosts.sort((a, b) => a.content.length > b.content.length ? -1 : 1);
+    }
+
+    this.setState(prevState => ({ posts: [...sortedPosts] }));
+  };
+
   render() {
     return (
       <div className="feed__container">
@@ -146,11 +200,9 @@ class Feed extends Component {
               <h2 className="feed__title">Feed</h2>
             </div>
             <div className="col-10">
-              <Input
-                prefix={<Icon type="search"/>}
-                placeholder="Search for posts"
-                className="feed__search-input"
-                onPressEnter={this.handleSearch}
+              <Search
+                onSearch={this.handleFeedSearch}
+                placeholder="Search your feed..."
               />
             </div>
           </div>
@@ -183,15 +235,49 @@ class Feed extends Component {
                 New Post
               </Button>
             </div>
+            <div className="col-8">
+              <Select
+                defaultValue={sortOptions[0]}
+                onChange={this.handleSortByChange}
+                className="feed__sort"
+              >
+                {sortOptions.map(sortOption => <Option value={sortOption}>{sortOption}</Option>)}
+              </Select>
+            </div>
           </div>
           <div className="row">
-            {this.state.posts.length > 0 && this.state.posts.map(post => {
-              return (
-                <div className="col-6">
-                  <Post {...post} likedEmails={this.state.likedEmails} dislikedEmails={this.state.dislikedEmails} />
+            {
+              this.state.isFeedSearchLoading && 
+              <div className="col-12">
+                <div className="feed__loading--container">
+                  <img src={spinner} alt=""/>
                 </div>
-              )
-            })}
+              </div>
+            }
+            {
+              !this.state.isFeedSearchLoading && this.state.posts.length > 0 && this.state.posts.map(post => {
+                console.log("Mapping post", post);
+
+                const hasLiked = this.state.likedIds.includes(post.posting_id);
+                const hasDisliked = this.state.dislikedIds.includes(post.posting_id);
+
+                return (
+                  <div className="col-6">
+                    <Post
+                      likes={post.likedEmails.length}
+                      dislikes={post.dislikedEmails.length}
+                      {...post}
+                      likedIds={this.state.likedIds}
+                      dislikedIds={this.state.dislikedIds}
+                      hasLiked={hasLiked}
+                      hasDisliked={hasDisliked}
+                      addLikedId={this.addLikedId}
+                      addDislikedId={this.addDislikedId}
+                    />
+                  </div>
+                )
+              })
+            }
           </div>
           <Modal
             visible={this.state.isNewPostModalOpen}

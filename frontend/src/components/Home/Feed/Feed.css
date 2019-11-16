@@ -56,7 +56,17 @@
   margin-bottom: -16px;
 }
 
-.newPost__upload--description {
+.newPost__upload--description, .feed__sort {
   font-family: "Asap", sans-serif;
   font-weight: bold;
+}
+
+.feed__loading--container {
+  text-align: center;
+  padding-top: 8%;
+}
+
+.feed__sort {
+  float: right;
+  width: 140px;
 }

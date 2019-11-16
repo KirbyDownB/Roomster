@@ -18,6 +18,7 @@ import {
   durations,
   ethnicities,
   occupations,
+  genders,
   dummyRequest,
   loginRedirect
 } from '../../constants';
@@ -36,7 +37,8 @@ class Signup extends Component {
     duration: durations[0],
     ethnicity: ethnicities[0],
     isSignupLoading: false,
-    occupation: occupations[0]
+    occupation: occupations[0],
+    gender: genders[0]
   }
 
   handleSubmit = e => {
@@ -79,6 +81,7 @@ class Signup extends Component {
     const duration = this.state.duration;
     const ethnicity = this.state.ethnicity;
     const occupation = this.state.occupation;
+    const gender = this.state.gender;
 
     const allInfo = {
       email,
@@ -132,6 +135,8 @@ class Signup extends Component {
   handleOccupationChange = occupation => this.setState({ occupation });
 
   handleEthnicityChange = ethnicity => this.setState({ ethnicity });
+
+  handleGenderChange = gender => this.setState({ gender });
 
   render(){
     return(
@@ -246,12 +251,14 @@ class Signup extends Component {
                       <div className="row justify-content-center">
                         <div className="col-6">
                           <Item>
-                            <p className="signup__formBody">Location <span className="signup__red">*</span></p>
-                            <Input
-                              name="location"
-                              placeholder="Location"
-                              prefix={<Icon type="environment" style={{color: 'rgba(0, 0, 0)'}} />}
-                            />
+                            <p className="signup__formBody">Gender <span className="signup__red">*</span></p>
+                            <Select
+                              className="signup__gender"
+                              defaultValue={genders[0]}
+                              onChange={this.handleGenderChange}
+                            >
+                              {genders.map(genderOption => <Option value={genderOption}>{genderOption}</Option>)}
+                            </Select>
                           </Item>
                         </div>
                         <div className="col-6">
@@ -295,7 +302,17 @@ class Signup extends Component {
                         </div>
                       </div>
                       <div className="row justify-content-center">
-                        <div className="col-12">
+                        <div className="col-6">
+                          <Item>
+                            <p className="signup__formBody">Location <span className="signup__red">*</span></p>
+                            <Input
+                              name="location"
+                              placeholder="Location"
+                              prefix={<Icon type="environment" style={{color: 'rgba(0, 0, 0)'}} />}
+                            />
+                          </Item>
+                        </div>
+                        <div className="col-6">
                           <Item>
                             <p className="signup__formBody signup__priceRange--title">Price Range <span className="signup__red">*</span></p>
                             <Slider
