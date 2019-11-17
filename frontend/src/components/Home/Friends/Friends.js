@@ -3,7 +3,7 @@ import Cards from './Cards';
 import EmptyCard from './EmptyCard';
 import Requests from './Requests/Requests';
 import { Modal, Input, Select, Radio, Icon, Popover, Button } from 'antd';
-import { BASE_URL, ADD_FRIEND_ERROR, ADD_FRIEND_ERROR_YOURSELF, ADD_FRIEND_SUCCESS, showErrorMessage, showSuccessMessage } from '../../../constants.js';
+import { BASE_URL, ADD_FRIEND_ERROR, ADD_FRIEND_ERROR_YOURSELF, ADD_FRIEND_SUCCESS, SEARCH_FRIEND_ERROR, showErrorMessage, showSuccessMessage } from '../../../constants.js';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
 
@@ -20,9 +20,11 @@ class Friends extends Component {
     friendsList: [],
     requestsList: [],
     email: "",
+    search: "",
     visible: false,
     loading: false,
-    friendLoading: false
+    friendLoading: false,
+    requestLoading: false
   }
 
   fetchFriends = () => {
@@ -55,6 +57,7 @@ class Friends extends Component {
   }
 
   fetchRequests = () => {
+    //add loader for requests
     fetch(`${BASE_URL}/api/friends/request_list/`, {
       headers: {
         "Content-Type": "application/json",
@@ -119,8 +122,34 @@ class Friends extends Component {
     })
   }
 
-  handleSearch = () => {
-    fetch(`${BASE_URL}/friends/_list`)
+  handleSearch = (e) => {
+    if (this.state.search === ""){
+      showErrorMessage(SEARCH_FRIEND_ERROR);
+    }
+    else {
+      fetch(`${BASE_URL}/api/search/name/`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": localStorage.token
+        },
+        method: "POST",
+        body: JSON.stringify({
+          name_data: this.state.search
+        })
+      })
+      .then(resp => resp.json())
+      .then(resp => {
+        console.log(resp.results.length)
+        if (resp.results){
+          this.setState({
+            friendsList: resp.results,
+          })
+        }
+        else {
+          //error handling
+        }
+      })
+    }
   }
 
   handleAdd = () => {
@@ -199,13 +228,16 @@ class Friends extends Component {
         <div className="container-fluid">
           <div className="row justify-content-center">
             <div className="col-2">
-              <h2 className="friends__title">Friends</h2>
+              <h2 className="friends__title" onClick={this.fetchFriends}>Friends</h2>
             </div>
             <div className="col-10">
               <Input
+                name="search"
+                value={this.state.search}
                 prefix={<Icon type="search"/>}
                 placeholder="Search for your friends"
                 className="friends__search-input"
+                onChange={this.handleInput}
                 onPressEnter={this.handleSearch}
               />
             </div>
