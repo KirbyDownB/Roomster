@@ -6,23 +6,6 @@ import { BASE_URL, showErrorMessage, REACTION_ERROR } from '../../../../constant
 const moment = require('moment');
 
 class Post extends Component {
-  state = {
-    numLikes: 0,
-    numDislikes: 0,
-    hasLiked: false,
-    hasDisliked: false
-  }
-
-  componentDidMount = () => {
-    console.log(this.props);
-    this.setState({
-      numLikes: this.props.likes,
-      numDislikes: this.props.dislikes,
-      hasLiked: this.props.hasLiked,
-      hasDisliked: this.props.hasDisliked
-    });
-  }
-
   handlePostLike = (e, postId, hasLiked) => {
     e.preventDefault();
 
@@ -46,10 +29,6 @@ class Post extends Component {
       .then(data => {
         console.log("Response after LIKING post", data);
         this.props.addLikedId(postId);
-        this.setState(prevState => ({
-          numLikes: prevState.numLikes + 1,
-          hasLiked: true
-        }));
       })
       .catch(error => {
         console.error(error);
@@ -82,10 +61,6 @@ class Post extends Component {
       .then(data => {
         console.log("Response after DISLIKING post", data);
         this.props.addDislikedId(postId);
-        this.setState(prevState => ({
-          numDislikes: prevState.numDislikes + 1,
-          hasDisliked: true
-        }));
       })
       .catch(error => {
         console.error(error);
@@ -94,9 +69,19 @@ class Post extends Component {
   }
 
   render() {
-    const { name, date, content, images, tags, posting_id: postId } = this.props;
-    const { hasLiked, hasDisliked } = this.state;
-
+    const {
+      name,
+      date,
+      content,
+      images,
+      tags,
+      hasLiked,
+      hasDisliked,
+      likes,
+      dislikes,
+      posting_id: postId
+    } = this.props;
+    
     return (  
       <div className="post__container">
         <div className="post__name">{name}</div>
@@ -118,7 +103,7 @@ class Post extends Component {
         <div className="post__tags">
           {tags.length > 0 && tags.map(tag => <Tag color="red">{tag}</Tag> )}
         </div>
-        <div className="post__reactions">
+        {<div className="post__reactions">
           <Tooltip title="Like">
             <Icon
               className="post__react"
@@ -127,7 +112,7 @@ class Post extends Component {
               onClick={e => this.handlePostLike(e, postId, hasLiked)}
             />
           </Tooltip>
-          <span className="post__react--count">{this.state.numLikes}</span>
+          <span className="post__react--count">{likes}</span>
           <Tooltip title="Dislike">
             <Icon
               className="post__react"
@@ -136,8 +121,8 @@ class Post extends Component {
               onClick={e => this.handlePostDislike(e, postId, hasDisliked)}
             />
           </Tooltip>
-          <span className="post__react--count">{this.state.numDislikes}</span>
-        </div>
+          <span className="post__react--count">{dislikes}</span>
+        </div>}
       </div>
     )
   }
