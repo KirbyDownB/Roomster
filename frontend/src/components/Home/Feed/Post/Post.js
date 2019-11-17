@@ -6,11 +6,6 @@ import { BASE_URL, showErrorMessage, REACTION_ERROR } from '../../../../constant
 const moment = require('moment');
 
 class Post extends Component {
-  state = {
-    likes: this.props.likes,
-    dislikes: this.props.dislikes,
-  }
-
   handlePostLike = (e, postId, hasLiked) => {
     e.preventDefault();
 
@@ -74,10 +69,19 @@ class Post extends Component {
   }
 
   render() {
-    const { name, date, content, images, tags, posting_id: postId } = this.props;
+    const {
+      name,
+      date,
+      content,
+      images,
+      tags,
+      hasLiked,
+      hasDisliked,
+      likes,
+      dislikes,
+      posting_id: postId
+    } = this.props;
     
-    console.log("Received props in post", this.props)
-
     return (  
       <div className="post__container">
         <div className="post__name">{name}</div>
@@ -104,20 +108,20 @@ class Post extends Component {
             <Icon
               className="post__react"
               type="like"
-              theme={this.props.hasLiked ? "filled" : "outlined"}
-              onClick={e => this.handlePostLike(e, postId, this.props.hasLiked)}
+              theme={hasLiked ? "filled" : "outlined"}
+              onClick={e => this.handlePostLike(e, postId, hasLiked)}
             />
           </Tooltip>
-          <span className="post__react--count">{this.props.likes}</span>
+          <span className="post__react--count">{likes}</span>
           <Tooltip title="Dislike">
             <Icon
               className="post__react"
               type="dislike"
-              theme={this.props.hasDisliked ? "filled" : "outlined"}
-              onClick={e => this.handlePostDislike(e, postId, this.props.hasDisliked)}
+              theme={hasDisliked ? "filled" : "outlined"}
+              onClick={e => this.handlePostDislike(e, postId, hasDisliked)}
             />
           </Tooltip>
-          <span className="post__react--count">{this.props.dislikes}</span>
+          <span className="post__react--count">{dislikes}</span>
         </div>}
       </div>
     )
