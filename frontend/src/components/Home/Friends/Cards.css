@@ -22,9 +22,10 @@
 }
 
 .cards__profile-name {
-  padding-top: 3%;
+  padding-top: 4%;
   font-size: 14px;
   font-weight: 500;
+  margin-bottom: 2%;
 }
 
 .cards__profile-title {
