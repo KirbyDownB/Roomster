@@ -46,6 +46,7 @@ from .retrieve_profile import api as ns_retrieve_profile
 from .posting import api as ns_posting
 from .like import api as ns_like
 from .dislike import api as ns_dislike
+from .filter import api as ns_filter
 
 
 api.add_namespace(ns_login, path='/api/login')
@@ -59,3 +60,4 @@ api.add_namespace(ns_retrieve_profile, path='/api/retrieve_profile')
 api.add_namespace(ns_posting, path='/api/posting')
 api.add_namespace(ns_like, path='/api/like')
 api.add_namespace(ns_dislike, path='/api/dislike')
+api.add_namespace(ns_filter, path='/api/filter')
