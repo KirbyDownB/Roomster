@@ -34,39 +34,43 @@ class Feed extends Component {
     dislikedIds: [],
     isFeedLoading: false,
     isFeedSearchLoading: false,
-    sortBy: sortOptions[0]
+    sortBy: sortOptions[0],
+    postsToNumReactions: []
   }
 
   componentDidMount = () => {
-    this.setState({
-      posts: mockPosts,
-      likedIds: mockLikedIds,
-      dislikedIds: mockDislikedIds
-    });
-    // this.setState({ isFeedLoading: true });
-    // const token = localStorage.getItem("token");
+    // this.setState({
+    //   posts: mockPosts,
+    //   likedIds: mockLikedIds,
+    //   dislikedIds: mockDislikedIds
+    // });
+    this.setState({ isFeedLoading: true });
+    const token = localStorage.getItem("token");
 
-    // fetch(`${BASE_URL}/api/posting/all/`, {
-    //   headers: {
-    //     "Authorization": token
-    //   },
-    //   method: "POST",
-    // })
-    //   .then(response => response.json())
-    //   .then(({ postings, likedIds, dislikedIds }) => {
-    //     console.log("Got Feed data in componentDidMount", postings, likedIds, dislikedIds);
-    //     this.setState(prevState => ({
-    //       isFeedLoading: false,
-    //       posts: postings,
-    //       likedIds,
-    //       dislikedIds
-    //     }));
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //     showErrorMessage(FEED_ERROR);
-    //     this.setState({ isFeedLoading: false });
-    //   });
+    fetch(`${BASE_URL}/api/posting/all/`, {
+      headers: {
+        "Authorization": token
+      },
+      method: "POST",
+    })
+      .then(response => response.json())
+      .then(({ postings, likedIds, dislikedIds }) => {
+        console.log("Got Feed data in componentDidMount", postings, likedIds, dislikedIds);
+        const postsToNumReactions = postings.map(posting => ({ posting_id: posting.posting_id, likes: posting.likedEmails.length, dislikes: posting.dislikedEmails.length }));
+        console.log("Constructed postsToNumReactions", postsToNumReactions);
+        this.setState(prevState => ({
+          isFeedLoading: false,
+          posts: postings,
+          likedIds,
+          dislikedIds,
+          postsToNumReactions
+        }));
+      })
+      .catch(error => {
+        console.error(error);
+        showErrorMessage(FEED_ERROR);
+        this.setState({ isFeedLoading: false });
+      });
   }
 
   showFilter = e => {
@@ -173,12 +177,36 @@ class Feed extends Component {
       })
   }
 
-  addLikedId = postId => this.setState(prevState => ({ likedIds: [...prevState.likedIds, postId] }));
+  addLikedId = postId => {
+    const postsToNumReactions = [...this.state.postsToNumReactions];
+    const matchedPostIndex = postsToNumReactions.findIndex(item => item.posting_id === postId);
+    const updatedPost = postsToNumReactions[matchedPostIndex];
+    
+    updatedPost.likes += 1;
+    postsToNumReactions[matchedPostIndex] = updatedPost;
 
-  addDislikedId = postId => this.setState(prevState => ({ dislikedIds: [...prevState.dislikedIds, postId] }));
+    this.setState(prevState => ({
+      likedIds: [...prevState.likedIds, postId],
+      postsToNumReactions
+    }));
+  }
+
+  addDislikedId = postId => {
+    const postsToNumReactions = [...this.state.postsToNumReactions];
+    const matchedPostIndex = postsToNumReactions.findIndex(item => item.posting_id === postId);
+    const updatedPost = postsToNumReactions[matchedPostIndex];
+
+    updatedPost.dislikes += 1;
+    postsToNumReactions[matchedPostIndex] = updatedPost;
+
+    this.setState(prevState => ({
+      dislikedIds: [...prevState.dislikedIds, postId],
+      postsToNumReactions
+    }));
+  }
 
   handleSortByChange = sortBy => {
-    let sortedPosts = this.state.posts;
+    const sortedPosts = [...this.state.posts];
 
     if (sortBy === "Most Recent") {
       sortedPosts.sort((a, b) => a.date < b.date ? -1 : 1);
@@ -188,7 +216,7 @@ class Feed extends Component {
       sortedPosts.sort((a, b) => a.content.length > b.content.length ? -1 : 1);
     }
 
-    this.setState(prevState => ({ posts: [...sortedPosts] }));
+    this.setState({ posts: sortedPosts });
   };
 
   render() {
@@ -256,23 +284,26 @@ class Feed extends Component {
             }
             {
               !this.state.isFeedSearchLoading && this.state.posts.length > 0 && this.state.posts.map(post => {
-                console.log("Mapping post", post);
-
                 const hasLiked = this.state.likedIds.includes(post.posting_id);
                 const hasDisliked = this.state.dislikedIds.includes(post.posting_id);
+                
+                const matchedPost = this.state.postsToNumReactions.find(item => item.posting_id === post.posting_id);
+                const { likes, dislikes } = matchedPost;
+
+                console.log("Mapping post with likes and dislikes", post, likes, dislikes);
 
                 return (
                   <div className="col-6">
                     <Post
-                      likes={post.likedEmails.length}
-                      dislikes={post.dislikedEmails.length}
-                      {...post}
+                      likes={likes}
+                      dislikes={dislikes}
                       likedIds={this.state.likedIds}
                       dislikedIds={this.state.dislikedIds}
                       hasLiked={hasLiked}
                       hasDisliked={hasDisliked}
                       addLikedId={this.addLikedId}
                       addDislikedId={this.addDislikedId}
+                      {...post}
                     />
                   </div>
                 )

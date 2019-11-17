@@ -7,20 +7,8 @@ const moment = require('moment');
 
 class Post extends Component {
   state = {
-    numLikes: 0,
-    numDislikes: 0,
-    hasLiked: false,
-    hasDisliked: false
-  }
-
-  componentDidMount = () => {
-    console.log(this.props);
-    this.setState({
-      numLikes: this.props.likes,
-      numDislikes: this.props.dislikes,
-      hasLiked: this.props.hasLiked,
-      hasDisliked: this.props.hasDisliked
-    });
+    likes: this.props.likes,
+    dislikes: this.props.dislikes,
   }
 
   handlePostLike = (e, postId, hasLiked) => {
@@ -46,10 +34,6 @@ class Post extends Component {
       .then(data => {
         console.log("Response after LIKING post", data);
         this.props.addLikedId(postId);
-        this.setState(prevState => ({
-          numLikes: prevState.numLikes + 1,
-          hasLiked: true
-        }));
       })
       .catch(error => {
         console.error(error);
@@ -82,10 +66,6 @@ class Post extends Component {
       .then(data => {
         console.log("Response after DISLIKING post", data);
         this.props.addDislikedId(postId);
-        this.setState(prevState => ({
-          numDislikes: prevState.numDislikes + 1,
-          hasDisliked: true
-        }));
       })
       .catch(error => {
         console.error(error);
@@ -95,7 +75,8 @@ class Post extends Component {
 
   render() {
     const { name, date, content, images, tags, posting_id: postId } = this.props;
-    const { hasLiked, hasDisliked } = this.state;
+    
+    console.log("Received props in post", this.props)
 
     return (  
       <div className="post__container">
@@ -118,26 +99,26 @@ class Post extends Component {
         <div className="post__tags">
           {tags.length > 0 && tags.map(tag => <Tag color="red">{tag}</Tag> )}
         </div>
-        <div className="post__reactions">
+        {<div className="post__reactions">
           <Tooltip title="Like">
             <Icon
               className="post__react"
               type="like"
-              theme={hasLiked ? "filled" : "outlined"}
-              onClick={e => this.handlePostLike(e, postId, hasLiked)}
+              theme={this.props.hasLiked ? "filled" : "outlined"}
+              onClick={e => this.handlePostLike(e, postId, this.props.hasLiked)}
             />
           </Tooltip>
-          <span className="post__react--count">{this.state.numLikes}</span>
+          <span className="post__react--count">{this.props.likes}</span>
           <Tooltip title="Dislike">
             <Icon
               className="post__react"
               type="dislike"
-              theme={hasDisliked ? "filled" : "outlined"}
-              onClick={e => this.handlePostDislike(e, postId, hasDisliked)}
+              theme={this.props.hasDisliked ? "filled" : "outlined"}
+              onClick={e => this.handlePostDislike(e, postId, this.props.hasDisliked)}
             />
           </Tooltip>
-          <span className="post__react--count">{this.state.numDislikes}</span>
-        </div>
+          <span className="post__react--count">{this.props.dislikes}</span>
+        </div>}
       </div>
     )
   }
