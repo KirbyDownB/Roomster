@@ -9,6 +9,7 @@
   font-family: "Asap", sans-serif;
   color: #505050;
   font-weight: bold;
+  cursor: pointer;
 }
 
 /* This is set because the bootstrap row creates a left margin of -15px */
