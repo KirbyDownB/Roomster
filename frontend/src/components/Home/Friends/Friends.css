@@ -103,3 +103,7 @@
 .friends__requests-button {
   border-radius: 10px;
 }
+
+.friends__loader {
+  margin-top: 35%;
+}

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import Cards from './Cards';
+import EmptyCard from './EmptyCard';
 import Requests from './Requests/Requests';
 import { Modal, Input, Select, Radio, Icon, Popover, Button } from 'antd';
-import { BASE_URL, ADD_FRIEND_ERROR, showErrorMessage } from '../../../constants.js';
+import { BASE_URL, ADD_FRIEND_ERROR, ADD_FRIEND_ERROR_YOURSELF, ADD_FRIEND_SUCCESS, showErrorMessage, showSuccessMessage } from '../../../constants.js';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import Loader from 'react-loader-spinner'
 
 import './Friends.css';
 
@@ -18,10 +21,15 @@ class Friends extends Component {
     requestsList: [],
     email: "",
     visible: false,
-    loading: false
+    loading: false,
+    friendLoading: false
   }
 
   fetchFriends = () => {
+    this.setState({
+      friendLoading: true
+    })
+
     fetch(`${BASE_URL}/api/friends/friends_list/`, {
       headers: {
         "Content-Type": "application/json",
@@ -34,12 +42,15 @@ class Friends extends Component {
     .then(resp => {
       if (resp.friends){
         this.setState({
-          friendsList: resp.friends
+          friendsList: resp.friends,
         })
       }
       else {
         //error handling
       }
+      this.setState({
+        friendLoading: false
+      })
     })
   }
 
@@ -67,13 +78,26 @@ class Friends extends Component {
 
   handleDeleteRequests = (email) => {
     this.setState({
-      requestsList: this.state.requestsList.filter(user => user.Email != email)
+      requestsList: this.state.requestsList.filter(user => user.email != email)
     })
   }
 
   handleDelete = (email) => {
-    this.setState({
-      friendsList: this.state.friendsList.filter(user => user.Email != email)
+    fetch(`${BASE_URL}/api/friends/delete_friend/`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.token
+      },
+      method: "DELETE",
+      body: JSON.stringify({
+        friend: email
+      })
+    })
+    .then(resp => resp.json())
+    .then(resp => {
+      this.setState({
+        friendsList: this.state.friendsList.filter(user => user.email != email)
+      })
     })
   }
 
@@ -122,6 +146,12 @@ class Friends extends Component {
         if (resp.Message === "Friend email DNE"){
           showErrorMessage(ADD_FRIEND_ERROR)
         }
+        else if (resp.Message === "You cannot add yourself as a friend"){
+          showErrorMessage(ADD_FRIEND_ERROR_YOURSELF)
+        }
+        else {
+          showSuccessMessage(ADD_FRIEND_SUCCESS)
+        }
         this.setState({
           loading: false
         })
@@ -140,7 +170,9 @@ class Friends extends Component {
             )
           })}
         </div>:
-        <div></div>
+        <div>
+          You have no requests
+        </div>
       }
     </>
     )
@@ -151,9 +183,19 @@ class Friends extends Component {
   }
 
   render(){
-    console.log(this.state.friendsList)
     return(
       <div className="friends__container">
+      {this.state.friendLoading ?
+        <div className="container-fluid">
+          <div className="row justify-content-center friends__loader">
+            <Loader
+             type="CradleLoader"
+             color="#00BFFF"
+             height={100}
+             width={100}
+            />
+          </div>
+        </div>:
         <div className="container-fluid">
           <div className="row justify-content-center">
             <div className="col-2">
@@ -196,7 +238,8 @@ class Friends extends Component {
               </Modal>
             </div>
           </div>
-          {this.state.friendsList.length > 0 &&  <div className="friends__list--container">
+          {this.state.friendsList.length > 0 ?
+          <div className="friends__list--container">
             <div className="row">
               {this.state.friendsList.map(item => {
                 return (
@@ -206,9 +249,17 @@ class Friends extends Component {
                 )
               })}
             </div>
+          </div>:
+          <div className="friends__list--container">
+            <div className="row">
+              <div className="col-3">
+                <EmptyCard />
+              </div>
+            </div>
           </div>
         }
         </div>
+      }
       </div>
     )
   }
