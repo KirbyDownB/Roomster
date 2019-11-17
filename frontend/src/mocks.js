@@ -91,7 +91,7 @@ export const mockPosts = [
     dislikedEmails: ["five@gmail.com"]
   }
 ];
-
 export const mockLikedIds = ["1", "2", "3"];
-
 export const mockDislikedIds = ["2", "4", "5"];
+export const mockLocations = ["San Francisco", "New York", "Seattle", "Riverside", "Los Angeles"];
+export const mockPriceRange = [200, 8000];

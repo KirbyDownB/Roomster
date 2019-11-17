@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Feed.css';
 import Post from './Post/Post';
+import Filter from './Filter/Filter';
 import { Button, Icon, Popover, Input, Modal, Select, Form, Upload } from 'antd';
 import spinner from '../../../assets/tail-spin.svg';
 import {
@@ -13,9 +14,13 @@ import {
   NEW_POST_ERROR,
   FEED_ERROR,
   FEED_SEARCH_ERROR,
-  sortOptions
+  FILTER_SUBMIT_ERROR,
+  sortOptions,
+  ethnicities,
+  durations,
+  genders,
 } from '../../../constants';
-import { mockPosts, mockLikedIds, mockDislikedIds } from '../../../mocks';
+import { mockPosts, mockLikedIds, mockDislikedIds, mockLocations, mockPriceRange } from '../../../mocks';
 
 const { Option } = Select;
 const { Item } = Form;
@@ -35,7 +40,12 @@ class Feed extends Component {
     isFeedLoading: false,
     isFeedSearchLoading: false,
     sortBy: sortOptions[0],
-    postsToNumReactions: []
+    postsToNumReactions: [],
+    ethnicities: [],
+    locations: [],
+    durations: [],
+    priceMin: null,
+    priceMax: null
   }
 
   componentDidMount = () => {
@@ -44,7 +54,7 @@ class Feed extends Component {
     //   likedIds: mockLikedIds,
     //   dislikedIds: mockDislikedIds
     // });
-    this.setState({ isFeedLoading: true });
+    this.setState({ isFeedSearchLoading: true });
     const token = localStorage.getItem("token");
 
     fetch(`${BASE_URL}/api/posting/all/`, {
@@ -54,22 +64,26 @@ class Feed extends Component {
       method: "POST",
     })
       .then(response => response.json())
-      .then(({ postings, likedIds, dislikedIds }) => {
-        console.log("Got Feed data in componentDidMount", postings, likedIds, dislikedIds);
+      .then(({ postings, likedIds, dislikedIds, locations, durations, ethnicities, priceMin, priceMax }) => {
+        console.log("Got Feed data in componentDidMount", postings, likedIds, dislikedIds, locations, durations, ethnicities, priceMin, priceMax);
         const postsToNumReactions = postings.map(posting => ({ posting_id: posting.posting_id, likes: posting.likedEmails.length, dislikes: posting.dislikedEmails.length }));
-        console.log("Constructed postsToNumReactions", postsToNumReactions);
         this.setState(prevState => ({
-          isFeedLoading: false,
+          isFeedSearchLoading: false,
           posts: postings,
           likedIds,
           dislikedIds,
-          postsToNumReactions
+          postsToNumReactions,
+          ethnicities,
+          locations,
+          durations,
+          priceMin,
+          priceMax
         }));
       })
       .catch(error => {
         console.error(error);
         showErrorMessage(FEED_ERROR);
-        this.setState({ isFeedLoading: false });
+        this.setState({ isFeedSearchLoading: false });
       });
   }
 
@@ -219,6 +233,30 @@ class Feed extends Component {
     this.setState({ posts: sortedPosts });
   };
 
+  handleFilterSubmit = options => {
+    console.log("Submitting filter with options", options);
+
+    this.setState({ isFeedSearchLoading: true });
+
+    fetch(`${BASE_URL}/api/filter/`, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify({ ...options })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Received response after submitting FILTER", data);
+        this.setState({ isFeedSearchLoading: false });
+      })
+      .catch(error => {
+        console.error(error);
+        showErrorMessage(FILTER_SUBMIT_ERROR);
+        this.setState({ isFeedSearchLoading: false });
+      })
+  }
+
   render() {
     return (
       <div className="feed__container">
@@ -236,8 +274,18 @@ class Feed extends Component {
           </div>
           <div className="row">
             <div className="col-2">
-              <Popover
-                content={<a onClick={this.hideFilter}>Close</a>}
+              {<Popover
+                content={
+                  <Filter
+                    locationOptions={this.state.locations}
+                    ethnicityOptions={this.state.ethnicities}
+                    genderOptions={genders}
+                    durationOptions={durations}
+                    priceMin={this.state.priceMin}
+                    priceMax={this.state.priceMax}
+                    handleFilterSubmit={this.handleFilterSubmit}
+                  />
+                }
                 trigger="click"
                 visible={this.state.isFilterOpen}
                 placement="bottom"
@@ -251,7 +299,7 @@ class Feed extends Component {
                   <Icon type="control" />
                   Filter
                 </Button>
-              </Popover>
+              </Popover>}
             </div>
             <div className="col-2">
               <Button

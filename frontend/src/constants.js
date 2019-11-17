@@ -1,6 +1,6 @@
 import { message } from 'antd';
 
-export const BASE_URL = "http://6b3ba881.ngrok.io";
+export const BASE_URL = "http://65634573.ngrok.io";
 export const inputIconColor = { color: 'rgba(0, 0, 0)' };
 export const PASSWORD_MATCH_ERROR = "Your passwords don't match!";
 export const EMPTY_INPUT_ERROR = "You left an input field empty!";
@@ -20,6 +20,7 @@ export const ADD_FRIEND_SUCCESS = "You've succesfully added that user"
 export const FEED_ERROR = "Sorry, we had trouble loading your feed!";
 export const FEED_SEARCH_ERROR = "Sorry, we had trouble with searching!";
 export const REACTION_ERROR = "An issue occurred when trying to record your reaction.";
+export const FILTER_SUBMIT_ERROR = "Sorry, we couldn't submit your filter request.";
 export const durations = ["0 - 6 months", "6 months - 1 year", "1 year +"];
 export const ethnicities = [
   "American Indian or Alaska Native",
@@ -91,3 +92,4 @@ export const showErrorMessage = text => message.error(text);
 export const showSuccessMessage = text => message.success(text);
 export const dummyRequest = ({ file, onSuccess }) => setTimeout(() => onSuccess("ok"), 0);
 export const loginRedirect = () => window.location.href =  "/login";
+export const priceRangeFormatter = value => `$${value}`;
