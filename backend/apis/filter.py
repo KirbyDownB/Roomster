@@ -100,6 +100,10 @@ class Filter(Resource):
             user_data = User.objects(duration=duration)
             printData(user_data)
 
+        elif not location and not ethnicity and not duration and not gender and int(priceMin) >=0 and int(priceMax) >=0: #price
+            user_data = User.objects(Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
+            printData(user_data)
+
         elif gender and location and not ethnicity and not duration and not priceMin and not priceMax: #gender-location
             user_data = User.objects(Q(gender=gender) & Q(location_of_interest=location))
             printData(user_data)
@@ -112,6 +116,10 @@ class Filter(Resource):
             user_data = User.objects(Q(gender=gender) & Q(duration=duration))
             printData(user_data)
 
+        elif gender and priceMin and priceMax and not duration and not ethnicity and not location: #gender-price
+            user_data = User.objects(Q(gender=gender) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
+            printData(user_data)
+
         elif location and ethnicity and not duration and not gender and not priceMin and not priceMax: #location-ethnicity
             user_data = User.objects(Q(location_of_interest=location) & Q(ethnicity=ethnicity))
             printData(user_data)
@@ -120,9 +128,20 @@ class Filter(Resource):
             user_data = User.objects(Q(location_of_interest=location) & Q(duration=duration))
             printData(user_data)
 
+        elif location and priceMin and priceMax and not duration and not ethnicity and not gender: #location-price
+            user_data = User.objects(Q(location_of_interest=location) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
+            printData(user_data)
+
         elif ethnicity and duration and not location and not gender and not priceMin and not priceMax: #ethnicity-duration
             user_data = User.objects(Q(ethnicity=ethnicity) & Q(duration=duration))
             printData(user_data)
+
+        elif ethnicity and priceMin and priceMax and not duration and not location and not gender: #ethnicity-price
+            user_data = User.objects(Q(ethnicity=ethnicity) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
+            printData(user_data)
+        
+        elif duration and priceMin and priceMax and not ethnicity and not location and not gender: #duration-price
+            user_data = User.objects(Q(duration=duration) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
 
         elif gender and location and ethnicity and not duration and not priceMin and not priceMax: #gender-location-ethnicity
             user_data = User.objects(Q(location_of_interest=location) & Q(gender=gender) & Q(ethnicity=ethnicity))
@@ -132,46 +151,57 @@ class Filter(Resource):
             user_data = User.objects(Q(location_of_interest=location) & Q(gender=gender) & Q(duration=duration))
             printData(user_data)
 
+        elif gender and location and priceMin and priceMax and not duration and not location:   #gender-location-price
+            user_data = User.objects(Q(location_of_interest=location) &Q(gender=gender) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
+            printData(user_data)
+
         elif gender and ethnicity and duration and not location and not priceMin and not priceMax: #gender-ethnicity-duration
             user_data = User.objects(Q(duration=duration) & Q(gender=gender) & Q(ethnicity=ethnicity))
+            printData(user_data)
+
+        elif gender and ethnicity and priceMin and priceMax and not location and not duration: #gender-ethnicity-price
+            user_data = User.objects(Q(gender=gender) & Q(ethnicity=ethnicity) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
+            printData(user_data)
+
+        elif gender and duration and priceMin and priceMax and not location and not ethnicity: #gender-duration-price
+            user_data = User.objects(Q(gender=gender) & Q(duration=duration) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
             printData(user_data)
 
         elif location and ethnicity and duration and not gender and not priceMin and not priceMax: #location-ethnicity-duration
             user_data = User.objects(Q(location_of_interest=location) & Q(duration=duration) & Q(ethnicity=ethnicity))
             printData(user_data)
 
-        elif location and ethnicity and duration and gender and not priceMin and not priceMax: #location-ethnicity-duration-gender
+        elif location and ethnicity and priceMax and priceMin and not duration and not gender: #location-ethnicity-price
+            user_data = User.objects(Q(location_of_interest=location) & Q(ethnicity=ethnicity) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
+            printData(user_data)
+
+        elif location and duration and priceMin and priceMax and not ethnicity and not gender: #location-duration-price
+            user_data = User.objects(Q(location_of_interest=location) & Q(duration=duration) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
+            printData(user_data)
+
+        elif ethnicity and duration and priceMin and priceMax and not lcoation and not ethnicity: #ethnicity-duration-price
+            user_data = User.objects(Q(ethnicity=ethnicity) & Q(duration=duration) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
+            printData(user_data)
+
+        elif location and ethnicity and duration and gender and not priceMin and not priceMax: #gender-location-ethnicity-duration
             user_data = User.objects(Q(location_of_interest=location) & Q(gender=gender) & Q(ethnicity=ethnicity) & Q(duration=duration))
             printData(user_data)
 
-        elif location and ethnicity and duration and gender and priceMin and priceMax: #location-ethnicity-duration-gender and price min and max
-            user_data = User.objects(Q(location_of_interest=location) & Q(gender=gender) & Q(ethnicity=ethnicity) & Q(duration=duration)) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax))
+        elif gender and location and ethnicity and priceMin and priceMax and not duration: #gender-location-ethnicity-price
+            user_data = User.objects(Q(location_of_interest=location) & Q(gender=gender) & Q(ethnicity=ethnicity) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
             printData(user_data)
 
-
-        elif location and not ethnicity and duration and gender and priceMin and priceMax: #location-ethnicity-duration-gender and price min and max
-            user_data = User.objects(Q(location_of_interest=location) & Q(gender=gender) & Q(duration=duration)) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax))
+        elif gender and location and duration and priceMax and priceMin and not ethnicity: #gender-location-duration-price
+            user_data = User.objects(Q(location_of_interest=location) & Q(gender=gender) & Q(duration=duration) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
             printData(user_data)
 
-
-        elif location and not ethnicity and not duration and gender and priceMin and priceMax: #location-ethnicity-duration-gender and price min and max
-            user_data = User.objects(Q(location_of_interest=location) & Q(gender=gender) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
+        elif location and ethnicity and duration and priceMin and priceMax and not gender: #location-ethnicity-duration-price
+            user_data = User.objects(Q(location_of_interest=location) & Q(ethnicity=ethnicity) & Q(duration=duration) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
             printData(user_data)
 
-        elif location and not ethnicity and not duration and not gender and priceMin and priceMax: #location-ethnicity-duration-gender and price min and max
-            user_data = User.objects(Q(location_of_interest=location) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
+        elif location and ethnicity and duration and gender and priceMin and priceMax: #location-ethnicity-duration-gender-price
+            user_data = User.objects(Q(location_of_interest=location) & Q(gender=gender) & Q(ethnicity=ethnicity) & Q(duration=duration) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
             printData(user_data)
-
-        elif not location and not ethnicity and not duration and not gender and int(priceMin) >=0 and int(priceMax) >=0: #location-ethnicity-duration-gender and price min and max
-            print("HIIII")
-            print(priceMin)
-            print(priceMax)
-
-            user_data = User.objects(Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
-            print(user_data)
-            user_data = User.objects(Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
-            printData(user_data)
-
         
         postings = []
         for user in user_data:
