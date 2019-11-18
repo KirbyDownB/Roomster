@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Carousel, Tag, Icon, Tooltip} from 'antd';
+import { Carousel, Tag, Icon, Tooltip, Popover } from 'antd';
 import './Post.css';
 import { BASE_URL, showErrorMessage, REACTION_ERROR } from '../../../../constants';
+import BasicProfile from './BasicProfile/BasicProfile';
 
 const moment = require('moment');
 
@@ -79,12 +80,20 @@ class Post extends Component {
       hasDisliked,
       likes,
       dislikes,
+      poster_email,
       posting_id: postId
     } = this.props;
     
     return (  
       <div className="post__container">
-        <div className="post__name">{name}</div>
+        <div className="post__name">
+          <Popover
+            trigger="click"
+            content={<BasicProfile posterEmail={poster_email} />}
+          >
+            <span className="post__name--hover">{name}</span>
+          </Popover>
+        </div>
         <div className="post__date">{moment(date).format('MMMM Do, YYYY')}</div>
         <div className="post__images">
           {

@@ -72,3 +72,7 @@
   color: #F57676;
   font-weight: bold;
 }
+
+.post__name--hover:hover {
+  cursor: pointer;
+}
