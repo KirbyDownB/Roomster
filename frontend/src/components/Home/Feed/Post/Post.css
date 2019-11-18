@@ -27,11 +27,13 @@
 }
 
 .ant-carousel .slick-dots li.slick-active button {
-  background-color: black !important;
+  background-color: #F57676 !important;
+  margin-top: 24px;
 }
 
 .ant-carousel .slick-dots li button {
-  background-color: black !important;
+  background-color: #F57676 !important;
+  margin-top: 24px;
 }
 
 .post__carousel {
@@ -71,4 +73,8 @@
   margin-top: -2px;
   color: #F57676;
   font-weight: bold;
+}
+
+.post__name--hover:hover {
+  cursor: pointer;
 }

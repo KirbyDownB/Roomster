@@ -169,23 +169,19 @@ class Friends extends Component {
           friend: this.state.email
         })
       })
-      .then(resp => resp.json())
+      .then(resp => resp.status == 400 ? Promise.reject(resp) : resp.json())
       .then(resp => {
-        console.log(resp)
-        if (resp.Message === "Friend email DNE"){
-          showErrorMessage(ADD_FRIEND_ERROR)
-        }
-        else if (resp.Message === "You cannot add yourself as a friend"){
-          showErrorMessage(ADD_FRIEND_ERROR_YOURSELF)
-        }
-        else {
-          showSuccessMessage(ADD_FRIEND_SUCCESS)
-        }
+        showSuccessMessage(ADD_FRIEND_SUCCESS);
         this.setState({
           loading: false
         })
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        this.setState({
+          loading: false
+        })
+        showErrorMessage(ADD_FRIEND_ERROR)
+      })
     }
   }
 

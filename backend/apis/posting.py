@@ -79,9 +79,9 @@ class AddPosting(Resource):
 
 
 
-            return {"Message":"posting successfully stored"}
+            return {"Message":"Posting successfully stored"}
 
-        return {"Message":"Hit POST"}
+        return {"Message":"That user does not exist"}, 400
 
 
 @api.route('/all/')
@@ -94,7 +94,7 @@ class AllPosting(Resource):
             return {"Message":"Token machine BROKE"}, 400
         exists, user_obj = emailExists(user_email)
         if not exists:
-            return {"Message":"That user does not exist"}
+            return {"Message":"That user does not exist"}, 400
 
         
         # postings= (json.loads(Posting.objects.to_json()))
@@ -109,6 +109,28 @@ class AllPosting(Resource):
              
         random.shuffle(postings)
 
-       
 
-        return {"Message":"MEME","postings":postings, "likedIds":user_obj.likedPosts, "dislikedIds": user_obj.dislikedPosts}
+        all_possible_locations = []
+        durations = []
+        ethnicities = []
+        Pmin = []
+        Pmax = []
+        for user in User.objects:
+            all_possible_locations.append(user.location_of_interest)
+            durations.append(user.duration)
+            ethnicities.append(user.ethnicity)
+
+            if user.price_range_min is not None:
+                Pmin.append(int(user.price_range_min))
+
+            if user.price_range_max is not None:
+                Pmax.append(int(user.price_range_max))
+
+
+        all_possible_locations = list(set(all_possible_locations))
+        durations = list(set(durations))
+        ethnicities = list(set(ethnicities))
+
+
+        return {"Message":"MEME","postings":postings, "likedIds":user_obj.likedPosts, "dislikedIds": user_obj.dislikedPosts, "locations":all_possible_locations,
+            "durations":durations, "ethnicities":ethnicities, "priceMin":min(Pmin), "priceMax":max(Pmax)}
