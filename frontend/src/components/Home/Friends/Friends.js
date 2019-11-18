@@ -3,7 +3,7 @@ import Cards from './Cards';
 import EmptyCard from './EmptyCard';
 import Requests from './Requests/Requests';
 import { Modal, Input, Select, Radio, Icon, Popover, Button } from 'antd';
-import { BASE_URL, ADD_FRIEND_ERROR, ADD_FRIEND_ERROR_YOURSELF, ADD_FRIEND_SUCCESS, SEARCH_FRIEND_ERROR, showErrorMessage, showSuccessMessage } from '../../../constants.js';
+import { BASE_URL, ADD_FRIEND_ERROR, ADD_FRIEND_SUCCESS, SEARCH_FRIEND_ERROR, showErrorMessage, showSuccessMessage } from '../../../constants.js';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
 
@@ -169,23 +169,19 @@ class Friends extends Component {
           friend: this.state.email
         })
       })
-      .then(resp => resp.json())
+      .then(resp => resp.status == 400 ? Promise.reject(resp) : resp.json())
       .then(resp => {
-        console.log(resp)
-        if (resp.Message === "Friend email DNE"){
-          showErrorMessage(ADD_FRIEND_ERROR)
-        }
-        else if (resp.Message === "You cannot add yourself as a friend"){
-          showErrorMessage(ADD_FRIEND_ERROR_YOURSELF)
-        }
-        else {
-          showSuccessMessage(ADD_FRIEND_SUCCESS)
-        }
+        showSuccessMessage(ADD_FRIEND_SUCCESS);
         this.setState({
           loading: false
         })
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        this.setState({
+          loading: false
+        })
+        showErrorMessage(ADD_FRIEND_ERROR)
+      })
     }
   }
 

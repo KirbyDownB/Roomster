@@ -1,6 +1,6 @@
 import { message } from 'antd';
 
-export const BASE_URL = "http://a16a397b.ngrok.io";
+export const BASE_URL = "http://65634573.ngrok.io";
 export const inputIconColor = { color: 'rgba(0, 0, 0)' };
 export const PASSWORD_MATCH_ERROR = "Your passwords don't match!";
 export const EMPTY_INPUT_ERROR = "You left an input field empty!";
@@ -14,7 +14,7 @@ export const SIGNUP_ERROR = "An issue occurred when trying to sign you up.";
 export const LOGIN_ERROR = "Sorry, we had trouble logging you in!";
 export const GENERAL_ERROR = "Something went wrong!";
 export const NUM_IMAGE_UPLOAD_ERROR = "Please upload no more than 5 images!";
-export const ADD_FRIEND_ERROR = "Sorry, we had trouble finding a user with that email";
+export const ADD_FRIEND_ERROR = "Sorry, we had trouble adding your friend with that username";
 export const ADD_FRIEND_ERROR_YOURSELF = "Sorry, you cannot add yourself";
 export const ADD_FRIEND_SUCCESS = "You've succesfully added that user";
 export const SEARCH_FRIEND_ERROR = "Please input a name before searching"
