@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import './Profile.css';
-import { Input, Icon, Form, Slider, Button, Alert } from 'antd';
-import  { BASE_URL } from '../../../constants';
+import { Input, Icon, Form, Slider, Button, Select } from 'antd';
+import  { BASE_URL, occupations, showErrorMessage, showSuccessMessage, PROFILE_UPDATE_ERROR, PROFILE_UPDATE_SUCCESS, PASSWORD_MATCH_ERROR, ethnicities, durations } from '../../../constants';
+import spinner from '../../../assets/tail-spin.svg';
 
 const { Item } = Form;
+const { Option } = Select;
 
 class Profile extends Component {
   state = {
@@ -12,9 +14,10 @@ class Profile extends Component {
     lastName: '',
     phoneNumber: '',
     dob: '',
-    address: '',
+    occupation: '',
     age: '',
     location: '',
+    duration: '',
     ethnicity: '',
     password: '',
     pf_pic: null,
@@ -23,11 +26,15 @@ class Profile extends Component {
     priceHigh: null,
     token: null,
     alertMessage: "",
-    messageType: "warning"
+    messageType: "warning",
+    isProfileUpdating: false,
+    isProfileLoading: false
   }
 
   componentDidMount = () => {
     const token = localStorage.getItem("token");
+
+    this.setState({ isProfileLoading: true });
 
     fetch(`${BASE_URL}/api/update_profile/`, {
       headers: {
@@ -35,30 +42,40 @@ class Profile extends Component {
         "Authorization": token,
       },
     })
-      .then(response => response.json())
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
       .then(data => {
         console.log("Received the current user's information", data);
         const { user } = data;
-        const { pf_pic, address, age, email, ethnicity, first_name: firstName, last_name: lastName, location_of_interest: location, number_of_roommates: numRoommates, phone_number: phoneNumber, price_range_max: priceHigh, price_range_min: priceLow } = user;
+        const { age, email, ethnicity, occupation, duration, first_name: firstName, last_name: lastName, location_of_interest: location, number_of_roommates: numRoommates, phone_number: phoneNumber, price_range_max: priceHigh, price_range_min: priceLow } = user;
 
-        this.setState({ pf_pic, email, firstName, lastName, phoneNumber, address, age, location, ethnicity, numRoommates, priceLow, priceHigh });
+        this.setState({ email, firstName, lastName, phoneNumber, occupation, duration, age, location, ethnicity, numRoommates, priceLow, priceHigh, isProfileLoading: false });
       })
       .catch(error => {
         console.error("Got an error", error);
-      })
-
-    // const { email, firstName, lastName, phoneNumber, dob, address, age, location, ethnicity, numRoommates, priceLow, priceHigh } = mockProfileInfo;
-    // this.setState({ email, firstName, lastName, phoneNumber, dob, address, age, location, ethnicity, numRoommates, priceRange: [priceLow, priceHigh] });
+        this.setState({ isProfileLoading: false });
+      });
   }
 
   handleProfileUpdate = e => {
     e.preventDefault();
 
-    this.setState({ isLoading: true });
+    const password1 = e.target.password1.value;
+    const password2 = e.target.password2.value;
+
+    if (password1 !== password2) {
+      showErrorMessage(PASSWORD_MATCH_ERROR);
+      return;
+    }
+
+    this.setState({ isProfileUpdating: true });
 
     const token = localStorage.getItem("token");
     let userInfo = this.state;
-    delete userInfo.isLoading;
+    delete userInfo.isProfileUpdating;
+    delete userInfo.isProfileLoading;
+    delete userInfo.password;
+
+    console.log("Submitting userInfo to update_profile", userInfo);
 
     fetch(`${BASE_URL}/api/update_profile/`, {
       headers: {
@@ -66,36 +83,18 @@ class Profile extends Component {
         "Authorization": token,
       },
       method: "POST",
-      body: JSON.stringify({ ...this.state })
+      body: JSON.stringify({ ...userInfo, password: password1 })
     })
-      .then(response => response.json())
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
       .then(data => {
-        console.log("Received the current user's information", data);
-        const { user } = data;
-        const {
-          address,
-          age,
-          email,
-          ethnicity,
-          first_name: firstName,
-          last_name: lastName,
-          location_of_interest:
-          location,
-          number_of_roommates: numRoommates,
-          phone_number: phoneNumber,
-          price_range_max: priceHigh,
-          price_range_min: priceLow
-        } = user;
-
-        this.setState({ email, firstName, lastName, phoneNumber, address, age, location, ethnicity, numRoommates, priceRange: [priceLow, priceHigh], isLoading: false, alertMessage: "Your profile has been successfully updated!", messageType: "success" });
+        console.log("Received response after UPDATING PROFILE", data);
+        this.setState({ isProfileUpdating: false });
+        showSuccessMessage(PROFILE_UPDATE_SUCCESS);
       })
       .catch(error => {
-        console.error("Got an error", error);
-        this.setState({
-          isLoading: false,
-          alertMessage: "Something went wrong!",
-          messageType: "warning"
-        });
+        console.error("Got an error after UPDATING PROFILE", error);
+        this.setState({ isProfileUpdating: false });
+        showErrorMessage(PROFILE_UPDATE_ERROR);
       })
   }
 
@@ -115,12 +114,17 @@ class Profile extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  render() {
-    console.log(this.state.priceLow)
+  handleOccupationChange = occupation => this.setState({ occupation });
 
+  handleEthnicityChange = ethnicity => this.setState({ ethnicity });
+
+  handleDurationChange = duration => this.setState({ duration });
+
+  render() {
     return (
       <div className="profile__container">
         <div className="container-fluid">
+          {this.state.isProfileLoading && <img className="profile__spinner" src={spinner} alt=""/> }
           {this.state.priceLow && this.state.priceHigh && <Form onSubmit={this.handleProfileUpdate}>
             <div className="row justify-content-center">
               <div className="col-10">
@@ -215,15 +219,21 @@ class Profile extends Component {
               </div>
               <div className="col-5">
                 <Item>
-                  <div className="profile__input--caption">Address</div>
-                  <Input
+                  <div className="profile__input--caption">Occupation</div>
+                  <Select
+                    defaultValue={this.state.occupation}
+                    onChange={this.handleOccupationChange}
+                  >
+                    {occupations.map(occupationOption => <Option value={occupationOption}>{occupationOption}</Option>)}
+                  </Select>
+                  {/* <Input
                     className="profile__address"
                     name="address"
                     value={this.state.address}
                     placeholder="Address"
                     onChange={this.handleInputChange}
                     prefix={<Icon type="bank" style={{color: 'rgba(0, 0, 0)'}} />}
-                  />
+                  /> */}
                 </Item>
               </div>
             </div>
@@ -257,13 +267,19 @@ class Profile extends Component {
               <div className="col-5">
                 <Item>
                   <div className="profile__input--caption">Ethnicity</div>
-                  <Input
+                  <Select
+                    defaultValue={this.state.ethnicity}
+                    onChange={this.handleEthnicityChange}
+                  >
+                    {ethnicities.map(ethnicityOption => <Option value={ethnicityOption}>{ethnicityOption}</Option>)}
+                  </Select>
+                  {/* <Input
                     name="ethnicity"
                     placeholder="Ethnicity"
                     value={this.state.ethnicity}
                     onChange={this.handleInputChange}
                     prefix={<Icon type="flag" style={{color: 'rgba(0, 0, 0)'}} />}
-                  />
+                  /> */}
                 </Item>
               </div>
               <div className="col-5">
@@ -280,7 +296,18 @@ class Profile extends Component {
               </div>
             </div>
             <div className="row justify-content-center">
-              <div className="col-10">
+              <div className="col-5">
+                <Item>
+                  <div className="profile__input--caption">Duration</div>
+                  <Select
+                    defaultValue={this.state.duration}
+                    onChange={this.handleDurationChange}
+                  >
+                    {durations.map(durationOption => <Option value={durationOption}>{durationOption}</Option>)}
+                  </Select>
+                </Item>
+              </div>
+              <div className="col-5">
                 <Item>
                   <div className="profile__input--caption">Price Range</div>
                   <Slider
@@ -300,7 +327,7 @@ class Profile extends Component {
                 htmlType="submit"
                 type="primary"
                 style={{ width: 440 }}
-                loading={this.state.isLoading}
+                loading={this.state.isProfileUpdating}
               >
                 <span className="profile__button--bold">SUBMIT</span>
               </Button>

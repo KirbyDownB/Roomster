@@ -1,11 +1,13 @@
 import { message } from 'antd';
 
-export const BASE_URL = "http://7cd332ed.ngrok.io/";
+export const BASE_URL = "http://7cd332ed.ngrok.io";
 export const inputIconColor = { color: 'rgba(0, 0, 0)' };
 export const PASSWORD_MATCH_ERROR = "Your passwords don't match!";
 export const EMPTY_INPUT_ERROR = "You left an input field empty!";
 export const NO_IMAGE_ERROR = "You forgot to upload an image!";
 export const PHONE_ERROR = "Your phone number is invalid.";
+export const PROFILE_UPDATE_ERROR = "Sorry, we had an issue trying to update your profile.";
+export const PROFILE_UPDATE_SUCCESS = "Your profile has been successfully updated.";
 export const EMAIL_RESET_MESSAGE = "A password reset link has been sent to your email.";
 export const SIGNUP_SUCCESS= "You've successfully signed up! You'll be redirected to the login page in 3 seconds";
 export const NEW_POST_SUCCESS = "Your post has successfully been submitted!";
@@ -23,6 +25,12 @@ export const FEED_SEARCH_ERROR = "Sorry, we had trouble with searching!";
 export const REACTION_ERROR = "An issue occurred when trying to record your reaction.";
 export const FILTER_SUBMIT_ERROR = "Sorry, we couldn't submit your filter request.";
 export const durations = ["0 - 6 months", "6 months - 1 year", "1 year +"];
+export const defaultFilterMessages = {
+  location: "Select a location",
+  ethnicity: "Select an ethnicity",
+  gender: "Select a gender",
+  duration: "Select a duration"
+}
 export const ethnicities = [
   "American Indian or Alaska Native",
   "Asian",

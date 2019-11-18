@@ -13,12 +13,14 @@ export const userLoginFetch = (email, password) => {
         "password": password
       })
     })
-    .then(resp => resp.json())
+    .then(resp => resp.status === 400 ? Promise.reject() : resp.json())
     .then(resp => {
       if (resp.Message === "Login Successful"){
         localStorage.setItem("token", resp.token)
         console.log(resp.user)
         dispatch(loginUser(resp.user)); //backend needs to return user as well
+      } else {
+        console.log("Login not successful", resp);
       }
     })
   }
