@@ -24,6 +24,7 @@ class Profile extends Component {
     numRoommates: null,
     priceLow: null,
     priceHigh: null,
+    pf_pic: null,
     token: null,
     alertMessage: "",
     messageType: "warning",
@@ -46,9 +47,9 @@ class Profile extends Component {
       .then(data => {
         console.log("Received the current user's information", data);
         const { user } = data;
-        const { age, email, ethnicity, occupation, duration, first_name: firstName, last_name: lastName, location_of_interest: location, number_of_roommates: numRoommates, phone_number: phoneNumber, price_range_max: priceHigh, price_range_min: priceLow } = user;
+        const { pf_pic, age, email, ethnicity, occupation, duration, first_name: firstName, last_name: lastName, location_of_interest: location, number_of_roommates: numRoommates, phone_number: phoneNumber, price_range_max: priceHigh, price_range_min: priceLow } = user;
 
-        this.setState({ email, firstName, lastName, phoneNumber, occupation, duration, age, location, ethnicity, numRoommates, priceLow, priceHigh, isProfileLoading: false });
+        this.setState({ pf_pic, email, firstName, lastName, phoneNumber, occupation, duration, age, location, ethnicity, numRoommates, priceLow, priceHigh, isProfileLoading: false });
       })
       .catch(error => {
         console.error("Got an error", error);
