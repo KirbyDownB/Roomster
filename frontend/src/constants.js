@@ -21,6 +21,7 @@ export const SEARCH_FRIEND_ERROR = "Please input a name before searching"
 export const FEED_ERROR = "Sorry, we had trouble loading your feed!";
 export const FEED_SEARCH_ERROR = "Sorry, we had trouble with searching!";
 export const REACTION_ERROR = "An issue occurred when trying to record your reaction.";
+export const FILTER_SUBMIT_ERROR = "Sorry, we couldn't submit your filter request.";
 export const durations = ["0 - 6 months", "6 months - 1 year", "1 year +"];
 export const ethnicities = [
   "American Indian or Alaska Native",
