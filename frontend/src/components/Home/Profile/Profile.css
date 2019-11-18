@@ -42,3 +42,16 @@
   margin: 0 auto;
   margin-top: 20%;
 }
+
+.profile__image-container {
+  position: absolute;
+  top: -90%;
+  left: 30%;
+  text-align: center;
+}
+
+.profile__image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}

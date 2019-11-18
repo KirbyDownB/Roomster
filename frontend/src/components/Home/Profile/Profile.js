@@ -20,6 +20,7 @@ class Profile extends Component {
     duration: '',
     ethnicity: '',
     password: '',
+    pf_pic: null,
     numRoommates: null,
     priceLow: null,
     priceHigh: null,
@@ -145,7 +146,11 @@ class Profile extends Component {
                   />
                 </Item>
               </div>
-              <div className="col-5"></div>
+              <div className="col-5">
+                <div className="profile__image-container">
+                  <img className="profile__image" src={this.state.pf_pic}></img>
+                </div>
+              </div>
             </div>
             <div className="row justify-content-center">
               <div className="col-5">
