@@ -40,3 +40,16 @@
   width: 450px;
   margin-bottom: 64px;
 }
+
+.profile__image-container {
+  position: absolute;
+  top: -90%;
+  left: 30%;
+  text-align: center;
+}
+
+.profile__image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
