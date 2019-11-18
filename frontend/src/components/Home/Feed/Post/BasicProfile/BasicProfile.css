@@ -1,0 +1,10 @@
+.basicprofile__title {
+  text-align: center;
+  font-size: 125%;
+  margin-bottom: 4%;
+}
+
+.basicprofile__addFriend, .basicprofile__title {
+  font-family: "Asap", sans-serif;
+  font-weight: bold;
+}
