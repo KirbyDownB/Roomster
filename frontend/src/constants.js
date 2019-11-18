@@ -92,4 +92,3 @@ export const showErrorMessage = text => message.error(text);
 export const showSuccessMessage = text => message.success(text);
 export const dummyRequest = ({ file, onSuccess }) => setTimeout(() => onSuccess("ok"), 0);
 export const loginRedirect = () => window.location.href =  "/login";
-export const priceRangeFormatter = value => `$${value}`;

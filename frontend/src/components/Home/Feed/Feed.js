@@ -246,9 +246,12 @@ class Feed extends Component {
       body: JSON.stringify({ ...options })
     })
       .then(response => response.json())
-      .then(data => {
-        console.log("Received response after submitting FILTER", data);
-        this.setState({ isFeedSearchLoading: false });
+      .then(({ postings }) => {
+        console.log("Received response after submitting FILTER", postings);
+        this.setState(prevState => ({
+          isFeedSearchLoading: false,
+          posts: [...postings]
+        }));
       })
       .catch(error => {
         console.error(error);
@@ -337,8 +340,6 @@ class Feed extends Component {
                 
                 const matchedPost = this.state.postsToNumReactions.find(item => item.posting_id === post.posting_id);
                 const { likes, dislikes } = matchedPost;
-
-                console.log("Mapping post with likes and dislikes", post, likes, dislikes);
 
                 return (
                   <div className="col-6">
