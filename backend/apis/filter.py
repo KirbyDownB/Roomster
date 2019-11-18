@@ -24,10 +24,6 @@ def printData(user_data):
     for user in user_data:
         print(user.first_name)
 
-def existsData(user_data):
-    print(user_data)
-    if len(user_data) == 0:
-        return{"Message":"Sorry!, No matches with your filter"}
 
 
 @api.route('/')
@@ -94,8 +90,6 @@ class Filter(Resource):
 
         elif location and not gender and not ethnicity and not duration and not priceMin and not priceMax: #location
             user_data = User.objects(location_of_interest=location)
-            # printData(user_data)
-            existsData(user_data)
             printData(user_data)
 
         elif ethnicity and not gender and not location and not duration and not priceMin and not priceMax: #ethnicity

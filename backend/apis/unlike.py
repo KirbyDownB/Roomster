@@ -5,7 +5,7 @@ import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 
-api = Namespace('ulike', description='Unike a post')
+api = Namespace('unlike', description='Unlike a post')
 
 posting_id = api.model('posting_id', {
     'posting_id': fields.String(description="posting id of liked post")
@@ -63,7 +63,7 @@ class Unlike(Resource):
         if user_email is None:
             return {"Message":"Token machine BROKE"}, 400
 
-        exists, user_obj = emailExists(user_email)    #********************8
+        exists, user_obj = emailExists(user_email)    #********************
 
         if not exists:
             return {"Message":"There is no user with that email"}, 400
@@ -80,10 +80,10 @@ class Unlike(Resource):
         if not exists:
             return {"Message":"This post does not exist"}, 400
 
-        if user_email in post_obj.likedEmails
+        if user_email in post_obj.likedEmails:
             post_obj.likedEmails.remove(user_email)     
 
-        if data.get('posting_id') in user_obj.likedPosts
+        if data.get('posting_id') in user_obj.likedPosts:
             user_obj.likedPosts.remove(data.get('posting_id'))
 
 

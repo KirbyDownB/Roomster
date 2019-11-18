@@ -5,10 +5,10 @@ import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 
-api = Namespace('dislike', description='dislike a post')
+api = Namespace('undislike', description='Undislike a post')
 
 posting_id = api.model('posting_id', {
-    'posting_id': fields.String(description="posting id of liked post")
+    'posting_id': fields.String(description="posting id of undisliked post")
 })
 parser = api.parser()
 parser.add_argument('Authorization',type=str,location='headers',help='Bearer Access Token', required=True)
@@ -80,10 +80,10 @@ class dislike(Resource):
         if not exists:
             return {"Message":"This post does not exist"}, 400
 
-        if user_email in post_obj.dislikedEmails
+        if user_email in post_obj.dislikedEmails:
             post_obj.dislikedEmails.remove(user_email)
 
-        if data.get('posting_id') in user_obj.dislikedPosts
+        if data.get('posting_id') in user_obj.dislikedPosts:
             user_obj.dislikedPosts.remove(data.get('posting_id'))
         
 
@@ -94,4 +94,4 @@ class dislike(Resource):
             print(e)
             return {"Message":"Something went wrong saving the user or posting"}, 400
         
-        return {"Message":"dislike successfully saved. Post updated, user updated" }, 202
+        return {"Message":"undislike successfully saved. Post updated, user updated" }, 202
