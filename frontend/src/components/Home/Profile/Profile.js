@@ -17,6 +17,7 @@ class Profile extends Component {
     location: '',
     ethnicity: '',
     password: '',
+    pf_pic: null,
     numRoommates: null,
     priceLow: null,
     priceHigh: null,
@@ -38,9 +39,9 @@ class Profile extends Component {
       .then(data => {
         console.log("Received the current user's information", data);
         const { user } = data;
-        const { address, age, email, ethnicity, first_name: firstName, last_name: lastName, location_of_interest: location, number_of_roommates: numRoommates, phone_number: phoneNumber, price_range_max: priceHigh, price_range_min: priceLow } = user;
+        const { pf_pic, address, age, email, ethnicity, first_name: firstName, last_name: lastName, location_of_interest: location, number_of_roommates: numRoommates, phone_number: phoneNumber, price_range_max: priceHigh, price_range_min: priceLow } = user;
 
-        this.setState({ email, firstName, lastName, phoneNumber, address, age, location, ethnicity, numRoommates, priceLow, priceHigh });
+        this.setState({ pf_pic, email, firstName, lastName, phoneNumber, address, age, location, ethnicity, numRoommates, priceLow, priceHigh });
       })
       .catch(error => {
         console.error("Got an error", error);
@@ -71,19 +72,19 @@ class Profile extends Component {
       .then(data => {
         console.log("Received the current user's information", data);
         const { user } = data;
-        const { 
-          address, 
-          age, 
-          email, 
-          ethnicity, 
-          first_name: firstName, 
-          last_name: lastName, 
-          location_of_interest: 
-          location, 
-          number_of_roommates: numRoommates, 
-          phone_number: phoneNumber, 
-          price_range_max: priceHigh, 
-          price_range_min: priceLow 
+        const {
+          address,
+          age,
+          email,
+          ethnicity,
+          first_name: firstName,
+          last_name: lastName,
+          location_of_interest:
+          location,
+          number_of_roommates: numRoommates,
+          phone_number: phoneNumber,
+          price_range_max: priceHigh,
+          price_range_min: priceLow
         } = user;
 
         this.setState({ email, firstName, lastName, phoneNumber, address, age, location, ethnicity, numRoommates, priceRange: [priceLow, priceHigh], isLoading: false, alertMessage: "Your profile has been successfully updated!", messageType: "success" });
@@ -141,7 +142,11 @@ class Profile extends Component {
                   />
                 </Item>
               </div>
-              <div className="col-5"></div>
+              <div className="col-5">
+                <div className="profile__image-container">
+                  <img className="profile__image" src={this.state.pf_pic}></img>
+                </div>
+              </div>
             </div>
             <div className="row justify-content-center">
               <div className="col-5">
