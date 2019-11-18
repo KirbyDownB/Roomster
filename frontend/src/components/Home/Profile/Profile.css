@@ -1,7 +1,3 @@
-.profile__container {
-  background-color: #FFFAFA;
-}
-
 .profile__title {
   font-weight: 700;
   font-size: 50px;
@@ -39,4 +35,10 @@
 .profile__alertMessage {
   width: 450px;
   margin-bottom: 64px;
+}
+
+.profile__spinner {
+  display: flex;
+  margin: 0 auto;
+  margin-top: 20%;
 }
