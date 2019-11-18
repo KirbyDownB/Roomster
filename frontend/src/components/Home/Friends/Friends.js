@@ -3,7 +3,7 @@ import Cards from './Cards';
 import EmptyCard from './EmptyCard';
 import Requests from './Requests/Requests';
 import { Modal, Input, Select, Radio, Icon, Popover, Button } from 'antd';
-import { BASE_URL, ADD_FRIEND_ERROR, ADD_FRIEND_SUCCESS, SEARCH_FRIEND_ERROR, showErrorMessage, showSuccessMessage } from '../../../constants.js';
+import { BASE_URL, ADD_FRIEND_ERROR, ADD_FRIEND_ERROR_YOURSELF, ADD_FRIEND_SUCCESS, SEARCH_FRIEND_ERROR, showErrorMessage, showSuccessMessage } from '../../../constants.js';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
 
