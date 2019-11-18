@@ -51,20 +51,22 @@ class FriendsAdd(Resource):
         print(args)
         user_email = tokenToEmail(args)
         if user_email == data.get('friend'):
-            return {"Message":"You cannot add yourself as a friend"}
+            return {"Message":"You cannot add yourself as a friend"}, 400
         if user_email is None:
             return {"Message":"Token Machine Broke"}, 400
         exists, user_obj = emailExists(user_email,2)
         if not exists:
             return {"Message":"Token email DNE"}, 400
-        exists, friend_obj = emailExists(data.get('friend'),1)
+        exists, friend_obj = emailExists(data.get('friend'),2)
         if not exists:
+            print("HELLO")
             return {"Message":"Friend email DNE"}, 400
 
-        
+        if user_obj(friends__all=[friend_obj.first().email]):
+            return {"Message":"You're already friends with this user"}, 400
         
         try:
-            user_obj.update_one(add_to_set__friend_requests=friend_obj.email)
+            friend_obj.update_one(add_to_set__friend_requests=user_obj.first().email)
         except Exception as e:
             print(e)
             return {"Message":"Something went wrong when updating the friends list"}, 400
@@ -146,7 +148,7 @@ class FriendsRequest(Resource):
         args = parser.parse_args()
         user_email = tokenToEmail(args)
         if user_email == data.get('friend'):
-            return {"Message":"You cannot add yourself as a friend"}
+            return {"Message":"You cannot add yourself as a friend"}, 400
         if user_email is None:
             return {"Message":"Token Machine Broke"}, 400
         exists, user_obj = emailExists(user_email,2)
@@ -157,12 +159,12 @@ class FriendsRequest(Resource):
             return {"Message":"Friend email DNE"}, 400
 
         if len(user_obj(friend_requests__all=[friend_obj.first().email])) != 1:
-            return {"Message":"You have to send a friend request before you become someones friend"}
+            return {"Message":"You have to send a friend request before you become someones friend"}, 400
 
         
         
         try:
-            user_obj.update_one(add_to_set__friends=friend_obj.first().email)
+            user_obj.update_one(add_to_set__friends=friend_obj.first().email) #person who recieved frriend request
             user_obj.update_one(pull__friend_requests=friend_obj.first().email)
             friend_obj.update_one(add_to_set__friends=user_obj.first().email)
         except Exception as e:
@@ -187,7 +189,7 @@ class FriendsRequestList(Resource):
         friend_request_objs = (User.objects(email__in=user_obj.friend_requests))
 
         if len(friend_request_objs) == 0:
-            return {"Message":"User has no friend requests"}, 200
+            return {"Message":"User has no friend requests"}, 400
 
         friends = []
         for friend in friend_request_objs:
@@ -220,7 +222,7 @@ class FriendsList(Resource):
         friend_objs = (User.objects(email__in=user_obj.friends))
 
         if len(friend_objs) == 0:
-            return {"Message":"User has no friends"}, 200
+            return {"Message":"User has no friends"}, 400
 
         friends = []
         for friend in friend_objs:

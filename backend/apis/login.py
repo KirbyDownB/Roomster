@@ -31,12 +31,12 @@ class Login(Resource):
         if identifier.find('@') > -1:        
             user_data = User.objects(email=identifier)
         else:
-            return {"Message":"This is not a valid email"}
+            return {"Message":"This is not a valid email"}, 400
 
 
         
         if not user_data:
-            return {"Message":"This user does not exist"}
+            return {"Message":"This user does not exist"}, 400
 
         if check_password_hash(user_data[0].password_hash,password):
             token = jwt.encode({'email':user_data[0].email}, "SECRET_KEY")

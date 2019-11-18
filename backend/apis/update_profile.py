@@ -36,11 +36,11 @@ class update_profile(Resource):
         token = args['Authorization']
 
         if not token:
-            return {"Message":"Token is missing"}
+            return {"Message":"Token is missing"}, 400
         try:
             decToken = jwt.decode(token,"SECRET_KEY")
         except:
-            return {"Message":"Failed to decode token"}
+            return {"Message":"Failed to decode token"}, 400
 
         print(decToken)
 
@@ -54,7 +54,7 @@ class update_profile(Resource):
             # token = token.decode('utf-8')
             return {"Message":"Data retrieval successful", "user": user_profile_data , "token":token}
 
-        return {"Message":"You sent a GET request"}
+        return {"Message":"This user does not exist"}, 400
 
     @api.doc('Reset a given users profile',parser=parser,body=update_profile_data)
     def post(self):
@@ -82,17 +82,17 @@ class update_profile(Resource):
         token = args['Authorization']
 
         if not token:
-            return {"Message":"Token is missing"}
+            return {"Message":"Token is missing"}, 400
         try:
             decToken = jwt.decode(token,"SECRET_KEY")
         except:
-            return {"Message":"Failed to decode token"}
+            return {"Message":"Failed to decode token"}, 400
 
 
 
         user_email = decToken.get('email')
         if user_email is None:
-            return {"Message":"Token machine BROKE"}
+            return {"Message":"Token machine BROKE"}, 400
 
         user_data = User.object(email=user_email)
 
@@ -119,7 +119,7 @@ class update_profile(Resource):
                 if len(u) == 0:
                     user_data.update(email=email)
                 else:
-                    {"Message":"Unfortunately, that email is already taken. Please use a different one"}
+                    {"Message":"Unfortunately, that email is already taken. Please use a different one"}, 400
 
 
             if first_name is not "":
@@ -153,7 +153,7 @@ class update_profile(Resource):
                 user_data.update(price_range_max=price_range_max)
 
         except:
-            return {"Message":"Something went wrong when updating your profile. Please try again."}
+            return {"Message":"Something went wrong when updating your profile. Please try again."}, 400
 
         return {"Message":"Profile updated successfully"}
 

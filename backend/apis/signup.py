@@ -24,6 +24,7 @@ upload_parser.add_argument('lastName', type=str, help='The User\'s last name')
 upload_parser.add_argument('occupation', type=str, help='The User\'s occupation')
 upload_parser.add_argument('phoneNumber', type=str, help='The User\'s phone number')
 upload_parser.add_argument('age', type=str, help='The User\'s age')
+upload_parser.add_argument('gender', type=str, help='The User\'s age')
 upload_parser.add_argument('range', type=str, help='The User\'s range')
 upload_parser.add_argument('location', type=str, help='The User\'s location of interest')
 upload_parser.add_argument('ethnicity', type=str, help='The User\'s ethnicity')
@@ -54,7 +55,7 @@ class Signup(Resource):
         last_name=data.get('lastName'), phone_number=data.get('phoneNumber'), \
         age=data.get('age'), range=data.get('range'), ethnicity=data.get('ethnicity'), location_of_interest=data.get('location')\
             ,price_range_min=data.get('priceMin'), price_range_max=data.get('priceMax'), number_of_roommates=data.get('numRoomates'),\
-                 duration=data.get('duration'),occupation=data.get('occupation'))
+                 duration=data.get('duration'),occupation=data.get('occupation'), gender=data.get('gender'))
 
         
             
