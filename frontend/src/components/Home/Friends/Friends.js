@@ -4,7 +4,7 @@ import EmptyCard from './EmptyCard';
 import Requests from './Requests/Requests';
 import { Modal, Input, Select, Radio, Icon, Popover, Button } from 'antd';
 import { BASE_URL, ADD_FRIEND_ERROR, ADD_FRIEND_ERROR_YOURSELF, ADD_FRIEND_SUCCESS, SEARCH_FRIEND_ERROR, showErrorMessage, showSuccessMessage } from '../../../constants.js';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import spinner from '../../../assets/tail-spin.svg';
 import Loader from 'react-loader-spinner'
 
 import './Friends.css';
@@ -169,7 +169,7 @@ class Friends extends Component {
           friend: this.state.email
         })
       })
-      .then(resp => resp.status == 400 ? Promise.reject(resp) : resp.json())
+      .then(resp => resp.status === 400 ? Promise.reject(resp) : resp.json())
       .then(resp => {
         showSuccessMessage(ADD_FRIEND_SUCCESS);
         this.setState({
@@ -213,12 +213,7 @@ class Friends extends Component {
       {this.state.friendLoading ?
         <div className="container-fluid">
           <div className="row justify-content-center friends__loader">
-            <Loader
-             type="CradleLoader"
-             color="#00BFFF"
-             height={100}
-             width={100}
-            />
+            <img src={spinner} alt=""/>
           </div>
         </div>:
         <div className="container-fluid">
