@@ -1,10 +1,6 @@
 import { message } from 'antd';
 
-<<<<<<< HEAD
 export const BASE_URL = "http://7cd332ed.ngrok.io";
-=======
-export const BASE_URL = "http://7cd332ed.ngrok.io/";
->>>>>>> master
 export const inputIconColor = { color: 'rgba(0, 0, 0)' };
 export const PASSWORD_MATCH_ERROR = "Your passwords don't match!";
 export const EMPTY_INPUT_ERROR = "You left an input field empty!";
