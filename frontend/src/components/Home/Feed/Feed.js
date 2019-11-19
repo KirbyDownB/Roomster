@@ -63,7 +63,7 @@ class Feed extends Component {
       },
       method: "POST",
     })
-      .then(response => response.json())
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
       .then(({ postings, likedIds, dislikedIds, locations, durations, ethnicities, priceMin, priceMax }) => {
         console.log("Got Feed data in componentDidMount", postings, likedIds, dislikedIds, locations, durations, ethnicities, priceMin, priceMax);
         const postsToNumReactions = postings.map(posting => ({ posting_id: posting.posting_id, likes: posting.likedEmails.length, dislikes: posting.dislikedEmails.length }));
@@ -127,7 +127,7 @@ class Feed extends Component {
       method: "POST",
       body: formData,
     })
-      .then(response => response.json())
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
       .then(data => {
         console.log("Got response after submitting post", data);
         this.setState({
@@ -174,7 +174,7 @@ class Feed extends Component {
         content_and_tags_data: query
       })
     })
-      .then(response => response.json())
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
       .then(({ results }) => {
         console.log("Response after SEARCHING FEED", results);
         this.setState({
@@ -245,7 +245,7 @@ class Feed extends Component {
       method: "POST",
       body: JSON.stringify({ ...options })
     })
-      .then(response => response.json())
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
       .then(({ postings }) => {
         console.log("Received response after submitting FILTER", postings);
         this.setState(prevState => ({

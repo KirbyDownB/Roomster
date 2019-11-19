@@ -3,7 +3,17 @@ import Cards from './Cards';
 import EmptyCard from './EmptyCard';
 import Requests from './Requests/Requests';
 import { Modal, Input, Select, Radio, Icon, Popover, Button } from 'antd';
-import { BASE_URL, ADD_FRIEND_ERROR, ADD_FRIEND_ERROR_YOURSELF, ADD_FRIEND_SUCCESS, SEARCH_FRIEND_ERROR, showErrorMessage, showSuccessMessage } from '../../../constants.js';
+import {
+  BASE_URL,
+  ADD_FRIEND_ERROR,
+  ADD_FRIEND_ERROR_YOURSELF,
+  ADD_FRIEND_SUCCESS,
+  SEARCH_FRIEND_ERROR,
+  FRIENDS_LIST_ERROR,
+  FRIENDS_REQUESTS_ERROR,
+  showErrorMessage,
+  showSuccessMessage
+} from '../../../constants.js';
 import spinner from '../../../assets/tail-spin.svg';
 import Loader from 'react-loader-spinner'
 
@@ -34,49 +44,49 @@ class Friends extends Component {
 
     fetch(`${BASE_URL}/api/friends/friends_list/`, {
       headers: {
-        "Content-Type": "application/json",
         "Authorization": localStorage.token
       },
-      method: "POST",
-      body: JSON.stringify({})
+      method: "GET"
     })
-    .then(resp => resp.json())
-    .then(resp => {
-      if (resp.friends){
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
+      .then(resp => {
+        console.log("Got response from friends list", resp)
+        if (resp.friends){
+          this.setState({
+            friendsList: resp.friends,
+          })
+        }
         this.setState({
-          friendsList: resp.friends,
+          friendLoading: false
         })
-      }
-      else {
-        //error handling
-      }
-      this.setState({
-        friendLoading: false
       })
-    })
+      .catch(error => {
+        console.error("Get error from fetching friends");
+        showErrorMessage(FRIENDS_LIST_ERROR);
+        this.setState({ friendLoading: false });
+      })
   }
 
   fetchRequests = () => {
     //add loader for requests
     fetch(`${BASE_URL}/api/friends/request_list/`, {
       headers: {
-        "Content-Type": "application/json",
         "Authorization": localStorage.token
       },
-      method: "POST",
-      body: JSON.stringify({})
+      method: "GET"
     })
-    .then(resp => resp.json())
-    .then(resp => {
-      if (resp.friends){
-        this.setState({
-          requestsList: resp.friends
-        })
-      }
-      else {
-        //error handling
-      }
-    })
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
+      .then(resp => {
+        if (resp.friends){
+          this.setState({
+            requestsList: resp.friends
+          })
+        }
+      })
+      .catch(error => {
+        console.error("Got an error from loading friend requests", error);
+        showErrorMessage(FRIENDS_REQUESTS_ERROR);
+      });
   }
 
   handleDeleteRequests = (email) => {
@@ -96,7 +106,7 @@ class Friends extends Component {
         friend: email
       })
     })
-    .then(resp => resp.json())
+    .then(response => response.status === 400 ? Promise.reject() : response.json())
     .then(resp => {
       this.setState({
         friendsList: this.state.friendsList.filter(user => user.email != email)
@@ -137,7 +147,7 @@ class Friends extends Component {
           name_data: this.state.search
         })
       })
-      .then(resp => resp.json())
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
       .then(resp => {
         console.log(resp.results.length)
         if (resp.results){
