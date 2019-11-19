@@ -401,7 +401,7 @@ class Feed extends Component {
                     <Icon type="inbox" />
                   </p>
                   <p className="newPost__upload--description">
-                    Drag and drop a maximum of 5 images.
+                    Drag and drop your images here.
                   </p>
                 </Dragger>
               </Item>
