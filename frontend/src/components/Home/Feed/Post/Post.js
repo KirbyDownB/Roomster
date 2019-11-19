@@ -26,7 +26,7 @@ class Post extends Component {
         posting_id: postId
       })
     })
-      .then(response => response.json())
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
       .then(data => {
         console.log("Response after LIKING post", data);
         this.props.addLikedId(postId);
@@ -58,7 +58,7 @@ class Post extends Component {
         posting_id: postId
       })
     })
-      .then(response => response.json())
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
       .then(data => {
         console.log("Response after DISLIKING post", data);
         this.props.addDislikedId(postId);
