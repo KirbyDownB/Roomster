@@ -21,10 +21,6 @@ class ProfileModal extends Component {
             <h4 className="profilemodal__header-name">{this.props.name}</h4>
             <h6 className="profilemodal__header-occupation">{this.props.occupation}</h6>
           </div>
-          <div className="profilemodal__button-container">
-            <Button className="profilemodal__button-1" icon="user" type="primary">Posts</Button>
-            <Button className="profilemodal__button-2" icon="user" type="primary">Lorem</Button>
-          </div>
         </div>
         <div className="container-fluid profilemodal__body">
           <div className="row profilemodal__body-container">
@@ -52,14 +48,6 @@ class ProfileModal extends Component {
               <div className="profilemodal__icon-container">
                 <Icon className="profilemodal__icon" type="calendar"/>
                 <p className="profilemodal__icon-text"style={{margin: '0'}}>{this.props.duration}</p>
-              </div>
-            </div>
-          </div>
-          <div className="row profilemodal__body-container">
-            <div className="col-12 profilemodal__col">
-              <div className="profilemodal__icon-container">
-                <Icon className="profilemodal__icon" type="home"/>
-                <p className="profilemodal__icon-text"style={{margin: '0'}}>{this.props.address}</p>
               </div>
             </div>
           </div>

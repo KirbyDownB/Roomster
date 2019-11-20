@@ -35,8 +35,8 @@ class Sidebar extends Component {
           className="menu__item"
           key="profile"
         >
-          <Icon type="user" />
-          <span className="menu__text">Profile</span>
+          <Icon type="edit" />
+          <span className="menu__text">Edit Profile</span>
         </Item>
         <Item
           className="menu__item"

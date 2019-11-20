@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 import './Filter.css';
 import { Slider, Form, Button, Select } from 'antd';
+import { defaultFilterMessages } from '../../../../constants';
 
 const { Item } = Form;
 const { Option } = Select;
+const {
+  location: defaultLocation,
+  ethnicity: defaultEthnicity,
+  duration: defaultDuration,
+  gender: defaultGender
+} = defaultFilterMessages;
 
 class Filter extends Component {
   state = {
-    location: "Select a location",
-    ethnicity: "Select an ethnicity",
-    duration: "Select a duration",
-    gender: "Select a gender",
+    location: defaultLocation,
+    ethnicity: defaultEthnicity,
+    duration: defaultDuration,
+    gender: defaultGender,
     priceMin: this.props.priceMin,
     priceMax: this.props.priceMax
   }
@@ -44,6 +51,18 @@ class Filter extends Component {
   render() {
     const { locationOptions, ethnicityOptions, genderOptions, durationOptions } = this.props;
 
+    const updatedLocationOptions = [...locationOptions];
+    updatedLocationOptions.unshift(defaultLocation);
+
+    const updatedEthnicityOptions = [...ethnicityOptions];
+    updatedEthnicityOptions.unshift(defaultEthnicity);
+
+    const updatedGenderOptions = [...genderOptions];
+    updatedGenderOptions.unshift(defaultGender);
+
+    const updatedDurationOptions = [...durationOptions];
+    updatedDurationOptions.unshift(defaultDuration);
+
     return (
       <div className="filter__container">
         <div className="filter__title">Filter Options</div>
@@ -51,37 +70,37 @@ class Filter extends Component {
           <div className="filter__subtitle">Locations</div>
           <Item>
             <Select
-              defaultValue={this.state.location}
+              defaultValue={updatedLocationOptions[0]}
               onChange={this.handleLocationChange}
             >
-              {locationOptions.map(locationOption => <Option value={locationOption}>{locationOption}</Option>)}
+              {updatedLocationOptions.map(locationOption => <Option value={locationOption}>{locationOption}</Option>)}
             </Select>
           </Item>
           <div className="filter__subtitle">Ethnicities</div>
           <Item>
             <Select
-              defaultValue={this.state.ethnicity}
+              defaultValue={updatedEthnicityOptions[0]}
               onChange={this.handleEthnicityChange}
             >
-              {ethnicityOptions.map(ethnicityOption => <Option value={ethnicityOption}>{ethnicityOption}</Option>)}
+              {updatedEthnicityOptions.map(ethnicityOption => <Option value={ethnicityOption}>{ethnicityOption}</Option>)}
             </Select>
           </Item>
           <div className="filter__subtitle">Durations</div>
           <Item>
             <Select
-              defaultValue={this.state.duration}
+              defaultValue={updatedDurationOptions[0]}
               onChange={this.handleDurationChange}
             >
-              {durationOptions.map(durationOption => <Option value={durationOption}>{durationOption}</Option>)}
+              {updatedDurationOptions.map(durationOption => <Option value={durationOption}>{durationOption}</Option>)}
             </Select>
           </Item>
           <div className="filter__subtitle">Genders</div>
           <Item>
             <Select
-              defaultValue={this.state.gender}
+              defaultValue={updatedGenderOptions[0]}
               onChange={this.handleGenderChange}
             >
-              {genderOptions.map(genderOption => <Option value={genderOption}>{genderOption}</Option>)}
+              {updatedGenderOptions.map(genderOption => <Option value={genderOption}>{genderOption}</Option>)}
             </Select>
           </Item>
           <div className="filter__subtitle">Price Range</div>

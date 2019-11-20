@@ -19,7 +19,7 @@ class Requests extends Component {
         friend: this.props.email
       })
     })
-    .then(resp => resp.json())
+    .then(response => response.status === 400 ? Promise.reject() : response.json())
     .then(resp => {
       console.log(resp);
       this.props.handleDeleteRequests(this.props.email);
@@ -38,7 +38,7 @@ class Requests extends Component {
         friend: this.props.email
       })
     })
-    .then(resp => resp.json())
+    .then(response => response.status === 400 ? Promise.reject() : response.json())
     .then(resp => {
       console.log(resp);
       this.props.handleDeleteRequests(this.props.email);
