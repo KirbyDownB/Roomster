@@ -18,7 +18,7 @@ class Sidebar extends Component {
       <Menu
         onSelect={this.handleMenuSelect}
         style={{ height: "100vh", width: 256, marginLeft: -15, position: "fixed" }}
-        defaultSelectedKeys={["feed"]}
+        defaultSelectedKeys={[this.props.activeInterface]}
         mode="inline"
       >
         <div className="menu__logo--container">

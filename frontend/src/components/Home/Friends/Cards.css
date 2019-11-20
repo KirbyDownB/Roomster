@@ -28,6 +28,10 @@
   margin-bottom: 2%;
 }
 
+.cards__profile-name:hover {
+  cursor: pointer;
+}
+
 .cards__profile-title {
   text-align: center;
   width: 55%;
@@ -84,4 +88,8 @@
   height: 150px;
   border-radius: 50%;
   margin: auto;
+}
+
+.cards__profile--review {
+  text-align: center;
 }

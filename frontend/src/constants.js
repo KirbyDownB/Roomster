@@ -1,6 +1,6 @@
 import { message } from 'antd';
 
-export const BASE_URL = "http://7cd332ed.ngrok.io";
+export const BASE_URL = "http://127.0.0.1:5000";
 export const inputIconColor = { color: 'rgba(0, 0, 0)' };
 export const PASSWORD_MATCH_ERROR = "Your passwords don't match!";
 export const EMPTY_INPUT_ERROR = "You left an input field empty!";
@@ -26,6 +26,8 @@ export const FEED_ERROR = "Sorry, we had trouble loading your feed!";
 export const FEED_SEARCH_ERROR = "Sorry, we had trouble with searching!";
 export const REACTION_ERROR = "An issue occurred when trying to record your reaction.";
 export const FILTER_SUBMIT_ERROR = "Sorry, we couldn't submit your filter request.";
+export const REVIEW_SUBMIT_ERROR = "Sorry, we had issues submitting your review.";
+export const REVIEW_SUBMIT_SUCCESS = "Thanks for submitting your review!";
 export const durations = ["0 - 6 months", "6 months - 1 year", "1 year +"];
 export const defaultFilterMessages = {
   location: "Select a location",

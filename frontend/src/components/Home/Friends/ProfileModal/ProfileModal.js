@@ -3,13 +3,7 @@ import { Button, Icon } from 'antd';
 import './ProfileModal.css';
 import { BASE_URL } from '../../../../constants.js';
 
-
 class ProfileModal extends Component {
-
-  state = {
-
-  }
-
   render(){
     return(
       <div>
