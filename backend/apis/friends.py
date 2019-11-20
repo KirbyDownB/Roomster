@@ -176,8 +176,8 @@ class FriendsRequest(Resource):
 
 @api.route('/request_list/')
 class FriendsRequestList(Resource):
-    @api.expect(parser=parser)
-    def post(self):
+    @api.expect(parser)
+    def get(self):
         data = api.payload
         args = parser.parse_args()
         user_email = tokenToEmail(args)
@@ -189,7 +189,7 @@ class FriendsRequestList(Resource):
         friend_request_objs = (User.objects(email__in=user_obj.friend_requests))
 
         if len(friend_request_objs) == 0:
-            return {"Message":"User has no friend requests"}, 400
+            return {"Message":"User has no friend requests", "friends":[]}
 
         friends = []
         for friend in friend_request_objs:
@@ -206,7 +206,7 @@ class FriendsRequestList(Resource):
 @api.route('/friends_list/')
 class FriendsList(Resource):
     @api.expect(parser)
-    def post(self):
+    def get(self):
         print("HEWWO")
         data = api.payload
         print(data)
@@ -222,7 +222,7 @@ class FriendsList(Resource):
         friend_objs = (User.objects(email__in=user_obj.friends))
 
         if len(friend_objs) == 0:
-            return {"Message":"User has no friends"}, 400
+            return {"Message":"User has no friends", "friends":[]}
 
         friends = []
         for friend in friend_objs:

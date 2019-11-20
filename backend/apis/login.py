@@ -48,5 +48,5 @@ class Login(Resource):
             return {"Message":"Login Successful", "token":token, "user":user_profile_data}
 
         else:
-            return {"Message":"Incorrect Password"}
+            return {"Message":"Incorrect Password"}, 400
 

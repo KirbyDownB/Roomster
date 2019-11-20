@@ -32,24 +32,24 @@ class PasswordReset(Resource):
         data = api.payload
         password = data.get('new_password')
         if password is None:
-            return {"Message":"New password is missing"}
+            return {"Message":"New password is missing"}, 400
        
         args = parser.parse_args()
         token = args['Authorization']
 
         if not token:
-            return {"Message":"Token is missing"}
+            return {"Message":"Token is missing"}, 400
         try:
             decToken = jwt.decode(token,"SECRET_KEY")
         except:
-            return {"Message":"Failed to decode token"}
+            return {"Message":"Failed to decode token"}, 400
 
 
         user_email = decToken['email']
         user_data = User.objects(email=user_email)
 
         if len(user_data) != 1:
-            return {"Message":"This user does not exist or an invalid email was sent"}
+            return {"Message":"This user does not exist or an invalid email was sent"}, 400
         if user_email.find('@') > -1:
             User.objects(email=user_email).update_one(password_hash=generate_password_hash(password))
 
@@ -67,7 +67,7 @@ class SendResetEmail(Resource):
         data = api.payload
         email = data.get('email')
         if email is None:
-            return {"Message":"Email is missing"}
+            return {"Message":"Email is missing"}, 400
 
         user_data = None
 
@@ -75,7 +75,7 @@ class SendResetEmail(Resource):
             user_data = User.objects(email=email)
 
         if len(user_data) != 1:
-            return {"Message":"No user with this email found"}
+            return {"Message":"No user with this email found"}, 400
 
         token = jwt.encode({"email":user_data.email}, "SECRET_KEY")
         link = site + endpoint_name + token.decode('utf-8')
@@ -89,7 +89,7 @@ class SendResetEmail(Resource):
         try:
             mail.send(msg)
         except:
-            return {"Message":"Something went wrong when sending the email"}
+            return {"Message":"Something went wrong when sending the email"}, 400
 
 
         return {"Message":"Email successfully sent"}

@@ -41,6 +41,22 @@ class Posting(db.DynamicDocument):
     images = db.ListField()
 
 
+class Group(db.DynamicDocument):
+
+    name = db.StringField() 
+    memebers = db.ListField()
+
+class Review(db.DynamicDocument):
+    
+    rater_email = db.EmailField()
+    person_who_was_rated_email = db.EmailField()
+    num_stars = db.StringField()
+    content = db.StringField()
+
+
+
+
+
 
 
 

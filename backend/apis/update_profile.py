@@ -17,14 +17,15 @@ update_profile_data = api.model('update_profile_data', {
     'firstName': fields.String(description="First name"),
     'lastName': fields.String(description="Last name"),
     'phoneNumber': fields.String(description="Phone number"),
-    'dob': fields.String(description="Date of birth"),
-    'address': fields.String(description="Address"),
     'age': fields.String(description="Age of desired roommates"),
     'location': fields.String(description="Location desired"),
     'ethnicity': fields.String(description="Ethnicity"),
     'numRoommates': fields.String(description="Desired amount of roommates"),
     'priceLow': fields.String(description="Minimum amount of money to be paid"),
     'priceHigh': fields.String(description="Maximum amount of money to be paid"),
+    'occupation': fields.String(description="Users occupation"),
+    'duration': fields.String(description="User duration")
+
 })
 
 @api.route('/')
@@ -68,15 +69,14 @@ class update_profile(Resource):
         first_name=data.get('firstName')
         last_name=data.get('lastName')
         phone_number=data.get('phoneNumber')
-        date_of_birth=data.get('dob')
-        address=data.get('address')
         age=data.get('age')
         location_of_interest=data.get('location')
         ethnicity=data.get('ethnicity')
         number_of_roommates=data.get('numRoommates')
         price_range_min=data.get('priceLow')
         price_range_max=data.get('priceHigh')
-
+        occupation = data.get('occupation')
+        duration = data.get('duration')
 
         args = parser.parse_args()
         token = args['Authorization']
@@ -94,7 +94,47 @@ class update_profile(Resource):
         if user_email is None:
             return {"Message":"Token machine BROKE"}, 400
 
-        user_data = User.object(email=user_email)
+        user_data = User.objects(email=user_email)
+
+        try:
+            if email != user_email: # update to email
+                if len(User.objects(email=email)) > 0:
+                    return {"Message":"Unfortunately, that email is already taken. Please use a different one"}, 400
+                else:
+                    user_data.update(email=email)
+
+            if password != '': #update to password
+                user_data.update(password_hash=generate_password_hash(password))
+
+            if user_data.first().first_name != first_name: #update to first name
+                user_data.update(first_name=first_name)
+
+            if user_data.first().last_name != last_name: #update to last name
+                user_data.update(last_name=last_name)
+            if user_data.first().phone_number != phone_number: #update to phone number
+                user_data.update(phone_number=phone_number)
+            if user_data.first().location_of_interest != location_of_interest: #update to LoI
+                user_data.update(location_of_interest=location_of_interest)
+            if user_data.first().ethnicity != ethnicity: #update to ethnicity
+                user_data.update(ethnicity=ethnicity)
+            if user_data.first().number_of_roommates != number_of_roommates: #update to number of roommates
+                user_data.update(number_of_roommates=number_of_roommates)
+            if user_data.first().age != age: #update to number of roommates
+                user_data.update(age=age)
+            if user_data.first().duration != duration:
+                user_data.update(duration=duration)
+            if user_data.first().price_range_min != price_range_min: #update to pricerangemin
+                user_data.update(price_range_min=price_range_min)
+            if user_data.first().price_range_max != price_range_max: #update to pricerangemax
+                user_data.update(price_range_max=price_range_max)
+            if user_data.first().occupation != occupation:
+                user_data.update(occupation=occupation)
+
+        except Exception as e:
+            print(e)
+            return {"Message":"Something went wrong when updating the profile"}, 400
+
+        return {"Message":"Profile updated successfully"}
 
 
         # user_data = User.query.filter_by(email=user_email).first()
@@ -111,49 +151,49 @@ class update_profile(Resource):
         #         return {"Message":"Something went wrong when updating your profile"}
 
 
-        try:
+        # try:
 
-            if email is not "":
+        #     if email is not "":
 
-                u = User.object(email=email)
-                if len(u) == 0:
-                    user_data.update(email=email)
-                else:
-                    {"Message":"Unfortunately, that email is already taken. Please use a different one"}, 400
+        #         u = User.objects(email=email)
+        #         if len(u) == 0:
+        #             user_data.update(email=email)
+        #         else:
+        #             {"Message":"Unfortunately, that email is already taken. Please use a different one"}, 400
 
 
-            if first_name is not "":
-                user_data.update(first_name=first_name)
+        #     if first_name is not "":
+        #         user_data.update(first_name=first_name)
 
-            if last_name is not "":
-                user_data.update(last_name=last_name)
+        #     if last_name is not "":
+        #         user_data.update(last_name=last_name)
 
-            if phone_number is not "":
-                user_data.update(phone_number=phone_number)
+        #     if phone_number is not "":
+        #         user_data.update(phone_number=phone_number)
 
-            if address is not "":
-                user_data.update(address=address)
+        #     if address is not "":
+        #         user_data.update(address=address)
 
-            if age is not "":
-                user_data.update(age=age)
+        #     if age is not "":
+        #         user_data.update(age=age)
 
-            if location_of_interest is not "":
-                user_data.update(location_of_interest=location_of_interest)
+        #     if location_of_interest is not "":
+        #         user_data.update(location_of_interest=location_of_interest)
             
-            if ethnicity is not "":
-                user_data.update(ethnicity=ethnicity)
+        #     if ethnicity is not "":
+        #         user_data.update(ethnicity=ethnicity)
 
-            if number_of_roommates is not "":
-                user_data.update(number_of_roommates=number_of_roommates)
+        #     if number_of_roommates is not "":
+        #         user_data.update(number_of_roommates=number_of_roommates)
 
-            if price_range_min is not "":
-                user_data.update(price_range_min=price_range_min)
+        #     if price_range_min is not "":
+        #         user_data.update(price_range_min=price_range_min)
 
-            if price_range_max is not "":
-                user_data.update(price_range_max=price_range_max)
+        #     if price_range_max is not "":
+        #         user_data.update(price_range_max=price_range_max)
 
-        except:
-            return {"Message":"Something went wrong when updating your profile. Please try again."}, 400
+        # except:
+        #     return {"Message":"Something went wrong when updating your profile. Please try again."}, 400
 
-        return {"Message":"Profile updated successfully"}
+        # return {"Message":"Profile updated successfully"}
 

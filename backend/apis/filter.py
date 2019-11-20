@@ -46,8 +46,8 @@ class Filter(Resource):
         print(location)
         print(ethnicity)
         print(duration)
-        print(priceMin)
-        print(priceMax)
+        print("pricemin ", priceMin)
+        print("pricemax ",priceMax)
         
 
         if gender == "Select a gender":
@@ -60,7 +60,20 @@ class Filter(Resource):
             duration = ""
 
 
-        if int(priceMin) == 0 and int(priceMax) == 123124:
+        Pmin = []
+        Pmax = []
+        for user in User.objects:
+            if user.price_range_min is not None:
+                Pmin.append(int(user.price_range_min))
+
+            if user.price_range_max is not None:
+                Pmax.append(int(user.price_range_max))
+
+
+        min_ = min(Pmin)
+        max_ = max(Pmax)
+
+        if int(priceMin) == min_ and int(priceMax) == max_:
             priceMin = ""
             priceMax = ""
 
@@ -179,7 +192,7 @@ class Filter(Resource):
             user_data = User.objects(Q(location_of_interest=location) & Q(duration=duration) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
             printData(user_data)
 
-        elif ethnicity and duration and priceMin and priceMax and not lcoation and not ethnicity: #ethnicity-duration-price
+        elif ethnicity and duration and priceMin and priceMax and not location and not ethnicity: #ethnicity-duration-price
             user_data = User.objects(Q(ethnicity=ethnicity) & Q(duration=duration) & Q(price_range_min__gte=(priceMin)) & Q(price_range_max__lte=(priceMax)))
             printData(user_data)
 

@@ -54,7 +54,7 @@ class Signup(Resource):
         user_data = User(email=data.get('email'), first_name=data.get('firstName'),\
         last_name=data.get('lastName'), phone_number=data.get('phoneNumber'), \
         age=data.get('age'), range=data.get('range'), ethnicity=data.get('ethnicity'), location_of_interest=data.get('location')\
-            ,price_range_min=data.get('priceMin'), price_range_max=data.get('priceMax'), number_of_roommates=data.get('numRoomates'),\
+            ,price_range_min=data.get('priceMin'), price_range_max=data.get('priceMax'), number_of_roommates=data.get('numRoommates'),\
                  duration=data.get('duration'),occupation=data.get('occupation'), gender=data.get('gender'))
 
         
