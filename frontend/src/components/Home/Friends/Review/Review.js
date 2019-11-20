@@ -30,9 +30,7 @@ class Review extends Component {
         "Authorization": token
       },
       method: "POST",
-      body: JSON.stringify({
-
-      })
+      body: JSON.stringify({ review, rating })
     })
       .then(response => response.status === 400 ? Promise.reject() : response.json())
       .then(data => {
