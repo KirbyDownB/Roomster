@@ -113,7 +113,7 @@ class Listings(Resource):
             user_data = User.query.filter(ethnicity==ethnicity, number_of_roomates==number_of_roomates).all()
             # for users in user_data:
             #     print(user_data)
-            # print('HOLAAAAAA12!')
+            # print('HOLA4AAAAA12!')
 
  #*********************************3 ENTIRES QUERIES***********************************************************************     
 

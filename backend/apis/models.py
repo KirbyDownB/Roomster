@@ -54,6 +54,8 @@ class Review(db.DynamicDocument):
     person_who_was_rated_email = db.EmailField()
     num_stars = db.FloatField()
     content = db.StringField()
+    date = db.DateTimeField(default=datetime.now())
+    
 
 
 

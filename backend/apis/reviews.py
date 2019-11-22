@@ -5,6 +5,7 @@ import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 from pprint import pprint
+from datetime import datetime
 api = Namespace('reviews', description='Review related operations')
 
 posting_id = api.model('posting_id', {
@@ -116,6 +117,9 @@ class AllReview(Resource):
         for i in range (0, len(user_obj.first().reviews)):
             r = Review.objects.get(pk=user_obj.first().reviews[i]).to_json()
             r = json.loads(r)
+            d = (str(r['date']['$date'])[:-3])
+            d = int(d)
+            r['date'] = (datetime.utcfromtimestamp(d).strftime('%Y-%m-%d %H:%M:%S'))
             otherReviews.append(r)
             
         my_reviews = []
@@ -129,6 +133,9 @@ class AllReview(Resource):
             u = User.objects.get(email=r['person_who_was_rated_email'])
             name = u.first_name + ' ' + u.last_name
             r['name'] = name
+            d = (str(r['date']['$date'])[:-3])
+            d = int(d)
+            r['date'] = (datetime.utcfromtimestamp(d).strftime('%Y-%m-%d %H:%M:%S'))
             my_reviews.append(r)
 
 
