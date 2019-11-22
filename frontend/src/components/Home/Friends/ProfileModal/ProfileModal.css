@@ -30,10 +30,18 @@
   font-size: 150%;
 }
 
-.profilemodal__header-occupation {
-  color: #BEBEBE;
-  margin: 0;
-  padding-top: 2%;
+.profilemodal__occupation {
+  text-align: center;
+  width: 30%;
+  border-radius: 15px;
+  background-color: #FFDCDC;
+  color: #F57676;
+  padding: 0;
+  margin: auto;
+  letter-spacing: 2px;
+  font-weight: bold;
+  font-size: 120%;
+  margin-top: 8px;
 }
 
 .profilemodal__button-container {
@@ -56,6 +64,12 @@
 
 .profilemodal__body-container {
   padding-top: 2.5%;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.profilemodal__body {
+  padding-bottom: 32px;
 }
 
 .profilemodal__body-text {
@@ -85,4 +99,34 @@
 
 .profilemodal__container {
   font-family: "Asap", sans-serif;
+  margin: 0 auto;
+}
+
+.profilemodal__reviews--title {
+  color: #F57676;
+  font-weight: bold;
+  font-size: 135%;
+  margin-top: 32px;
+  text-align: center;
+}
+
+.profilemodal__reviews--container {
+  margin-top: 4%;
+  background-color: #FFFFFF;
+  box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.12);
+  border-radius: 10px;
+  padding: 4% 4%;
+}
+
+.profilemodal__reviews--date, .profilemodal__reviews--name {
+  font-weight: bold;
+}
+
+.profilemodal__reviews--date {
+  color: #F57676;
+  margin-bottom: 12px;
+}
+
+.profilemodal__reviews--content {
+  margin-top: 8px;
 }

@@ -39,7 +39,6 @@ class Feed extends Component {
     dislikedIds: [],
     isFeedLoading: false,
     isFeedSearchLoading: false,
-    sortBy: sortOptions[0],
     postsToNumReactions: [],
     ethnicities: [],
     locations: [],

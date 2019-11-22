@@ -1,6 +1,7 @@
 import { message } from 'antd';
 
-export const BASE_URL = 'http://dc213e08.ngrok.io';
+export const BASE_URL = "http://127.0.0.1:5000";
+
 export const inputIconColor = { color: 'rgba(0, 0, 0)' };
 export const PASSWORD_MATCH_ERROR = "Your passwords don't match!";
 export const EMPTY_INPUT_ERROR = 'You left an input field empty!';
@@ -37,6 +38,9 @@ export const FILTER_SUBMIT_ERROR =
 export const REVIEW_SUBMIT_ERROR =
   'Sorry, we had issues submitting your review.';
 export const REVIEW_SUBMIT_SUCCESS = 'Thanks for submitting your review!';
+export const MY_REVIEW_SELECTION = "My Reviews";
+export const REVIEWS_ABOUT_ME_SELECTION = "Reviews About Me";
+export const NO_REVIEWS = "Sorry, there currently aren't any reviews available.";
 export const durations = ['0 - 6 months', '6 months - 1 year', '1 year +'];
 export const defaultFilterMessages = {
   location: 'Select a location',
@@ -105,6 +109,7 @@ export const postTags = [
 ];
 export const genders = ['Male', 'Female', 'Other'];
 export const sortOptions = ['Most Recent', 'Most Tags', 'Longest'];
+export const reviewsSortOptions = ['Most Recent', 'Longest', 'Highest Rating'];
 
 export const showErrorMessage = text => message.error(text);
 export const showSuccessMessage = text => message.success(text);

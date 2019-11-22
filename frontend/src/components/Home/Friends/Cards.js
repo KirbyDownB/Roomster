@@ -45,11 +45,12 @@ class Cards extends Component {
           <Button className="cards__button-left" onClick={this.handleReviewModal} icon="form">Review</Button>
           <div style={{border: '0.5px solid #BEBEBE'}}></div>
           <Popconfirm
-            title="Are you sure？"
+            title="Are you sure"
             onConfirm={this.deleteCard}
             okText="Yes"
             cancelText="No"
             icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
+            className="cards__popconfirm"
           >
             <Button className="cards__button-right" icon="user-delete">Delete</Button>
           </Popconfirm>
@@ -57,14 +58,8 @@ class Cards extends Component {
         <Modal
           visible={this.state.isProfileModalVisible}
           onCancel={this.handleProfileModalCancel}
-          footer={
-            [
-              <Button className="cards__profilemodal--return" key="back" onClick={this.handleProfileModalCancel}>
-                Close
-              </Button>
-            ]
-          }
-          width="30vw"
+          footer={null}
+          width="45vw"
         >
           <ProfileModal {...this.props} />
         </Modal>
