@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
-import { Button, Icon } from 'antd';
+import { Rate, Icon, Divider } from 'antd';
 import './ProfileModal.css';
 import { BASE_URL } from '../../../../constants.js';
+import { mockMyReviews } from '../../../../mocks';
+
+const moment = require('moment');
 
 class ProfileModal extends Component {
+  state = {
+    reviews: []
+  }
+
   render(){
     return(
       <div className="profilemodal__container">
@@ -13,7 +20,9 @@ class ProfileModal extends Component {
           </div>
           <div className="profilemodal__header-text">
             <div className="profilemodal__header-name">{this.props.name}</div>
-            <h6 className="profilemodal__header-occupation">{this.props.occupation}</h6>
+            <div className="profilemodal__occupation">
+              <p className="profilemodal__occupation--inner">{this.props.occupation}</p>
+            </div>
           </div>
         </div>
         <div className="container-fluid profilemodal__body">
@@ -53,6 +62,26 @@ class ProfileModal extends Component {
               </div>
             </div>
           </div>
+        </div>
+        <Divider />
+        <div className="profilemodal__reviews--title">Reviews About {this.props.name.split(' ')[0]}</div>
+        <div className="row justify-content-center">
+          {mockMyReviews.length > 0 && mockMyReviews.map(review => {
+            const { content, date, name, num_stars: rating } = review;
+
+            return (
+              <div className="col-12">
+                <div className="profilemodal__reviews--container">
+                  <div className="profilemodal__reviews--name">{name}</div>
+                  <div className="profilemodal__reviews--date">{moment(date).format('MMMM Do, YYYY')}</div>
+                  <div className="profilemodal__reviews--rating">
+                    <Rate value={rating} disabled />
+                  </div>
+                  <div className="profilemodal__reviews--content">{content}</div>
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
     )

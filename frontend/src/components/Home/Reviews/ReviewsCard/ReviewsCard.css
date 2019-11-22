@@ -6,3 +6,16 @@
   padding: 4% 6%;
   font-family: "Asap", sans-serif;
 }
+
+.reviewscard__name, .reviewscard__date {
+  font-weight: bold;
+}
+
+.reviewscard__date {
+  color: #F57676;
+  margin-bottom: 12px;
+}
+
+.reviewscard__content {
+  margin-top: 16px;
+}
