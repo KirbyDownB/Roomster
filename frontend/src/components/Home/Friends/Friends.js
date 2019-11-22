@@ -15,7 +15,6 @@ import {
   showSuccessMessage
 } from '../../../constants.js';
 import spinner from '../../../assets/tail-spin.svg';
-import Loader from 'react-loader-spinner'
 
 import './Friends.css';
 

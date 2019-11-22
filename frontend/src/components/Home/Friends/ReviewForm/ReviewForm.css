@@ -1,0 +1,26 @@
+.reviewform__title {
+  font-family: "Asap", sans-serif;
+  color: #F57676;
+  font-size: 200%;
+  font-weight: bold;
+  text-align: center;
+}
+
+.reviewform__caption {
+  font-family: "Asap", sans-serif;
+  font-weight: bold;
+  margin-bottom: -4px;
+  font-size: 16px;
+}
+
+.reviewform__caption--rating {
+  margin-bottom: -16px;
+}
+
+.reviewform__submit {
+  display: flex;
+  margin: 0 auto;
+  letter-spacing: 4px;
+  font-family: "Asap", sans-serif;
+  font-weight: bold;
+}

@@ -3,22 +3,16 @@ import { Button, Icon } from 'antd';
 import './ProfileModal.css';
 import { BASE_URL } from '../../../../constants.js';
 
-
 class ProfileModal extends Component {
-
-  state = {
-
-  }
-
   render(){
     return(
-      <div>
+      <div className="profilemodal__container">
         <div className="profilemodal__header">
           <div className="profilemodal__image-container">
             <img className="profilemodal__image" src={this.props.pf_pic}></img>
           </div>
           <div className="profilemodal__header-text">
-            <h4 className="profilemodal__header-name">{this.props.name}</h4>
+            <div className="profilemodal__header-name">{this.props.name}</div>
             <h6 className="profilemodal__header-occupation">{this.props.occupation}</h6>
           </div>
         </div>

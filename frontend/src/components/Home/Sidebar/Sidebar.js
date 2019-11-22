@@ -18,7 +18,7 @@ class Sidebar extends Component {
       <Menu
         onSelect={this.handleMenuSelect}
         style={{ height: "100vh", width: 256, marginLeft: -15, position: "fixed" }}
-        defaultSelectedKeys={["feed"]}
+        defaultSelectedKeys={[this.props.activeInterface]}
         mode="inline"
       >
         <div className="menu__logo--container">
@@ -33,17 +33,24 @@ class Sidebar extends Component {
         </Item>
         <Item
           className="menu__item"
-          key="profile"
-        >
-          <Icon type="edit" />
-          <span className="menu__text">Edit Profile</span>
-        </Item>
-        <Item
-          className="menu__item"
           key="friends"
         >
           <Icon type="team" />
           <span className="menu__text">Friends</span>
+        </Item>
+        <Item
+          className="menu__item"
+          key="reviews"
+        >
+          <Icon type="profile" />
+          <span className="menu__text">Reviews</span>
+        </Item>
+        <Item
+          className="menu__item"
+          key="profile"
+        >
+          <Icon type="edit" />
+          <span className="menu__text">Edit Profile</span>
         </Item>
         <div className="menu__logout--container">
           <Button
