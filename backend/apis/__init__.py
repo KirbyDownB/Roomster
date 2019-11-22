@@ -49,6 +49,7 @@ from .dislike import api as ns_dislike
 from .filter import api as ns_filter
 from .unlike import api as ns_unlike
 from .undislike import api as ns_undislike
+from .reviews import api as ns_reviews
 
 
 api.add_namespace(ns_login, path='/api/login')
@@ -65,3 +66,4 @@ api.add_namespace(ns_dislike, path='/api/dislike')
 api.add_namespace(ns_filter, path='/api/filter')
 api.add_namespace(ns_unlike, path='/api/unlike')
 api.add_namespace(ns_undislike, path='/api/undislike')
+api.add_namespace(ns_reviews, path='/api/reviews')
