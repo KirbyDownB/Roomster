@@ -28,7 +28,9 @@ class User(db.DynamicDocument):
     occupation = db.StringField()
     likedPosts = db.ListField()
     dislikedPosts = db.ListField()
-
+    reviews = db.ListField()
+    groups = db.ListField()
+    my_reviews = db.ListField()
 class Posting(db.DynamicDocument):
 
     name = db.StringField()
@@ -50,7 +52,7 @@ class Review(db.DynamicDocument):
     
     rater_email = db.EmailField()
     person_who_was_rated_email = db.EmailField()
-    num_stars = db.StringField()
+    num_stars = db.FloatField()
     content = db.StringField()
 
 
