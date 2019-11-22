@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, Icon, Popconfirm } from 'antd';
 import ProfileModal from './ProfileModal/ProfileModal';
-import Review from './Review/Review';
+import ReviewForm from './ReviewForm/ReviewForm';
 import './Cards.css';
 
 class Cards extends Component {
@@ -59,8 +59,8 @@ class Cards extends Component {
           onCancel={this.handleProfileModalCancel}
           footer={
             [
-              <Button key="back" onClick={this.handleProfileModalCancel}>
-                Return
+              <Button className="cards__profilemodal--return" key="back" onClick={this.handleProfileModalCancel}>
+                Close
               </Button>
             ]
           }
@@ -73,7 +73,7 @@ class Cards extends Component {
           onCancel={this.handleReviewModalCancel}
           footer={null}
         >
-          <Review />
+          <ReviewForm friendEmail={this.props.email} closeReviewForm={this.handleReviewModalCancel} />
         </Modal>
       </div>
     )

@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
-import './Review.css';
+import './ReviewForm.css';
 import { Rate, Form, Input, Button } from 'antd';
-import { BASE_URL, showErrorMessage, REVIEW_SUBMIT_ERROR, showSuccessMessage, REVIEW_SUBMIT_SUCCESS } from '../../../../constants';
+import {
+  BASE_URL,
+  showErrorMessage,
+  REVIEW_SUBMIT_ERROR,
+  showSuccessMessage,
+  REVIEW_SUBMIT_SUCCESS
+} from '../../../../constants';
 
 const { Item } = Form;
 const { TextArea } = Input;
 
-class Review extends Component {
+class ReviewForm extends Component {
   state = {
     rating: 0,
     isReviewSubmitLoading: false
@@ -22,21 +28,23 @@ class Review extends Component {
 
     const token = localStorage.getItem("token");
     const review = e.target.review.value;
+    const { friendEmail } = this.props;
     const { rating } = this.state;
 
-    fetch(`${BASE_URL}/reviews/submit`, {
+    fetch(`${BASE_URL}/api/reviews/add/`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": token
       },
       method: "POST",
-      body: JSON.stringify({ review, rating })
+      body: JSON.stringify({ content: review, numStars: rating, email: friendEmail })
     })
       .then(response => response.status === 400 ? Promise.reject() : response.json())
       .then(data => {
         console.log("Received response after SUBMITTING REVIEW", data);
         showSuccessMessage(REVIEW_SUBMIT_SUCCESS);
         this.setState({ isReviewSubmitLoading: false });
+        this.props.closeReviewForm();
       })
       .catch(error => {
         console.error(error);
@@ -47,22 +55,22 @@ class Review extends Component {
 
   render() {
     return (
-      <div className="review__container">
+      <div className="reviewform__container">
         <Form onSubmit={this.handleReviewSubmit}>
-          <div className="review__title">Write Review</div>
+          <div className="reviewform__title">Write Review</div>
           <Item>
-            <div className="review__caption review__caption--rating">Rating</div>
-            <div className="review__rating">
+            <div className="reviewform__caption reviewform__caption--rating">Rating</div>
+            <div className="reviewform__rating">
               <Rate
                 allowHalf
                 defaultValue={0}
-                className="review__stars"
+                className="reviewform__stars"
                 onChange={this.handleRatingChange}
               />
             </div>
           </Item>
           <Item>
-            <div className="review__caption">Review</div>
+            <div className="reviewform__caption">Review</div>
             <TextArea
               rows={4}
               name="review"
@@ -74,7 +82,8 @@ class Review extends Component {
             <Button
               type="primary"
               htmlType="submit"
-              className="review__submit"
+              className="reviewform__submit"
+              loading={this.state.isReviewSubmitLoading}
             >
               SUBMIT
             </Button>
@@ -85,4 +94,4 @@ class Review extends Component {
   }
 }
 
-export default Review;
+export default ReviewForm;

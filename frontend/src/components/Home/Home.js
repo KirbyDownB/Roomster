@@ -4,6 +4,7 @@ import Sidebar from './Sidebar/Sidebar';
 import Feed from './Feed/Feed';
 import Profile from './Profile/Profile';
 import Friends from './Friends/Friends';
+import Reviews from './Reviews/Reviews';
 
 class Home extends Component {
   state = {
@@ -36,6 +37,7 @@ class Home extends Component {
                 {this.state.activeInterface === "profile" && <Profile />}
                 {this.state.activeInterface === "feed" && <Feed />}
                 {this.state.activeInterface === "friends" && <Friends />}
+                {this.state.activeInterface === "reviews" && <Reviews />}
               </div>
             </div>
           </div>
