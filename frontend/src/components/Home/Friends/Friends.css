@@ -113,3 +113,10 @@
 .friends__loader {
   margin-top: 20%;
 }
+
+.friends__nofriends {
+  text-align: center;
+  width: 45%;
+  margin: 0 auto;
+  margin-top: 32px;
+}

@@ -130,3 +130,7 @@
 .profilemodal__reviews--content {
   margin-top: 8px;
 }
+
+.profilemodal__reviews--loading {
+  text-align: center;
+}

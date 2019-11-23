@@ -3,7 +3,7 @@ import Cards from './Cards';
 import EmptyCard from './EmptyCard';
 import Requests from './Requests/Requests';
 import Fade from 'react-reveal/Fade';
-import { Modal, Input, Icon, Popover, Button } from 'antd';
+import { Modal, Input, Icon, Popover, Button, Alert } from 'antd';
 import {
   BASE_URL,
   ADD_FRIEND_ERROR,
@@ -12,6 +12,7 @@ import {
   SEARCH_FRIEND_ERROR,
   FRIENDS_LIST_ERROR,
   FRIENDS_REQUESTS_ERROR,
+  NO_FRIENDS,
   showErrorMessage,
   showSuccessMessage
 } from '../../../constants.js';
@@ -280,12 +281,8 @@ class Friends extends Component {
               })}
             </div>
           </div>:
-          <div className="friends__list--container">
-            <div className="row">
-              <div className="col-3">
-                <EmptyCard />
-              </div>
-            </div>
+          <div className="friends__nofriends">
+            <Alert type="error" message={NO_FRIENDS} />
           </div>
         }
         </div>

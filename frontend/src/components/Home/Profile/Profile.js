@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
 import './Profile.css';
 import { Input, Icon, Form, Slider, Button, Select } from 'antd';
-import  { BASE_URL, occupations, showErrorMessage, showSuccessMessage, PROFILE_UPDATE_ERROR, PROFILE_UPDATE_SUCCESS, PASSWORD_MATCH_ERROR, ethnicities, durations } from '../../../constants';
+import  {
+  BASE_URL,
+  occupations,
+  showErrorMessage,
+  showSuccessMessage,
+  PROFILE_LOAD_ERROR,
+  PROFILE_UPDATE_ERROR,
+  PROFILE_UPDATE_SUCCESS,
+  PASSWORD_MATCH_ERROR,
+  ethnicities,
+  durations
+} from '../../../constants';
 import spinner from '../../../assets/tail-spin.svg';
 
 const { Item } = Form;
@@ -52,7 +63,7 @@ class Profile extends Component {
         this.setState({ pf_pic, email, firstName, lastName, phoneNumber, occupation, duration, age, location, ethnicity, numRoommates, priceLow, priceHigh, isProfileLoading: false });
       })
       .catch(error => {
-        console.error("Got an error", error);
+        showErrorMessage(PROFILE_LOAD_ERROR);
         this.setState({ isProfileLoading: false });
       });
   }
