@@ -28,7 +28,7 @@ class Home extends Component {
       setTimeout(() => {
         // showNotification(mockNotification);
         this.setState(prevState => ({ notifications: [...prevState.notifications, mockNotification] }));
-      }, 3000 * (index + 1));
+      }, 250 * (index + 1));
     });
 
     // subscribeToNotifications(data => {
@@ -37,9 +37,18 @@ class Home extends Component {
     // });
   }
 
+  clearAllNotifications = () => {
+    this.setState(prevState => ({ notifications: [] }));
+  }
+
+  handleNotificationDelete = notificationId => {
+    const updatedNotifications = this.state.notifications.filter(notification => notification.notificationId !== notificationId);
+    this.setState(prevState => ({ notifications: updatedNotifications }));
+  }
+
   render() {
     const lastActiveInterface = localStorage.getItem("activeInterface");
-    const { notifications } = this.state;
+    const { activeInterface, notifications } = this.state;
 
     return (
       <div className="home__container">
@@ -54,11 +63,17 @@ class Home extends Component {
             </div>
             <div className="col-10">
               <div className="home__right--wrapper">
-                {this.state.activeInterface === "profile" && <Profile />}
-                {this.state.activeInterface === "feed" && <Feed />}
-                {this.state.activeInterface === "friends" && <Friends />}
-                {this.state.activeInterface === "reviews" && <Reviews />}
-                {this.state.activeInterface === "notifications" && <Notifications notifications={notifications} />}
+                {activeInterface === "profile" && <Profile />}
+                {activeInterface === "feed" && <Feed />}
+                {activeInterface === "friends" && <Friends />}
+                {activeInterface === "reviews" && <Reviews />}
+                {activeInterface === "notifications" &&
+                  <Notifications
+                    notifications={notifications}
+                    handleNotificationDelete={this.handleNotificationDelete}
+                    clearAllNotifications={this.clearAllNotifications}
+                  />
+                }
               </div>
             </div>
           </div>

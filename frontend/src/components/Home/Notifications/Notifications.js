@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import './Notifications.css';
-import { Icon, Button, Alert, Empty } from 'antd';
+import { Icon, Button, Empty, Popconfirm } from 'antd';
 import Fade from 'react-reveal/Fade';
-import { BASE_URL, NO_NOTIFICATIONS } from '../../../constants';
+import { NO_NOTIFICATIONS } from '../../../constants';
 
 class Notifications extends Component {
-  handleNotificationDelete = e => {
+  handleNotificationDelete = (e, notificationId) => {
     e.preventDefault();
-    alert("Deleting notification")
+    this.props.handleNotificationDelete(notificationId);
   }
 
   clearAllNotifications = e => {
     e.preventDefault();
-    alert("Clearing all notifications");
+    this.props.clearAllNotifications();
   }
 
   render() {
-    const { notifications } = this.props;
+    const notifications = [...this.props.notifications];
 
     return (
       <div className="notifications__container">
@@ -27,14 +27,22 @@ class Notifications extends Component {
             </div>
             <div className="col-10">
               {notifications.length > 0 &&
-              <Button
-                type="primary"
-                className="notifications__clearall--button"
-                onClick={e => this.clearAllNotifications(e)}
-              >
-                <Icon type="close-circle" theme="filled" />
-                Clear All
-              </Button>}
+                <Popconfirm
+                  title="Are you sure you want to clear all of your notifications?"
+                  onConfirm={e => this.clearAllNotifications(e)}
+                  okText="Yes"
+                  cancelText="No"
+                  placement="left"
+                >
+                  <Button
+                    type="primary"
+                    className="notifications__clearall--button"
+                  >
+                    <Icon type="close-circle" theme="filled" />
+                    Clear All
+                  </Button>
+                </Popconfirm>
+              }
             </div>
           </div>
           <div className="notification__wrapper">
@@ -47,11 +55,11 @@ class Notifications extends Component {
                 />
               }
               {notifications.length > 0 && 
-              notifications.map(notification => {
-                const { category, content } = notification;
+              notifications.reverse().map(notification => {
+                const { category, content, notificationId } = notification;
                 
                 return (
-                  <div className="col-10">
+                  <div className="col-10" key={notificationId}>
                     <Fade>
                       <div className="notification__card">
                         <div className="row justify-content-center">
@@ -65,7 +73,7 @@ class Notifications extends Component {
                                 type="close-circle"
                                 theme="filled"
                                 className="notification__delete--icon"
-                                onClick={e => this.handleNotificationDelete(e)}
+                                onClick={e => this.handleNotificationDelete(e, notificationId)}
                               />
                             </div>
                           </div>

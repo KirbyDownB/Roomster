@@ -167,50 +167,50 @@ export const mockOtherReviews = [
 export const mockNotifications = [
   {
     category: "friend request",
-    content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    content: "first",
     date: "2019-11-20 20:10:43",
     notificationId: 1
   },
   {
     category: "friend request",
-    content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    content: "second",
     date: "2019-11-17 20:10:43",
     notificationId: 2
   },
   {
     category: "friend request",
-    content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    content: "third",
     date: "2019-11-17 20:10:43",
     notificationId: 3
   },
   {
     category: "friend request",
-    content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    content: "fourth",
     date: "2019-11-16 20:10:43",
     notificationId: 4
   },
   {
     category: "friend request",
-    content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    content: "fifth",
     date: "2019-11-20 20:10:43",
-    notificationId: 1
+    notificationId: 5
   },
   {
     category: "friend request",
-    content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    content: "sixth",
     date: "2019-11-17 20:10:43",
-    notificationId: 2
+    notificationId: 6
   },
   {
     category: "friend request",
-    content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    content: "seventh",
     date: "2019-11-17 20:10:43",
-    notificationId: 3
+    notificationId: 7
   },
   {
     category: "friend request",
-    content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    content: "eighth",
     date: "2019-11-16 20:10:43",
-    notificationId: 4
+    notificationId: 8
   }
 ]
