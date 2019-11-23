@@ -42,6 +42,8 @@ export const MY_REVIEW_SELECTION = "My Reviews";
 export const REVIEWS_ABOUT_ME_SELECTION = "Reviews About Me";
 export const NO_REVIEWS = "Sorry, there currently aren't any reviews available.";
 export const NO_NOTIFICATIONS = "You don't have any notifications.";
+export const DELETE_NOTIFICATION_ERROR = "Sorry, we had an issue trying to delete your notification.";
+export const DELETE_ALL_NOTIFICATIONS_ERROR = "Sorry, we couldn't clear all of your notifications.";
 export const durations = ['0 - 6 months', '6 months - 1 year', '1 year +'];
 export const defaultFilterMessages = {
   location: 'Select a location',
