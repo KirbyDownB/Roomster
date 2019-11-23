@@ -1,6 +1,6 @@
 import { message } from 'antd';
 
-export const BASE_URL = 'http://dc213e08.ngrok.io';
+export const BASE_URL = "http://localhost:5000";
 export const inputIconColor = { color: 'rgba(0, 0, 0)' };
 export const PASSWORD_MATCH_ERROR = "Your passwords don't match!";
 export const EMPTY_INPUT_ERROR = 'You left an input field empty!';
@@ -108,6 +108,5 @@ export const sortOptions = ['Most Recent', 'Most Tags', 'Longest'];
 
 export const showErrorMessage = text => message.error(text);
 export const showSuccessMessage = text => message.success(text);
-export const dummyRequest = ({ file, onSuccess }) =>
-  setTimeout(() => onSuccess('ok'), 0);
-export const loginRedirect = () => (window.location.href = '/login');
+export const dummyRequest = ({ file, onSuccess }) => setTimeout(() => onSuccess("ok"), 0);
+export const loginRedirect = () => window.location.href =  "/login";

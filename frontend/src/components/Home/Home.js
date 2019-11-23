@@ -5,6 +5,7 @@ import Feed from './Feed/Feed';
 import Profile from './Profile/Profile';
 import Friends from './Friends/Friends';
 import Reviews from './Reviews/Reviews';
+import Groups from './Groups/Groups';
 
 class Home extends Component {
   state = {
@@ -38,6 +39,7 @@ class Home extends Component {
                 {this.state.activeInterface === "feed" && <Feed />}
                 {this.state.activeInterface === "friends" && <Friends />}
                 {this.state.activeInterface === "reviews" && <Reviews />}
+                {this.state.activeInterface === "groups" && <Groups />}
               </div>
             </div>
           </div>

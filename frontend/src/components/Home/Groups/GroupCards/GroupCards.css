@@ -1,0 +1,120 @@
+.groupcards__container {
+  box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.6);
+  background-color: white;
+  border-radius: 8px;
+  padding-top: 2%;
+  padding-left: 4%;
+  padding-right: 4%;
+}
+
+.groupcards__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-bottom: 2%;
+}
+
+.groupcards__icon-container {
+  padding-left: 1%;
+}
+
+.groupcards__icon-button {
+  font-size: 16px;
+  display: block;
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+
+.groupcards__icon-button:hover {
+  color: #F57676;
+}
+
+.groupcards__header-text {
+  font-family: "Asap", sans-serif;
+  color: #505050;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 0;
+}
+
+.groupcards__profile {
+  display: flex;
+}
+
+.groupcards__profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid white;
+  box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.6);
+}
+
+.groupcards__title_container {
+  padding-left: 4%;
+  padding-top: 2%;
+  width: 100%;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.groupcards__profile-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #F57676;
+}
+
+.groupcards__profile-sub {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.groupcards__body {
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+.groupcards__footer {
+  border-top: 1px solid #BEBEBE;
+  padding: 0.5%;
+  display: flex;
+}
+
+.groupcards__footer-text {
+  font-weight: 450;
+}
+
+.groupcards__footer-click {
+  font-weight: 650;
+  color: rgba(245, 118, 118, 1);
+  cursor: pointer;
+}
+
+.groupcards__footer-click:hover {
+  color: rgba(245, 118, 118, 0.5);
+}
+
+.groupcards__title-format {
+}
+
+.groupcards__title-container {
+  display: flex;
+  padding-bottom: 6%;
+}
+
+.groupcards__title-list {
+  margin: 0;
+  font-family: "Asap", sans-serif;
+  color: #989898;
+  font-weight: 550;
+  cursor: pointer;
+}
+
+.groupcards__title-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.groupcards__reply {
+  width: 100%;
+}
