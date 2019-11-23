@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { message, notification } from 'antd';
 
 export const BASE_URL = "http://127.0.0.1:5000";
 
@@ -41,6 +41,7 @@ export const REVIEW_SUBMIT_SUCCESS = 'Thanks for submitting your review!';
 export const MY_REVIEW_SELECTION = "My Reviews";
 export const REVIEWS_ABOUT_ME_SELECTION = "Reviews About Me";
 export const NO_REVIEWS = "Sorry, there currently aren't any reviews available.";
+export const NO_NOTIFICATIONS = "You don't have any notifications.";
 export const durations = ['0 - 6 months', '6 months - 1 year', '1 year +'];
 export const defaultFilterMessages = {
   location: 'Select a location',
@@ -113,6 +114,10 @@ export const reviewsSortOptions = ['Most Recent', 'Longest', 'Highest Rating'];
 
 export const showErrorMessage = text => message.error(text);
 export const showSuccessMessage = text => message.success(text);
+export const showNotification = data => notification.open({
+  message: data.category,
+  description: data.content
+});
 export const dummyRequest = ({ file, onSuccess }) =>
   setTimeout(() => onSuccess('ok'), 0);
 export const loginRedirect = () => (window.location.href = '/login');

@@ -3,6 +3,7 @@ import './Feed.css';
 import Post from './Post/Post';
 import Filter from './Filter/Filter';
 import { Button, Icon, Popover, Input, Modal, Select, Form, Upload } from 'antd';
+import Fade from 'react-reveal/Fade';
 import spinner from '../../../assets/tail-spin.svg';
 import {
   showSuccessMessage,
@@ -342,17 +343,19 @@ class Feed extends Component {
 
                 return (
                   <div className="col-6">
-                    <Post
-                      likes={likes}
-                      dislikes={dislikes}
-                      likedIds={this.state.likedIds}
-                      dislikedIds={this.state.dislikedIds}
-                      hasLiked={hasLiked}
-                      hasDisliked={hasDisliked}
-                      addLikedId={this.addLikedId}
-                      addDislikedId={this.addDislikedId}
-                      {...post}
-                    />
+                    <Fade>
+                      <Post
+                        likes={likes}
+                        dislikes={dislikes}
+                        likedIds={this.state.likedIds}
+                        dislikedIds={this.state.dislikedIds}
+                        hasLiked={hasLiked}
+                        hasDisliked={hasDisliked}
+                        addLikedId={this.addLikedId}
+                        addDislikedId={this.addDislikedId}
+                        {...post}
+                      />
+                    </Fade>
                   </div>
                 )
               })

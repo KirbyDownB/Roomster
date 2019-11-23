@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Cards from './Cards';
 import EmptyCard from './EmptyCard';
 import Requests from './Requests/Requests';
+import Fade from 'react-reveal/Fade';
 import { Modal, Input, Icon, Popover, Button } from 'antd';
 import {
   BASE_URL,
@@ -271,7 +272,9 @@ class Friends extends Component {
               {this.state.friendsList.map(item => {
                 return (
                   <div className="col-3">
-                    <Cards handleDelete={this.handleDelete} {...item}/>
+                    <Fade>
+                      <Cards handleDelete={this.handleDelete} {...item}/>
+                    </Fade>
                   </div>
                 )
               })}

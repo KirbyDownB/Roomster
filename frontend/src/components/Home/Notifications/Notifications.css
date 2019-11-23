@@ -1,0 +1,46 @@
+.notifications__container {
+  width: 90%;
+  margin: 4% auto;
+}
+
+.notification__card {
+  box-shadow: 0px 2px 15px rgba(129, 129, 129, 0.12);
+  border-radius: 10px;
+  padding: 2%;
+  margin-top: 2%;
+}
+
+.notifications__title {
+  font-weight: bold;
+  color: #505050;
+}
+
+.notification__category {
+  font-size: 140%;
+  font-weight: bold;
+  color: #F57676;
+  margin-bottom: 4px;
+}
+
+.notification__delete {
+  float: right;
+}
+
+.notification__delete--icon {
+  font-size: 16px;
+}
+
+.notification__delete--icon:hover {
+  cursor: pointer;
+  color: #F57676;
+}
+
+.notifications__clearall--button {
+  float: right;
+  margin-top: 4px;
+  font-weight: bold;
+}
+
+.notification__wrapper {
+  margin-top: 16px;
+}
