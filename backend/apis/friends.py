@@ -127,7 +127,7 @@ class FriendsDelete(Resource):
 
         
         if len(user_obj(friends__all=[friend_obj.first().email])) < 1: #check this statment and other like it. It might be breaking things!!!!!!
-            return {"Message":"Somone has to be your friend before you can delete them"}
+            return {"Message":"Somone has to be your friend before you can delete them"},400
 
         
         try:
