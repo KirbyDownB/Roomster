@@ -14,6 +14,9 @@ posting_id = api.model('posting_id', {
     'numStars': fields.Float(description="number of stars in review")
 
 })
+friend_data = api.model('friend_data_for_review', {
+    'friend': fields.String(description="User email or username"),
+})
 parser = api.parser()
 parser.add_argument('Authorization',type=str,location='headers',help='Bearer Access Token', required=True)
 
@@ -71,6 +74,9 @@ class AddReview(Resource):
 
         if not exists:
             return {"Message":"There is no user with that email"}, 400
+
+        if len(user_obj(friends__all=[friend_obj.first().email])) < 1: #check this statment and other like it. It might be breaking things!!!!!!
+            return {"Message":"Somone has to be your friend before you can review them"},400
 
 
         review = Review(rater_email=user_email, person_who_was_rated_email=friend_obj.first().email, num_stars=data.get('numStars'), content=data.get('content'))
@@ -140,3 +146,48 @@ class AllReview(Resource):
 
 
         return {"Message":"Data retrieved successfully", "otherReviews": otherReviews, "my_reviews":my_reviews, }
+
+@api.route('/friend_reviews/')
+class AddReview(Resource):
+    @api.doc('Access Token and post review',parser=parser,body=friend_data)
+    def post(self):
+        data = api.payload
+        args = parser.parse_args()
+        print(data)
+        print(args)
+
+        user_email = tokenToEmail(args)
+
+        if user_email is None:
+            return {"Message":"Token machine BROKE"}, 400
+
+        exists, user_obj = emailExists(user_email,2)
+
+        if not exists:
+            return {"Message":"There is no user with that email"}, 400
+
+        if data.get('friend') is None:
+            return {"Message":"Nothing was sent in the post body"}, 400
+
+        exists, friend_obj = emailExists(data.get('friend'),2)
+
+        if not exists:
+            return {"Message":"There is no user with that email"}, 400
+
+        if len(user_obj(friends__all=[friend_obj.first().email])) < 1: #check this statment and other like it. It might be breaking things!!!!!!
+            return {"Message":"Somone has to be your friend before you can see their reviews"},400
+
+        reviews_about_user = []
+        for review in friend_obj.first().reviews:
+            r = Review.objects.get(pk=review)
+
+            r = json.loads(r.to_json())
+            u = User.objects.get(email=r['rater_email'])
+            r['name'] = u.first_name + ' ' + u.last_name
+            d = (str(r['date']['$date'])[:-3])
+            d = int(d)
+            r['date'] = (datetime.utcfromtimestamp(d).strftime('%Y-%m-%d %H:%M:%S'))
+            reviews_about_user.append(r)
+
+        return {"Message":"Reviews retrieved successfully", "Reviews":reviews_about_user}
+
