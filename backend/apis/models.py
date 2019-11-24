@@ -60,6 +60,7 @@ class Review(db.DynamicDocument):
     content = db.StringField()
     date = db.DateTimeField(default=datetime.now())
     
+
 class Notification(db.DynamicDocument):
 
     category = db.StringField()

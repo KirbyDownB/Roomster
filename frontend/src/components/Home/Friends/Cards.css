@@ -1,7 +1,7 @@
 .cards__bg {
   background-color: white;
   width: 15vw;
-  height: 30vh;
+  height: 33vh;
   border-radius: 15px;
   box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.12);
   margin-top: 16%;
@@ -26,6 +26,12 @@
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 2%;
+  font-family: "Asap", sans-serif;
+  font-weight: bold;
+}
+
+.cards__profile-name:hover {
+  cursor: pointer;
 }
 
 .cards__profile-title {
@@ -53,20 +59,21 @@
   display: flex;
 }
 
-.cards__button-left {
+.cards__button-left, .cards__button-right {
   color: #BBC2CD;
   width: 50%;
   border: none;
-  border-radius: 0px 0px 0px 15px;
   background-color: #FBFCFF;
+  font-family: "Asap", sans-serif;
+  font-weight: bold;
+}
+
+.cards__button-left {
+  border-radius: 0px 0px 0px 15px;
 }
 
 .cards__button-right {
-  color: #BBC2CD;
-  width: 50%;
-  border: none;
   border-radius: 0px 0px 15px 0px;
-  background-color: #FBFCFF;
 }
 
 .cards__footer-split {
@@ -84,4 +91,13 @@
   height: 150px;
   border-radius: 50%;
   margin: auto;
+}
+
+.cards__profile--review {
+  text-align: center;
+}
+
+.cards__profilemodal--return, .cards__popconfirm {
+  font-family: "Asap", sans-serif;
+  font-weight: bold;
 }

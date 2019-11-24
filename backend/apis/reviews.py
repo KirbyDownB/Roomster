@@ -17,6 +17,7 @@ posting_id = api.model('posting_id', {
 friend_data = api.model('friend_data_for_review', {
     'friend': fields.String(description="User email or username"),
 })
+
 parser = api.parser()
 parser.add_argument('Authorization',type=str,location='headers',help='Bearer Access Token', required=True)
 
@@ -190,4 +191,5 @@ class AddReview(Resource):
             reviews_about_user.append(r)
 
         return {"Message":"Reviews retrieved successfully", "Reviews":reviews_about_user}
+
 

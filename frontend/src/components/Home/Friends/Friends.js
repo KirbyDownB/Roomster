@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Cards from './Cards';
 import EmptyCard from './EmptyCard';
 import Requests from './Requests/Requests';
-import { Modal, Input, Select, Radio, Icon, Popover, Button } from 'antd';
+import { Modal, Input, Icon, Popover, Button } from 'antd';
 import {
   BASE_URL,
   ADD_FRIEND_ERROR,
@@ -15,14 +15,8 @@ import {
   showSuccessMessage
 } from '../../../constants.js';
 import spinner from '../../../assets/tail-spin.svg';
-import Loader from 'react-loader-spinner'
 
 import './Friends.css';
-
-const { Search } = Input;
-const eric = require("../../../assets/eric.jpg")
-const aditya = require("../../../assets/aditya.jpg")
-
 
 class Friends extends Component {
 

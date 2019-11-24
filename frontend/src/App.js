@@ -56,7 +56,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
 });
 
 const mapDispatchToProps = dispatch => ({

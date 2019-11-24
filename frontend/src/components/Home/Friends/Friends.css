@@ -105,6 +105,11 @@
   border-radius: 10px;
 }
 
+.friends__add-button, .friends__requests-button {
+  font-family: "Asap", sans-serif;
+  font-weight: bold;
+}
+
 .friends__loader {
   margin-top: 20%;
 }
