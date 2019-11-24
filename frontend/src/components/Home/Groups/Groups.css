@@ -12,3 +12,69 @@
 .groups__chat-box {
   width: 100%;
 }
+
+.groups__icon-button {
+  font-size: 16px;
+  padding-bottom: 2px;
+  cursor: pointer;
+  color: #F57676;
+}
+
+.groups__people-container {
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.groups__people-text {
+  margin: 0;
+  padding-left: 1%;
+}
+
+.groups__user-container {
+  display: flex;
+  align-items: center;
+  margin-top: 2%;
+}
+
+.groups__user-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 2%;
+}
+
+.groups__user-name {
+  margin: 0;
+}
+
+.groups__sections {
+  padding-bottom: 2%;
+}
+
+.groups__empty-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.groups__empty-title-container {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  vertical-align: middle;
+  padding-bottom: 4%;
+}
+
+.groups__empty-title {
+  font-weight: 700;
+  color: #F57676;
+  margin: 0;
+}
+
+.groups__empty-img-container {
+  margin: auto;
+}
