@@ -78,4 +78,5 @@ api.add_namespace(ns_reviews, path='/api/reviews')
 api.add_namespace(ns_notifications, path='/api/notifications')
 
 api.add_namespace(ns_reviews, path='/api/reviews')
+api.add_namespace(ns_groups, path='/api/groups')
 
