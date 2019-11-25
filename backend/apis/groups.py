@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restplus import Resource, Api, fields, Namespace
-from .models import User, Review, Group
+from .models import User, Review, Group, GroupPosting
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
