@@ -60,7 +60,6 @@ class Review(db.DynamicDocument):
     content = db.StringField()
     date = db.DateTimeField(default=datetime.now())
     
-
 class Notification(db.DynamicDocument):
 
     category = db.StringField()
@@ -72,10 +71,6 @@ class GroupPosting(db.DynamicDocument):
     poster_email = db.EmailField()
     date = db.DateTimeField(default=datetime.now())
     content = db.StringField()
-    tags = db.ListField()
-    likedEmails = db.ListField()
-    dislikedEmails = db.ListField()
-    images = db.ListField()
     replies = db.ListField()
 
 # class GroupPostingComment(db.DynamicDocument):
