@@ -51,6 +51,10 @@ from .unlike import api as ns_unlike
 from .undislike import api as ns_undislike
 from .reviews import api as ns_reviews
 
+from .notifications import api as ns_notifications
+from .groups import api as ns_groups
+
+
 
 api.add_namespace(ns_login, path='/api/login')
 api.add_namespace(ns_signup, path='/api/signup')
@@ -66,4 +70,9 @@ api.add_namespace(ns_dislike, path='/api/dislike')
 api.add_namespace(ns_filter, path='/api/filter')
 api.add_namespace(ns_unlike, path='/api/unlike')
 api.add_namespace(ns_undislike, path='/api/undislike')
+
 api.add_namespace(ns_reviews, path='/api/reviews')
+api.add_namespace(ns_notifications, path='/api/notifications')
+
+api.add_namespace(ns_reviews, path='/api/reviews')
+

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GroupCards from './GroupCards/GroupCards';
 import Reply from './Reply/Reply';
+import { BASE_URL } from '../../../constants.js'
 import { Popover, Icon, Popconfirm, Input, Button, Modal } from 'antd';
 import './Groups.css';
 
@@ -13,6 +14,7 @@ class Groups extends Component {
 
   state = {
     visible: false,
+    groupName: "",
     groupList: []
   }
 
@@ -28,22 +30,38 @@ class Groups extends Component {
     })
   }
 
+  handleChange = (e) => {
+    e.preventDefault()
+    this.setState({
+      groupName: e.target.value
+    })
+  }
+
+  handleSubmit = () => {
+    fetch(`${BASE_URL}/`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.token
+      },
+      method: "POST",
+      body: JSON.stringify({
+        groupName: this.state.groupName
+      })
+    })
+    .then(resp => resp.json())
+    .then(resp => console.log(resp))
+  }
+
   groupList = () => {
-    //fetch()
-    // let fake = [
-    //   {
-    //     name: "Aditya Acharya",
-    //     pf_pic: aditya,
-    //   },
-    //   {
-    //     name: "Eric Ong",
-    //     pf_pic: eric
-    //   }
-    // ]
-    //
-    // this.setState({
-    //   groupList: fake
-    // })
+    fetch(`${BASE_URL}/`, {
+      headers: {
+        "Authorization": localStorage.token
+      },
+      method: "GET"
+    })
+    .then(resp => resp.json())
+    .then(resp => console.log(resp))
+
   }
 
   modalContent = () => {
@@ -89,6 +107,7 @@ class Groups extends Component {
   }
 
   render(){
+    console.log(this.state.groupName)
     return(
       <div>
       {this.state.groupList.length > 0 ?
@@ -132,7 +151,35 @@ class Groups extends Component {
         <div className="groups__empty-img-container">
           <div className="groups__empty-title-container">
             <h2 className="groups__empty-title">You are currently not part of a group</h2>
-            <Button type="primary" shape="circle" icon="search" />
+            <div style={{width: '50px'}}>
+              <Button onClick={this.showModal} type="primary" shape="circle" icon="plus" />
+            </div>
+            <Modal
+              title="Group Settings"
+              visible={this.state.visible}
+              onOk={this.handleOk}
+              onCancel={this.handleOk}
+              footer={[
+                <Button
+                  type="primary"
+                  onClick={this.handleSubmit}
+                >
+                  Submit
+                </Button>,
+                <Button key="back" onClick={this.handleOk}>
+                  Return
+                </Button>
+              ]}
+            >
+            <Input
+              placeholder="Enter your group name"
+              name="groupName"
+              value={this.state.groupName}
+              onChange={this.handleChange}
+              prefix={<Icon type="team" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            />
+
+            </Modal>
           </div>
           <img className="groups__empty-img" src={groupImg}>
           </img>

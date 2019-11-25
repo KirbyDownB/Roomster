@@ -37,6 +37,9 @@ export const FILTER_SUBMIT_ERROR =
 export const REVIEW_SUBMIT_ERROR =
   'Sorry, we had issues submitting your review.';
 export const REVIEW_SUBMIT_SUCCESS = 'Thanks for submitting your review!';
+export const MY_REVIEW_SELECTION = "My Reviews";
+export const REVIEWS_ABOUT_ME_SELECTION = "Reviews About Me";
+export const NO_REVIEWS = "Sorry, there currently aren't any reviews available.";
 export const durations = ['0 - 6 months', '6 months - 1 year', '1 year +'];
 export const defaultFilterMessages = {
   location: 'Select a location',
@@ -105,6 +108,7 @@ export const postTags = [
 ];
 export const genders = ['Male', 'Female', 'Other'];
 export const sortOptions = ['Most Recent', 'Most Tags', 'Longest'];
+export const reviewsSortOptions = ['Most Recent', 'Longest', 'Highest Rating'];
 
 export const showErrorMessage = text => message.error(text);
 export const showSuccessMessage = text => message.success(text);

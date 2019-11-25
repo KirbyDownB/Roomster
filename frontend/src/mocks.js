@@ -110,23 +110,56 @@ export const mockLocations = [
 ];
 export const mockPriceRange = [200, 8000];
 
-export const mockReviews = [
+export const mockMyReviews = [
   {
-    poster: "Eric Ong",
-    rating: 4,
+    name: "Francisco Lagos Vilaboa",
+    person_who_was_rated_email: "flagosvilaboa@gmail.com",
+    rater_email: "ericong18@gmail.com",
+    num_stars: 4,
+    date: "2019-11-22 20:10:43",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    date: "November 20th, 2019"
   },
   {
-    poster: "Eric Ong",
-    rating: 2,
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    date: "November 19th, 2019"
+    name: "Francisco Lagos Vilaboa",
+    person_who_was_rated_email: "flagosvilaboa@gmail.com",
+    rater_email: "ericong18@gmail.com",
+    num_stars: 2,
+    date: "2019-11-21 20:10:43",
+    content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   {
-    poster: "Eric Ong",
-    rating: 4,
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    date: "November 14th, 2019"
+    name: "Francisco Lagos Vilaboa",
+    person_who_was_rated_email: "flagosvilaboa@gmail.com",
+    rater_email: "ericong18@gmail.com",
+    num_stars: 4,
+    date: "2019-11-14 20:10:43",
+    content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   }
-]
+];
+
+export const mockOtherReviews = [
+  {
+    name: "Eric Ong",
+    person_who_was_rated_email: "flagosvilaboa@gmail.com",
+    rater_email: "ericong18@gmail.com",
+    num_stars: 4,
+    date: "2019-11-18 20:10:43",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  },
+  {
+    name: "Eric Ong",
+    person_who_was_rated_email: "flagosvilaboa@gmail.com",
+    rater_email: "ericong18@gmail.com",
+    num_stars: 2,
+    date: "2019-11-21 20:10:43",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  },
+  {
+    name: "Eric Ong",
+    person_who_was_rated_email: "flagosvilaboa@gmail.com",
+    rater_email: "ericong18@gmail.com",
+    num_stars: 4,
+    date: "2019-11-14 20:10:43",
+    content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  }
+];
