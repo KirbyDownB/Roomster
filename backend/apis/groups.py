@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restplus import Resource, Api, fields, Namespace
-from .models import User, Review, Group
+from .models import User, Review, Group, GroupPosting
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
@@ -16,7 +16,6 @@ just_group_id = api.model('just_group_id', {
 })
 create_group = api.model('create_group',{
     'group_name':fields.String(description='name'),
-    'group_members':fields.List(fields.String(description='member emails'))
 
 })
 create_posting_in_group = api.model('create_posting_in_group',{
@@ -144,8 +143,7 @@ class CreateGroup(Resource):
 
         if not exists:
             return {"Message":"There is no user with that email"}, 400
-        group_M = data.get('group_members')
-        print(group_M)
+        group_M = []
         group_M.append(user_email)
         group = Group(name=data.get('group_name'), members=group_M)
 
@@ -225,3 +223,29 @@ class CreatePostInGroup(Resource):
             return {"Something went wrong when trying to submit your post"}
 
         return {"Message":"Successfully submitted post to group"}
+
+@api.route('/group/')
+class GetGroup(Resource):
+    @api.expect(parser)
+    def get(self):
+        args = parser.parse_args()
+        print(args)
+        user_email = tokenToEmail(args)
+
+        if user_email is None:
+            return {"Message":"Token machine BROKE"}, 400
+
+        exists, user_obj = emailExists(user_email,2)
+
+        if not exists:
+            return {"Message":"There is no user with that email"}, 400
+
+        
+
+        if user_obj.first().group == "":
+            return {"Message":"This user is not a part of any group"}
+
+        g = json.loads(Group.objects.get(pk=user_obj.first().group).to_json())
+
+
+        return {"Message":"Successfully got the group", "group":g}
