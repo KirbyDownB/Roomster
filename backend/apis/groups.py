@@ -16,7 +16,6 @@ just_group_id = api.model('just_group_id', {
 })
 create_group = api.model('create_group',{
     'group_name':fields.String(description='name'),
-    'group_members':fields.List(fields.String(description='member emails'))
 
 })
 create_posting_in_group = api.model('create_posting_in_group',{
@@ -144,8 +143,7 @@ class CreateGroup(Resource):
 
         if not exists:
             return {"Message":"There is no user with that email"}, 400
-        group_M = data.get('group_members')
-        print(group_M)
+        group_M = []
         group_M.append(user_email)
         group = Group(name=data.get('group_name'), members=group_M)
 
