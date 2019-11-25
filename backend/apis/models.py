@@ -29,8 +29,10 @@ class User(db.DynamicDocument):
     likedPosts = db.ListField()
     dislikedPosts = db.ListField()
     reviews = db.ListField()
-    groups = db.ListField()
+    group = db.StringField(default="")
     my_reviews = db.ListField()
+    notifications = db.ListField()
+
 class Posting(db.DynamicDocument):
 
     name = db.StringField()
@@ -46,7 +48,9 @@ class Posting(db.DynamicDocument):
 class Group(db.DynamicDocument):
 
     name = db.StringField() 
-    memebers = db.ListField()
+    members = db.ListField()
+    posts_in_group = db.ListField()
+
 
 class Review(db.DynamicDocument):
     
@@ -56,8 +60,20 @@ class Review(db.DynamicDocument):
     content = db.StringField()
     date = db.DateTimeField(default=datetime.now())
     
+class Notification(db.DynamicDocument):
 
+    category = db.StringField()
+    date = db.DateTimeField(default=datetime.now())
+    content = db.StringField()
 
+class GroupPosting(db.DynamicDocument):
+    name = db.StringField()
+    poster_email = db.EmailField()
+    date = db.DateTimeField(default=datetime.now())
+    content = db.StringField()
+    replies = db.ListField()
+
+# class GroupPostingComment(db.DynamicDocument):
 
 
 

@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 from flask_mail_sendgrid import MailSendGrid
 from flask_cors import CORS
 from flask_mongoengine import MongoEngine
+from flask_socketio import SocketIO
 import pyrebase
 from .keys import config, mongo_uri
 
@@ -27,6 +28,8 @@ app.config['MAIL_SENDGRID_API_KEY'] = os.getenv('SENDGRID_API_KEY')
 mail = MailSendGrid(app)
 migrate = Migrate(app, db)
 CORS(app)
+app.config['SECRET_KEY'] = 'mysecret'
+socketio = SocketIO(app)
 api = Api(
     title='Roomster Backend',
     version='1.0',
@@ -51,6 +54,10 @@ from .unlike import api as ns_unlike
 from .undislike import api as ns_undislike
 from .reviews import api as ns_reviews
 
+from .notifications import api as ns_notifications
+from .groups import api as ns_groups
+
+
 
 api.add_namespace(ns_login, path='/api/login')
 api.add_namespace(ns_signup, path='/api/signup')
@@ -66,4 +73,10 @@ api.add_namespace(ns_dislike, path='/api/dislike')
 api.add_namespace(ns_filter, path='/api/filter')
 api.add_namespace(ns_unlike, path='/api/unlike')
 api.add_namespace(ns_undislike, path='/api/undislike')
+
 api.add_namespace(ns_reviews, path='/api/reviews')
+api.add_namespace(ns_notifications, path='/api/notifications')
+
+api.add_namespace(ns_reviews, path='/api/reviews')
+api.add_namespace(ns_groups, path='/api/groups')
+
