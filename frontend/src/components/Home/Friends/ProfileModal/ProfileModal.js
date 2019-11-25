@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Rate, Icon, Divider } from 'antd';
 import './ProfileModal.css';
 import { BASE_URL, showErrorMessage, FRIEND_REVIEW_ERROR } from '../../../../constants.js';
-import { mockMyReviews } from '../../../../mocks';
 import spinner from '../../../../assets/tail-spin.svg';
 
 const moment = require('moment');
