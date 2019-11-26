@@ -1,12 +1,13 @@
-import { message } from 'antd';
+import { message, notification } from 'antd';
 
-export const BASE_URL = "http://127.0.0.1:5000";
+export const BASE_URL = "http://3b50c9fd.ngrok.io";
 
 export const inputIconColor = { color: 'rgba(0, 0, 0)' };
 export const PASSWORD_MATCH_ERROR = "Your passwords don't match!";
 export const EMPTY_INPUT_ERROR = 'You left an input field empty!';
 export const NO_IMAGE_ERROR = 'You forgot to upload an image!';
 export const PHONE_ERROR = 'Your phone number is invalid.';
+export const PROFILE_LOAD_ERROR = 'Sorry, we had trouble loading your profile information.';
 export const PROFILE_UPDATE_ERROR =
   'Sorry, we had an issue trying to update your profile.';
 export const PROFILE_UPDATE_SUCCESS =
@@ -21,6 +22,7 @@ export const SIGNUP_ERROR = 'An issue occurred when trying to sign you up.';
 export const LOGIN_ERROR = 'Sorry, we had trouble logging you in!';
 export const GENERAL_ERROR = 'Something went wrong!';
 export const NUM_IMAGE_UPLOAD_ERROR = 'Please upload no more than 5 images!';
+export const NO_FRIENDS = "It looks like you don't have any friends, send a friend request to someone!";
 export const FRIENDS_LIST_ERROR = "Sorry, we couldn't get your friends list.";
 export const FRIENDS_REQUESTS_ERROR =
   "Sorry, we couldn't get your friend requests.";
@@ -29,6 +31,7 @@ export const ADD_FRIEND_ERROR =
 export const ADD_FRIEND_ERROR_YOURSELF = 'Sorry, you cannot add yourself';
 export const ADD_FRIEND_SUCCESS = "You've succesfully added that user";
 export const SEARCH_FRIEND_ERROR = 'Please input a name before searching';
+export const FRIEND_REVIEW_ERROR = "Sorry, we couldn't get reviews about your friend.";
 export const FEED_ERROR = 'Sorry, we had trouble loading your feed!';
 export const FEED_SEARCH_ERROR = 'Sorry, we had trouble with searching!';
 export const REACTION_ERROR =
@@ -41,6 +44,9 @@ export const REVIEW_SUBMIT_SUCCESS = 'Thanks for submitting your review!';
 export const MY_REVIEW_SELECTION = "My Reviews";
 export const REVIEWS_ABOUT_ME_SELECTION = "Reviews About Me";
 export const NO_REVIEWS = "Sorry, there currently aren't any reviews available.";
+export const NO_NOTIFICATIONS = "You don't have any notifications.";
+export const DELETE_NOTIFICATION_ERROR = "Sorry, we had an issue trying to delete your notification.";
+export const DELETE_ALL_NOTIFICATIONS_ERROR = "Sorry, we couldn't clear all of your notifications.";
 export const durations = ['0 - 6 months', '6 months - 1 year', '1 year +'];
 export const defaultFilterMessages = {
   location: 'Select a location',
@@ -113,6 +119,10 @@ export const reviewsSortOptions = ['Most Recent', 'Longest', 'Highest Rating'];
 
 export const showErrorMessage = text => message.error(text);
 export const showSuccessMessage = text => message.success(text);
+export const showNotification = data => notification.open({
+  message: data.category,
+  description: data.content
+});
 export const dummyRequest = ({ file, onSuccess }) =>
   setTimeout(() => onSuccess('ok'), 0);
 export const loginRedirect = () => (window.location.href = '/login');

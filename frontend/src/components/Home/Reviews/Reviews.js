@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Reviews.css';
 import { Radio, Select, Alert } from 'antd';
+import Fade from 'react-reveal/Fade';
 import ReviewsCard from './ReviewsCard/ReviewsCard';
 import { mockMyReviews, mockOtherReviews } from '../../../mocks';
 import { BASE_URL,
@@ -128,7 +129,9 @@ class Reviews extends Component {
                   {reviews.length > 0 && reviews.map(review => {
                     return (
                       <div className="col-10">
-                        <ReviewsCard {...review} />
+                        <Fade>
+                          <ReviewsCard {...review} />
+                        </Fade>
                       </div>
                     )
                   })}

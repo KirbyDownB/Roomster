@@ -163,3 +163,54 @@ export const mockOtherReviews = [
     content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   }
 ];
+
+export const mockNotifications = [
+  {
+    category: "friend request",
+    content: "first",
+    date: "2019-11-20 20:10:43",
+    notificationId: 1
+  },
+  {
+    category: "friend request",
+    content: "second",
+    date: "2019-11-17 20:10:43",
+    notificationId: 2
+  },
+  {
+    category: "friend request",
+    content: "third",
+    date: "2019-11-17 20:10:43",
+    notificationId: 3
+  },
+  {
+    category: "friend request",
+    content: "fourth",
+    date: "2019-11-16 20:10:43",
+    notificationId: 4
+  },
+  {
+    category: "friend request",
+    content: "fifth",
+    date: "2019-11-20 20:10:43",
+    notificationId: 5
+  },
+  {
+    category: "friend request",
+    content: "sixth",
+    date: "2019-11-17 20:10:43",
+    notificationId: 6
+  },
+  {
+    category: "friend request",
+    content: "seventh",
+    date: "2019-11-17 20:10:43",
+    notificationId: 7
+  },
+  {
+    category: "friend request",
+    content: "eighth",
+    date: "2019-11-16 20:10:43",
+    notificationId: 8
+  }
+]

@@ -23,3 +23,7 @@
   font-weight: bold;
   letter-spacing: 8px;
 }
+
+.menu__notifications--popover {
+  background-color: #F57676;
+}

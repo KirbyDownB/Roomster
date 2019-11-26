@@ -113,7 +113,7 @@
 .profilemodal__reviews--container {
   margin-top: 4%;
   background-color: #FFFFFF;
-  box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.12);
+  box-shadow: 0px 2px 15px rgba(129, 129, 129, 0.12);
   border-radius: 10px;
   padding: 4% 4%;
 }
@@ -129,4 +129,8 @@
 
 .profilemodal__reviews--content {
   margin-top: 8px;
+}
+
+.profilemodal__reviews--loading {
+  text-align: center;
 }
