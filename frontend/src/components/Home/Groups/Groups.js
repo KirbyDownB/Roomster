@@ -20,6 +20,7 @@ class Groups extends Component {
     groupName: "",
     groupList: [],
     group: null,
+    loading: false,
     body: "",
     subject: ""
   }
@@ -89,8 +90,10 @@ class Groups extends Component {
   }
 
   handlePostSubmit = () => {
-    console.log(this.state.subject)
-    console.log(this.state.body)
+    this.setState({
+      loading: true
+    })
+
     fetch(`${BASE_URL}/api/groups/create_post/`, {
       headers: {
         "Content-Type": "application/json",
@@ -103,7 +106,13 @@ class Groups extends Component {
       })
     })
     .then(resp => resp.json())
-    .then(resp => console.log(resp))
+    .then(resp => {
+      console.log(resp);
+      this.setState({
+        loading: false,
+        postModal: false
+      })
+    })
   }
 
   modalContent = () => {
@@ -157,14 +166,13 @@ class Groups extends Component {
         <div className="col">
           <div className="groupcards__header">
               <h2 className="groupcards__header-text" onClick={this.showModal}>KirbyDownB</h2>
-              <Icon className="groupcards__header-icon" onClick={this.handlePost} type="form" />
               <Modal
                 title="Reply Message"
                 visible={this.state.postModal}
                 onOk={this.handlePostOk}
                 onCancel={this.handlePostOk}
                 footer={[
-                  <Button key="back" onClick={this.handleOk}>
+                  <Button key="back" loading={this.state.loading} onClick={this.handleOk}>
                     Return
                   </Button>,
                   <Button key="submit" type="primary" onClick={this.handlePostSubmit}>
@@ -174,32 +182,31 @@ class Groups extends Component {
               >
                 <MessageModal handleChange={this.handleChange} email={this.props.user.email} name={this.state.groupName}/>
               </Modal>
-              <Modal
-                title="Group Settings"
-                visible={this.state.visible}
-                onOk={this.handleOk}
-                onCancel={this.handleOk}
-                footer={[
-                  <Button key="back" onClick={this.handleOk}>
-                    Return
-                  </Button>
-                ]}
-              >
-                {this.modalContent()}
-              </Modal>
-            <div className="groupcards__icon-container">
-            </div>
           </div>
         </div>
       </div>
         <div className="row">
-          <div className="col groups__chat-container">
+          <div className="col-4" style={{paddingBottom: '3%'}}>
+            <Button className="groups__header-buttons" icon="form" onClick={this.handlePost} type="primary">New Post</Button>
+            <Popconfirm
+              placement="right"
+              title="Delete Group?"
+              icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
+              trigger="click"
+            >
+              <Button className="groups__header-buttons_delete" icon="delete" type="primary">Are you sure?</Button>
+            </Popconfirm>
+          </div>
+
+        </div>
+        <div className="row">
+          <div className="col-11 groups__chat-container">
             <div>
             {this.state.group.length > 0 ?
               <div>
               {this.state.group.map(props => {
                 return(
-                  <GroupCards {...props} />
+                  <GroupCards handlePost={this.handlePost} {...props}  />
                 )
               })
               }
@@ -208,6 +215,11 @@ class Groups extends Component {
               null
             }
             </div>
+          </div>
+          <div className="col-1 groups__drop-down">
+            <img className="groups__image-dd" src={eric}></img>
+            <img className="groups__image-dd" src={eric}></img>
+            <Button className="groups__image-dd" shape="circle" icon="plus" />
           </div>
         </div>
       </div>:

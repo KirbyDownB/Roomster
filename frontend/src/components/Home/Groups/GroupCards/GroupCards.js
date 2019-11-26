@@ -63,9 +63,9 @@ class GroupCards extends Component {
             </div>
             <div className="groupcards__footer">
               <p className="groupcards__footer-text">Click here to &nbsp;</p>
-              <p className="groupcards__footer-click" onClick={this.handleReply}>Reply &nbsp;</p>
+              <p className="groupcards__footer-click" onClick={this.props.handlePost}>Reply &nbsp;</p>
               <p>or &nbsp;</p>
-              <p className="groupcards__footer-click">Share</p>
+              <p className="groupcards__footer-click">Remove</p>
             </div>
             <div>
             </div>
