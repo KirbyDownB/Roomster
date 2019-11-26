@@ -15,14 +15,17 @@ const aditya = require('../../../assets/aditya.jpg')
 class Groups extends Component {
 
   state = {
+    groupdId: "",
     postModal: false,
+    addModal: false,
     visible: false,
     groupName: "",
     groupList: [],
     group: null,
     loading: false,
     body: "",
-    subject: ""
+    subject: "",
+    addingMember: ""
   }
 
   showModal = () => {
@@ -66,14 +69,22 @@ class Groups extends Component {
     })
     .then(resp => resp.json())
     .then(resp => {
+      console.log(resp)
       console.log(resp.group)
       if (resp.group){
         this.setState({
+          groupId: resp.group._id,
           group: resp.group.posts_in_group,
           groupName: resp.group.name,
           groupList: resp.group.members
         })
       }
+    })
+  }
+
+  showAddModal = () => {
+    this.setState({
+      addModal: true
     })
   }
 
@@ -87,6 +98,39 @@ class Groups extends Component {
     this.setState({
       postModal: false
     })
+  }
+
+  handleAddCancel = () => {
+    this.setState({
+      addModal: false
+    })
+  }
+
+  handleDelete = () => {
+    fetch(`${BASE_URL}/api/groups/leave/`, {
+      headers: {
+        'Authorization': 'application/json'
+      },
+      method: 'GET'
+    })
+    .then(resp => resp.json())
+    .then(resp => console.log(resp))
+  }
+
+  handleAddMembers = () => {
+    fetch(`${BASE_URL}/api/groups/add/`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.token
+      },
+      method: "POST",
+      body: JSON.stringify({
+        new_group_member: this.state.addingMember,
+        group_id: this.state.groupId
+      })
+    })
+    .then(resp => resp.json())
+    .then(resp => console.log(resp))
   }
 
   handlePostSubmit = () => {
@@ -172,10 +216,10 @@ class Groups extends Component {
                 onOk={this.handlePostOk}
                 onCancel={this.handlePostOk}
                 footer={[
-                  <Button key="back" loading={this.state.loading} onClick={this.handleOk}>
+                  <Button key="back" onClick={this.handlePostOk}>
                     Return
                   </Button>,
-                  <Button key="submit" type="primary" onClick={this.handlePostSubmit}>
+                  <Button key="submit" type="primary" loading={this.state.loading} onClick={this.handlePostSubmit}>
                     Send
                   </Button>
                 ]}
@@ -194,7 +238,7 @@ class Groups extends Component {
               icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
               trigger="click"
             >
-              <Button className="groups__header-buttons_delete" icon="delete" type="primary">Are you sure?</Button>
+              <Button className="groups__header-buttons_delete" onClick={this.handleDelete} icon="delete" type="primary">Are you sure?</Button>
             </Popconfirm>
           </div>
 
@@ -219,7 +263,22 @@ class Groups extends Component {
           <div className="col-1 groups__drop-down">
             <img className="groups__image-dd" src={eric}></img>
             <img className="groups__image-dd" src={eric}></img>
-            <Button className="groups__image-dd" shape="circle" icon="plus" />
+            <Button className="groups__image-dd" onClick={this.showAddModal} shape="circle" icon="plus" />
+            <Modal
+              title="Add Members"
+              visible={this.state.addModal}
+              onCancel={this.handleAddCancel}
+              footer={[
+                <Button key="back" onClick={this.handleAddCancel}>
+                  Return
+                </Button>,
+                <Button key="submit" type="primary" loading={this.state.loading} onClick={this.handleAddMembers}>
+                  Submit
+                </Button>
+              ]}
+            >
+              <Input placeHolder="Enter username"/>
+            </Modal>
           </div>
         </div>
       </div>:
