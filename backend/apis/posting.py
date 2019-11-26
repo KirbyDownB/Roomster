@@ -64,7 +64,10 @@ class AddPosting(Resource):
             # then takes images, upload them, and come up with some dumb schema
             # 
             image_list = []
-            for i in range(0,len(data.get('images'))):
+            image_array = data.get('images')
+            if image_array is None:
+                image_array = []
+            for i in range(0,len(image_array)):
                 filename = str(full_name + (p.date.strftime('%m/%d/%Y'))+ str(i))
                 storage.child(filename).put(data.get('images')[i])
                 image_list.append(storage.child(filename).get_url(None))         
