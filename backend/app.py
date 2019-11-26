@@ -6,11 +6,20 @@ from flask_socketio import send,emit
 api.init_app(app)
 
 
-@socketio.on('message')
+@socketio.on('test')
 def handle_message(message):
     print('received message: ' + str(message))
     send(message, broadcast=True)
-    emit('my response', message)
+    emit('Hi Eric', message)
+@socketio.on('connect')
+def on_connect():
+    print('user connected')
+    emit('success', 'Im the server')
+
+#friend request
+# any feed activity (like dislike)
+# review
+#for all of these actions, construct a notification object and store it in the User's list
 
 
 

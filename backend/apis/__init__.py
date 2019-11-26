@@ -29,7 +29,7 @@ mail = MailSendGrid(app)
 migrate = Migrate(app, db)
 CORS(app)
 app.config['SECRET_KEY'] = 'mysecret'
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 api = Api(
     title='Roomster Backend',
     version='1.0',
