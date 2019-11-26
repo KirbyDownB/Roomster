@@ -82,3 +82,13 @@
 .groups__empty-img-container {
   margin: auto;
 }
+
+.groupcards__header-icon {
+  font-size: 16px;
+  padding-left: 1.2%;
+  cursor: pointer;
+}
+
+.groupcards__header-icon:hover {
+  color: #F57676;
+}

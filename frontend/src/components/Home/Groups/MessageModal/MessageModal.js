@@ -7,34 +7,27 @@ const { TextArea } = Input;
 class MessageModal extends Component {
   state = {
     from: "",
-    to: "",
-    body: ""
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      body: e.target.value
-    })
+    to: ""
   }
 
   componentDidMount () {
     //add fetching here
     this.setState({
-      from: "Ericong18@gmail.com",
-      to: "KirbyDownB"
+      from: this.props.email,
+      to: this.props.name
     })
   }
 
   render(){
-    console.log(this.state.body)
     return(
       <div>
         <div className="messagemodal__input-container">
           <Input className="messagemodal__input" value={this.state.from} addonBefore="From: "></Input>
           <Input className="messagemodal__input" value={this.state.to} addonBefore="To: "></Input>
+          <Input className="messagemodal__input" name="subject" onChange={this.props.handleChange} addonBefore="Subject: "></Input>
         </div>
         <div>
-          <TextArea rows={10} onChange={this.handleChange} />
+          <TextArea rows={10} name="body" onChange={this.props.handleChange} />
         </div>
       </div>
     )

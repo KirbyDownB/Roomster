@@ -54,7 +54,7 @@ class GroupCards extends Component {
               <img className="groupcards__profile-image" src={eric}></img>
               <div className="groupcards__title_container">
                 <h1 className="groupcards__profile-title">Eric Ong</h1>
-                <h2 className="groupcards__profile-sub">Parrot</h2>
+                <h2 className="groupcards__profile-sub">I like lorem ipsum</h2>
               </div>
             </div>
             <div className="groupcards__body">

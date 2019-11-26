@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import GroupCards from './GroupCards/GroupCards';
+import MessageModal from './MessageModal/MessageModal';
 import Reply from './Reply/Reply';
 import { BASE_URL } from '../../../constants.js'
 import { Popover, Icon, Popconfirm, Input, Button, Modal } from 'antd';
+import { connect } from 'react-redux';
 import './Groups.css';
 
 const { Search } = Input;
@@ -13,9 +15,13 @@ const aditya = require('../../../assets/aditya.jpg')
 class Groups extends Component {
 
   state = {
+    postModal: false,
     visible: false,
     groupName: "",
-    groupList: []
+    groupList: [],
+    group: null,
+    body: "",
+    subject: ""
   }
 
   showModal = () => {
@@ -32,20 +38,18 @@ class Groups extends Component {
 
   handleChange = (e) => {
     e.preventDefault()
-    this.setState({
-      groupName: e.target.value
-    })
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   handleSubmit = () => {
-    fetch(`${BASE_URL}/`, {
+    fetch(`${BASE_URL}/api/groups/create/`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": localStorage.token
       },
       method: "POST",
       body: JSON.stringify({
-        groupName: this.state.groupName
+        group_name: this.state.groupName
       })
     })
     .then(resp => resp.json())
@@ -53,15 +57,53 @@ class Groups extends Component {
   }
 
   groupList = () => {
-    fetch(`${BASE_URL}/`, {
+    fetch(`${BASE_URL}/api/groups/group/`, {
       headers: {
         "Authorization": localStorage.token
       },
       method: "GET"
     })
     .then(resp => resp.json())
-    .then(resp => console.log(resp))
+    .then(resp => {
+      console.log(resp.group)
+      if (resp.group){
+        this.setState({
+          group: resp.group,
+          groupName: resp.group.name,
+          groupList: resp.group.members
+        })
+      }
+    })
+  }
 
+  handlePost = () => {
+    this.setState({
+      postModal: true
+    })
+  }
+
+  handlePostOk = () => {
+    this.setState({
+      postModal: false
+    })
+  }
+
+  handlePostSubmit = () => {
+    console.log(this.state.subject)
+    console.log(this.state.body)
+    fetch(`${BASE_URL}/api/groups/create_post/`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.token
+      },
+      method: "POST",
+      body: JSON.stringify({
+        name: this.state.subject,
+        content: this.state.body
+      })
+    })
+    .then(resp => resp.json())
+    .then(resp => console.log(resp))
   }
 
   modalContent = () => {
@@ -107,7 +149,6 @@ class Groups extends Component {
   }
 
   render(){
-    console.log(this.state.groupName)
     return(
       <div>
       {this.state.groupList.length > 0 ?
@@ -116,6 +157,23 @@ class Groups extends Component {
         <div className="col">
           <div className="groupcards__header">
               <h2 className="groupcards__header-text" onClick={this.showModal}>KirbyDownB</h2>
+              <Icon className="groupcards__header-icon" onClick={this.handlePost} type="form" />
+              <Modal
+                title="Reply Message"
+                visible={this.state.postModal}
+                onOk={this.handlePostOk}
+                onCancel={this.handlePostOk}
+                footer={[
+                  <Button key="back" onClick={this.handleOk}>
+                    Return
+                  </Button>,
+                  <Button key="submit" type="primary" onClick={this.handlePostSubmit}>
+                    Send
+                  </Button>
+                ]}
+              >
+                <MessageModal handleChange={this.handleChange} email={this.props.user.email} name={this.state.groupName}/>
+              </Modal>
               <Modal
                 title="Group Settings"
                 visible={this.state.visible}
@@ -178,7 +236,6 @@ class Groups extends Component {
               onChange={this.handleChange}
               prefix={<Icon type="team" style={{ color: 'rgba(0,0,0,.25)' }} />}
             />
-
             </Modal>
           </div>
           <img className="groups__empty-img" src={groupImg}>
@@ -191,4 +248,11 @@ class Groups extends Component {
   }
 }
 
-export default Groups;
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(
+  mapStateToProps,
+  null
+)(Groups);
