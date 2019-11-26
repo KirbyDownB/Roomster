@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import "./Sidebar.css";
-import { Menu, Icon, Button } from 'antd';
+import { Menu, Icon, Button, Badge } from 'antd';
 import logo from '../../../assets/imgs/roomster-logo.svg';
 
 const { Item } = Menu;
 
 class Sidebar extends Component {
-  handleMenuSelect = ({ key }) => this.props.setActiveInterface(key);
+  handleMenuSelect = ({ key }) => {
+    this.props.setActiveInterface(key);
+  };
 
   handleLogout = () => {
     localStorage.removeItem("token");
@@ -14,11 +16,13 @@ class Sidebar extends Component {
   }
 
   render() {
+    const { notifications, activeInterface } = this.props;
+
     return (
       <Menu
         onSelect={this.handleMenuSelect}
         style={{ height: "100vh", width: 256, marginLeft: -15, position: "fixed" }}
-        defaultSelectedKeys={[this.props.activeInterface]}
+        defaultSelectedKeys={[activeInterface]}
         mode="inline"
       >
         <div className="menu__logo--container">
@@ -44,6 +48,20 @@ class Sidebar extends Component {
         >
           <Icon type="profile" />
           <span className="menu__text">Reviews</span>
+        </Item>
+        <Item
+          className="menu__item"
+          key="notifications"
+        >
+          <Icon type="bell" />
+          <span className="menu__text">
+            Notifications
+            {notifications.length > 0 && 
+            <Badge
+              count={notifications.length}
+              style={{ backgroundColor: "#F57676", marginLeft: 8, fontWeight: "bold" }}
+            />}
+          </span>
         </Item>
         <Item
           className="menu__item"

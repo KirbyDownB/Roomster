@@ -1,17 +1,51 @@
 import React, { Component } from 'react';
 import { Rate, Icon, Divider } from 'antd';
 import './ProfileModal.css';
-import { BASE_URL } from '../../../../constants.js';
-import { mockMyReviews } from '../../../../mocks';
+import { BASE_URL, showErrorMessage, FRIEND_REVIEW_ERROR } from '../../../../constants.js';
+import spinner from '../../../../assets/tail-spin.svg';
 
 const moment = require('moment');
 
 class ProfileModal extends Component {
   state = {
-    reviews: []
+    reviews: [],
+    isLoading: false
+  }
+
+  componentDidMount = () => {
+    const { email } = this.props;
+    const token = localStorage.getItem("token");
+
+    this.setState({ isLoading: true });
+
+    fetch(`${BASE_URL}/api/reviews/friend_reviews/`, {
+      headers: {
+        "Authorization": token,
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify({ friend: email })
+    })
+      .then(response => response.json())
+      .then(data => {
+        const { Reviews: reviews } = data;
+        console.log("Response after fetching friend's reviews in ProfileModal", data);
+        this.setState({
+          isLoading: false,
+          reviews
+        });
+      })
+      .catch(error => {
+        console.error(error);
+        showErrorMessage(FRIEND_REVIEW_ERROR);
+        this.setState({ isLoading: false });
+      })
   }
 
   render(){
+    const reviews = [...this.state.reviews];
+    const { isLoading } = this.state;
+
     return(
       <div className="profilemodal__container">
         <div className="profilemodal__header">
@@ -64,25 +98,32 @@ class ProfileModal extends Component {
           </div>
         </div>
         <Divider />
-        <div className="profilemodal__reviews--title">Reviews About {this.props.name.split(' ')[0]}</div>
-        <div className="row justify-content-center">
-          {mockMyReviews.length > 0 && mockMyReviews.map(review => {
-            const { content, date, name, num_stars: rating } = review;
-
-            return (
-              <div className="col-12">
-                <div className="profilemodal__reviews--container">
-                  <div className="profilemodal__reviews--name">{name}</div>
-                  <div className="profilemodal__reviews--date">{moment(date).format('MMMM Do, YYYY')}</div>
-                  <div className="profilemodal__reviews--rating">
-                    <Rate value={rating} disabled />
+        {isLoading &&
+          <div className="profilemodal__reviews--loading">
+            <img src={spinner} className="profilemodal__spinner" alt=""/>
+          </div>
+        }
+        {!isLoading && <div className="profilemodal__reviews--wrapper">
+          <div className="profilemodal__reviews--title">Reviews About {this.props.name.split(' ')[0]}</div>
+          <div className="row justify-content-center">
+            {reviews.length > 0 && reviews.map(review => {
+              const { content, date, name, num_stars: rating } = review;
+  
+              return (
+                <div className="col-12">
+                  <div className="profilemodal__reviews--container">
+                    <div className="profilemodal__reviews--name">{name}</div>
+                    <div className="profilemodal__reviews--date">{moment(date).format('MMMM Do, YYYY')}</div>
+                    <div className="profilemodal__reviews--rating">
+                      <Rate value={rating} disabled />
+                    </div>
+                    <div className="profilemodal__reviews--content">{content}</div>
                   </div>
-                  <div className="profilemodal__reviews--content">{content}</div>
                 </div>
-              </div>
-            )
-          })}
-        </div>
+              )
+            })}
+          </div>
+        </div>}
       </div>
     )
   }
