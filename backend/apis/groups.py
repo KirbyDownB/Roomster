@@ -210,11 +210,11 @@ class CreatePostInGroup(Resource):
         if data.get('name') is None or data.get('content') is None:
             return {"Message":"Post body empty"}
 
-        gp = GroupPosting(name=data.get('name'), content=data.get('content'))
-
+        gp = GroupPosting(name=data.get('name'), content=data.get('content'),poster_email=user_email)
+        gp.save()
         group = Group.objects.get(pk=user_obj.first().group)
 
-        group.posts_in_group.append(gp)
+        group.posts_in_group.append(json.loads(gp.to_json())['_id']['$oid'])
 
         try:
             group.save()
@@ -246,6 +246,20 @@ class GetGroup(Resource):
             return {"Message":"This user is not a part of any group"}
 
         g = json.loads(Group.objects.get(pk=user_obj.first().group).to_json())
+        gps = []
+        for posting in g['posts_in_group']:
+            gp = GroupPosting.objects.get(pk=posting)
+            gp = json.loads(gp.to_json())
+            d = (str(gp['date']['$date'])[:-3])
+            d = int(d)
+            gp['date'] = (datetime.utcfromtimestamp(d).strftime('%Y-%m-%d %H:%M:%S'))
+            poster = User.objects.get(email=gp['poster_email'])
+            poster = poster.to_json()
+            poster = json.loads(poster)
+            poster['name'] = poster['first_name'] + ' ' + poster['last_name']
+            gp['user'] = poster 
+            gps.append(gp)
 
+        g['posts_in_group'] = gps
 
         return {"Message":"Successfully got the group", "group":g}

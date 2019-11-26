@@ -1,9 +1,11 @@
 from flask import Flask
 from flask_restplus import Resource, Api, fields, Namespace
-from .models import User, Posting
+from .models import User, Posting, Notification
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
+from . import socketio
 import json
+from flask_socketio import send,emit
 
 api = Namespace('like', description='Like a post')
 
@@ -84,12 +86,23 @@ class Like(Resource):
 
         user_obj.likedPosts.append(data.get('posting_id'))
 
-
+        n = Notification(category="feed",content="{} liked your post".format(user_email))
         
+        p = User.objects.get(email=post_obj.poster_email)
+        p.notifications.append(n)
+        token = jwt.encode({'email':p.email}, "SECRET_KEY")
+        token = token.decode('utf-8')
+
+
+
+       
 
         try:
             user_obj.save()
             post_obj.save()
+            n.save()
+            p.save()
+            socketio.emit("{} notification".format(token), json.loads(n.to_json()))
         except Exception as e:
             print(e)
             return {"Message":"Something went wrong saving the user or posting"}, 400
