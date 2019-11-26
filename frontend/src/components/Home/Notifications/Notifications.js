@@ -41,7 +41,7 @@ class Notifications extends Component {
                     <Icon type="close-circle" theme="filled" />
                     Clear All
                   </Button>
-                </Popconfirm>
+                </Popconfirm> 
               }
             </div>
           </div>
@@ -56,7 +56,7 @@ class Notifications extends Component {
               }
               {notifications.length > 0 && 
               notifications.reverse().map(notification => {
-                const { category, content, notificationId } = notification;
+                const { category, content, notification_id: notificationId } = notification;
                 
                 return (
                   <div className="col-10" key={notificationId}>

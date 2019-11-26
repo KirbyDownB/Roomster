@@ -18,7 +18,7 @@ class ProfileModal extends Component {
 
     this.setState({ isLoading: true });
 
-    fetch('http://7b5c79e7.ngrok.io/api/reviews/friend_reviews/', {
+    fetch(`${BASE_URL}/api/reviews/friend_reviews/`, {
       headers: {
         "Authorization": token,
         "Content-Type": "application/json"

@@ -14,6 +14,7 @@ import {
   DELETE_ALL_NOTIFICATIONS_ERROR,
   DELETE_NOTIFICATION_ERROR
 } from '../../constants';
+import { subscribeToNotifications } from '../../socket';
 
 class Home extends Component {
   state = {
@@ -27,15 +28,37 @@ class Home extends Component {
   };
 
   componentDidMount = () => {
+    const token = localStorage.getItem("token");
     const activeInterface = localStorage.getItem("activeInterface");
     this.setState({ activeInterface });
 
-    mockNotifications.forEach((mockNotification, index) => {
-      setTimeout(() => {
-        // showNotification(mockNotification);
-        this.setState(prevState => ({ notifications: [...prevState.notifications, mockNotification] }));
-      }, 250 * (index + 1));
+    fetch(`${BASE_URL}/api/notifications/get_notifications/`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+      method: "GET"
+    })
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
+      .then(data => {
+        const { Notifications: notifications } = data;
+        console.log("Got notifications", notifications);
+        this.setState({ notifications });
+      })
+      .catch(error => {
+        console.error(error);
+      })
+
+    subscribeToNotifications(token, notification => {
+      this.setState(prevState => ({ notifications: [...prevState.notifications, notification] }))
     });
+
+    // mockNotifications.forEach((mockNotification, index) => {
+    //   setTimeout(() => {
+    //     // showNotification(mockNotification);
+    //     this.setState(prevState => ({ notifications: [...prevState.notifications, mockNotification] }));
+    //   }, 250 * (index + 1));
+    // });
 
     // subscribeToNotifications(data => {
     //   console.log("Got data from notification subscription", data);
@@ -66,29 +89,29 @@ class Home extends Component {
   }
 
   handleNotificationDelete = notificationId => {
-    const updatedNotifications = this.state.notifications.filter(notification => notification.notificationId !== notificationId);
-    this.setState(prevState => ({ notifications: updatedNotifications }));
+    // const updatedNotifications = this.state.notifications.filter(notification => notification.notificationId !== notificationId);
+    // this.setState(prevState => ({ notifications: updatedNotifications }));
 
-    // const token = localStorage.getItem("token");
-    // fetch(`${BASE_URL}/api/notifications/delete`, {
-    //   headers: {
-    //     "Authorization": token,
-    //     "Content-Type": "application/json"
-    //   },
-    //   method: "DELETE",
-    //   body: JSON.stringify({ notificationId })
-    // })
-    //   .then(response => response.status === 400 ? Promise.reject() : response.json())
-    //   .then(data => {
-    //     console.log(`Got response after deleting notification with id ${notificationId}`, data);
+    const token = localStorage.getItem("token");
+    fetch(`${BASE_URL}/api/notifications/delete/`, {
+      headers: {
+        "Authorization": token,
+        "Content-Type": "application/json"
+      },
+      method: "DELETE",
+      body: JSON.stringify({ notificationId })
+    })
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
+      .then(data => {
+        console.log(`Got response after deleting notification with id ${notificationId}`, data);
 
-    //     const updatedNotifications = this.state.notifications.filter(notification => notification.notificationId !== notificationId);
-    //     this.setState(prevState => ({ notifications: updatedNotifications }));
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //     showErrorMessage(DELETE_NOTIFICATION_ERROR);
-    //   });
+        const updatedNotifications = this.state.notifications.filter(notification => notification.notificationId !== notificationId);
+        this.setState(prevState => ({ notifications: updatedNotifications }));
+      })
+      .catch(error => {
+        console.error(error);
+        showErrorMessage(DELETE_NOTIFICATION_ERROR);
+      });
   }
 
   render() {
