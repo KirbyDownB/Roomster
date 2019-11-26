@@ -68,7 +68,7 @@ class Groups extends Component {
       console.log(resp.group)
       if (resp.group){
         this.setState({
-          group: resp.group,
+          group: resp.group.posts_in_group,
           groupName: resp.group.name,
           groupList: resp.group.members
         })
@@ -195,12 +195,18 @@ class Groups extends Component {
         <div className="row">
           <div className="col groups__chat-container">
             <div>
-              <div className="groups__chat-box">
-                <GroupCards />
-                <Reply />
-                <Reply />
-                <GroupCards />
+            {this.state.group.length > 0 ?
+              <div>
+              {this.state.group.map(props => {
+                return(
+                  <GroupCards {...props} />
+                )
+              })
+              }
               </div>
+            :
+              null
+            }
             </div>
           </div>
         </div>

@@ -46,19 +46,20 @@ class GroupCards extends Component {
   }
 
   render(){
+    console.log(this.props)
     return(
       <div className="container-fluid">
       <div className="row">
         <div className="groupcards__container">
             <div className="groupcards__profile">
-              <img className="groupcards__profile-image" src={eric}></img>
+              <img className="groupcards__profile-image" src={this.props.user.pf_pic}></img>
               <div className="groupcards__title_container">
-                <h1 className="groupcards__profile-title">Eric Ong</h1>
-                <h2 className="groupcards__profile-sub">I like lorem ipsum</h2>
+                <h1 className="groupcards__profile-title">{this.props.user.name}</h1>
+                <h2 className="groupcards__profile-sub">{this.props.name}</h2>
               </div>
             </div>
             <div className="groupcards__body">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+              {this.props.content}
             </div>
             <div className="groupcards__footer">
               <p className="groupcards__footer-text">Click here to &nbsp;</p>
