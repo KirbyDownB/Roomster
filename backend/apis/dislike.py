@@ -4,6 +4,7 @@ from .models import User, Posting, Notification
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
+from . import socketio, client, twilio_phone
 
 api = Namespace('dislike', description='dislike a post')
 
@@ -84,7 +85,7 @@ class dislike(Resource):
 
         user_obj.dislikedPosts.append(data.get('posting_id'))
 
-        n = Notification(category="feed",content="{} disliked your post".format(user_email))
+        n = Notification(category="Feed",content="{} disliked your post".format(user_obj.first().first_name + ' ' + user_obj.first().last_name))
         
         p = User.objects.get(email=post_obj.poster_email)
         p.notifications.append(n)
@@ -96,6 +97,11 @@ class dislike(Resource):
             user_obj.save()
             post_obj.save()
             n.save()
+            client.messages.create(
+                    body="{} disliked your post".format(user_obj.first().first_name + ' ' + user_obj.first().last_name),
+                    from_=twilio_phone,
+                    to=user_obj.first().phone_number
+                )
             socketio.emit("{} notification".format(token), json.loads(n.to_json()))
         except Exception as e:
             print(e)

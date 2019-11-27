@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restplus import Resource, Api, fields, Namespace
 from .models import User, Notification
-from . import socketio
+from . import socketio,client, twilio_phone
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
@@ -67,7 +67,7 @@ class FriendsAdd(Resource):
             return {"Message":"You're already friends with this user"}, 400
         
         
-        n = Notification(category="feed",content="{} posted a review about you".format(user_obj.first().first_name + ' ' + user_obj.first().last_name))
+        n = Notification(category="Friend Request",content="{} sent you a friend request".format(user_obj.first().first_name + ' ' + user_obj.first().last_name))
         
         p = User.objects.get(email=friend_obj.first().email)
         p.notifications.append(n)
@@ -76,6 +76,11 @@ class FriendsAdd(Resource):
         try:
             friend_obj.update_one(add_to_set__friend_requests=user_obj.first().email)
             n.save()
+            client.messages.create( \
+                    body="{} sent you a friend request".format(user_obj.first().first_name + ' ' + user_obj.first().last_name), \
+                    from_=twilio_phone, \
+                    to=friend_obj.first().phone_number \
+                )
             socketio.emit("{} notification".format(token), json.loads(n.to_json()))
         except Exception as e:
             print(e)

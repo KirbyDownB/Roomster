@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import json
 from pprint import pprint
 from datetime import datetime
-from . import socketio
+from . import socketio,client, twilio_phone
 api = Namespace('reviews', description='Review related operations')
 
 posting_id = api.model('posting_id', {
@@ -86,7 +86,7 @@ class AddReview(Resource):
 
         print(review.person_who_was_rated_email)
 
-        n = Notification(category="feed",content="{} posted a review about you".format(user_obj.first().first_name + ' ' + user_obj.first().last_name))
+        n = Notification(category="Feed",content="{} posted a review about you".format(user_obj.first().first_name + ' ' + user_obj.first().last_name))
         
         p = User.objects.get(email=friend_obj.first().email)
         
@@ -96,7 +96,11 @@ class AddReview(Resource):
         try:
             review.save()
             n.save()
-            
+            client.messages.create( \
+                     body="{} posted a review about you".format(user_obj.first().first_name + ' ' + user_obj.first().last_name), \
+                     from_=twilio_phone, \
+                     to=friend_obj.first().phone_number \
+                 )
             socketio.emit("{} notification".format(token), json.loads(n.to_json()))
         except Exception as e:
             print(e)
