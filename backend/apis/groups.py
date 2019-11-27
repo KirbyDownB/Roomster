@@ -320,6 +320,7 @@ class GetGroup(Resource):
                 group_users.append(U)
 
         g['members'] = group_users
+        g['group_id'] = g['_id']['$oid']
         
 
         return {"Message":"Successfully got the group", "group":g}
