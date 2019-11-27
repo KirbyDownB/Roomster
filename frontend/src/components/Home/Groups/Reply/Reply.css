@@ -1,5 +1,5 @@
 .reply__container {
-  margin-top: 2%;
+  margin-bottom: 2%;
   display: flex;
 }
 
@@ -10,7 +10,7 @@
 
 .reply__container-right {
   padding: 1%;
-  box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.6);
+  box-shadow: 0px 2px 15px rgba(129, 129, 129, 0.12);
   background-color: white;
   border-radius: 8px;
   width: 90%;

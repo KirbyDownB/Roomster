@@ -45,6 +45,17 @@ class Groups extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  handleLeaveGroup = () => {
+    fetch(`${BASE_URL}/api/groups/leave/`, {
+      headers: {
+        "Authorization": localStorage.token
+      },
+      method: "GET"
+    })
+    .then(resp => resp.json())
+    .then(resp => console.log(resp))
+  }
+
   handleSubmit = () => {
     fetch(`${BASE_URL}/api/groups/create/`, {
       headers: {
@@ -70,10 +81,9 @@ class Groups extends Component {
     .then(resp => resp.json())
     .then(resp => {
       console.log(resp)
-      console.log(resp.group)
       if (resp.group){
         this.setState({
-          groupId: resp.group._id,
+          groupId: resp.group.group_id,
           group: resp.group.posts_in_group,
           groupName: resp.group.name,
           groupList: resp.group.members
@@ -118,6 +128,7 @@ class Groups extends Component {
   }
 
   handleAddMembers = () => {
+    console.log(this.state.addingMember)
     fetch(`${BASE_URL}/api/groups/add/`, {
       headers: {
         "Content-Type": "application/json",
@@ -230,27 +241,30 @@ class Groups extends Component {
         </div>
       </div>
         <div className="row">
-          <div className="col-4" style={{paddingBottom: '3%'}}>
+          <div className="col" style={{paddingBottom: '3%'}}>
             <Button className="groups__header-buttons" icon="form" onClick={this.handlePost} type="primary">New Post</Button>
+            <Button className="groups__header-buttons_delete" icon="export" onClick={this.handleLeaveGroup} type="primary">Leave Group</Button>
             <Popconfirm
               placement="right"
-              title="Delete Group?"
+              title="Are you sure?"
               icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
               trigger="click"
             >
-              <Button className="groups__header-buttons_delete" onClick={this.handleDelete} icon="delete" type="primary">Are you sure?</Button>
+              <Button className="groups__header-buttons_delete" onClick={this.handleDelete} icon="delete" type="primary">Delete Group</Button>
             </Popconfirm>
           </div>
 
         </div>
         <div className="row">
           <div className="col-11 groups__chat-container">
-            <div>
+            <div style={{width: '100%'}}>
             {this.state.group.length > 0 ?
               <div>
               {this.state.group.map(props => {
                 return(
-                  <GroupCards handlePost={this.handlePost} {...props}  />
+                  <div>
+                    <GroupCards handlePost={this.handlePost} user={this.props.user} {...props}  />
+                  </div>
                 )
               })
               }
@@ -261,9 +275,20 @@ class Groups extends Component {
             </div>
           </div>
           <div className="col-1 groups__drop-down">
-            <img className="groups__image-dd" src={eric}></img>
-            <img className="groups__image-dd" src={eric}></img>
-            <Button className="groups__image-dd" onClick={this.showAddModal} shape="circle" icon="plus" />
+            {this.state.groupList.length > 0 &&
+              <div>
+                {this.state.groupList.map(({name, pf_pic}) => {
+                  return(
+                    <div style={{textAlign: 'center', marginBottom: '15px'}}>
+                      <img className="groups__image-dd" src={pf_pic}></img>
+                      <p>{name}</p>
+                    </div>
+                  )
+                })
+              }
+              </div>
+            }
+            <Button style={{marginBottom: '15px'}} className="groups__image-dd" onClick={this.showAddModal} shape="circle" icon="plus" />
             <Modal
               title="Add Members"
               visible={this.state.addModal}
@@ -277,7 +302,7 @@ class Groups extends Component {
                 </Button>
               ]}
             >
-              <Input placeHolder="Enter username"/>
+              <Input name="addingMember" onChange={this.handleChange} placeHolder="Enter username"/>
             </Modal>
           </div>
         </div>

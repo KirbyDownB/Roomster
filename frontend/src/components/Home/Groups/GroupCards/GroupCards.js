@@ -2,17 +2,25 @@ import React, { Component } from 'react';
 import { Button, Modal, Input, Popover, Icon, Popconfirm } from 'antd';
 import MessageModal from '../MessageModal/MessageModal';
 import Reply from '../Reply/Reply';
+import { BASE_URL } from '../../../../constants'
 import './GroupCards.css';
 
 const eric = require('../../../../assets/eric.jpg')
 const aditya = require('../../../../assets/aditya.jpg')
 const { Search } = Input;
 
-
 class GroupCards extends Component {
   state = {
     visible: false,
-    name: ""
+    loading: false,
+    name: "",
+    subject: "",
+    body: ""
+  }
+
+  handleChange = (e) => {
+    e.preventDefault()
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   handleReply = () => {
@@ -33,19 +41,57 @@ class GroupCards extends Component {
     });
   };
 
+  handleDeletePost = () => {
+    fetch(`${BASE_URL}/api/groups/delete_post/`, {
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": localStorage.token
+      },
+      method: "DELETE",
+      body: JSON.stringify({
+        posting_id: this.props.posting_id
+      })
+    })
+    .then(resp => resp.json())
+    .then(resp => console.log(resp))
+  }
+
   handleSearch = (value) => {
     //TODO fetch
     console.log(value)
   }
 
-  componentDidMount(){
-    //add fetching here
+  handleReplyModal = () => {
     this.setState({
-      name: "KirbyDownB"
+      visible: true
     })
   }
 
+  handleAddReply = () => {
+    this.setState({
+      loading: true
+    })
+    fetch(`${BASE_URL}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.token
+      },
+      method: "POST",
+      body: JSON.stringify({
+        subject: this.state.subject,
+        body: this.state.body
+      })
+    })
+    .then(resp => resp.json())
+    .then(resp => console.log(resp))
+  }
+
+  componentDidMount(){
+  }
+
   render(){
+    console.log(this.props.date.slice(0,10))
+    console.log(this.props.date.slice(11,20))
     return(
       <div className="container-fluid">
       <div className="row">
@@ -53,8 +99,22 @@ class GroupCards extends Component {
             <div className="groupcards__profile">
               <img className="groupcards__profile-image" src={this.props.user.pf_pic}></img>
               <div className="groupcards__title_container">
-                <h1 className="groupcards__profile-title">{this.props.user.name}</h1>
-                <h2 className="groupcards__profile-sub">{this.props.name}</h2>
+                <div className="groupcards__title_inner_container">
+                  <div style={{width: '100%'}}>
+                    <h1 className="groupcards__profile-title">{this.props.user.name}</h1>
+                  </div>
+                  <div style={{width: '100%', float: 'right'}}>
+                    <h2 className="groupcards__profile-date">{this.props.date.slice(0,10)}</h2>
+                  </div>
+                </div>
+                <div className="groupcards__title_inner_container">
+                  <div style={{width: '100%'}}>
+                    <h2 className="groupcards__profile-sub">{this.props.name}</h2>
+                  </div>
+                  <div style={{width: '100%', float: 'right'}}>
+                    <h2 className="groupcards__profile-date">{this.props.date.slice(11,20)}</h2>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="groupcards__body">
@@ -62,28 +122,18 @@ class GroupCards extends Component {
             </div>
             <div className="groupcards__footer">
               <p className="groupcards__footer-text">Click here to &nbsp;</p>
-              <p className="groupcards__footer-click" onClick={this.props.handlePost}>Reply &nbsp;</p>
-              <p>or &nbsp;</p>
-              <p className="groupcards__footer-click">Remove</p>
+              <Popconfirm
+                placement="right"
+                title="Are you sure?"
+                icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
+                trigger="click"
+                onConfirm={this.handleDeletePost}
+              >
+                <p className="groupcards__footer-click">Remove</p>
+              </Popconfirm>
             </div>
             <div>
             </div>
-              <Modal
-                title="Reply Message"
-                visible={this.state.visible}
-                onOk={this.handleOk}
-                onCancel={this.handleCancel}
-                footer={[
-                  <Button key="back" onClick={this.handleCancel}>
-                    Return
-                  </Button>,
-                  <Button key="submit" type="primary" onClick={this.handleOk}>
-                    Send
-                  </Button>
-                ]}
-              >
-                <MessageModal />
-              </Modal>
           </div>
         </div>
       </div>

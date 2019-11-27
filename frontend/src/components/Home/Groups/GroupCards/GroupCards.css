@@ -3,8 +3,8 @@
   background-color: white;
   border-radius: 8px;
   padding-top: 2%;
-  padding-left: 2%;
-  padding-right: 2%;
+  padding-left: 4%;
+  padding-right: 4%;
   margin-bottom: 2%;
   width: 100%;
 }
@@ -53,14 +53,16 @@
 }
 
 .groupcards__profile-title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   color: #F57676;
+  margin: 0;
 }
 
 .groupcards__profile-sub {
   font-size: 14px;
-  font-weight: 500;
+  color: #606060;
+  font-weight: 600;
 }
 
 .groupcards__body {
@@ -70,7 +72,8 @@
 
 .groupcards__footer {
   border-top: 1px solid #BEBEBE;
-  padding: 0.5%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
   display: flex;
 }
 
@@ -111,5 +114,19 @@
 }
 
 .groupcards__reply {
+  width: 100%;
+}
+
+.groupcards__profile-date {
+  font-size: 14px;
+  font-weight: 600;
+  float: right;
+  padding-left: 1%;
+  color: #BEBEBE;
+  margin: 0;
+}
+
+.groupcards__title_inner_container {
+  display: flex;
   width: 100%;
 }

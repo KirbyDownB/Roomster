@@ -7,6 +7,7 @@ import { NO_NOTIFICATIONS } from '../../../constants';
 class Notifications extends Component {
   handleNotificationDelete = (e, notificationId) => {
     e.preventDefault();
+    console.log("Handle notification delete in Notifications component", notificationId);
     this.props.handleNotificationDelete(notificationId);
   }
 

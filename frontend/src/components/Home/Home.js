@@ -68,28 +68,26 @@ class Home extends Component {
   }
 
   clearAllNotifications = () => {
-    this.setState(prevState => ({ notifications: [] }));
-
-    // const token = localStorage.getItem("token");
-    // fetch(`${BASE_URL}/api/notifications/deleteAll`, {
-    //   headers: {
-    //     "Authorization": token,
-    //     "Content-Type": "application/json"
-    //   },
-    //   method: "DELETE"
-    // })
-    //   .then(response => response.status === 400 ? Promise.reject() : response.json())
-    //   .then(data => {
-    //     console.log("Got response after deleting all notifications", data);
-    //     this.setState(prevState => ({ notifications: [] }));
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //     showErrorMessage(DELETE_ALL_NOTIFICATIONS_ERROR);
-    //   });
+    const token = localStorage.getItem("token");
+    fetch(`${BASE_URL}/api/notifications/delete_all/`, {
+      headers: {
+        "Authorization": token,
+        "Content-Type": "application/json"
+      },
+      method: "DELETE"
+    })
+      .then(response => response.status === 400 ? Promise.reject() : response.json())
+      .then(data => {
+        console.log("Got response after deleting all notifications", data);
+        this.setState(prevState => ({ notifications: [] }));
+      })
+      .catch(error => {
+        console.error(error);
+        showErrorMessage(DELETE_ALL_NOTIFICATIONS_ERROR);
+      });
   }
 
-  handleNotificationDelete = notificationId => {
+  handleNotificationDelete = notification_id => {
     // const updatedNotifications = this.state.notifications.filter(notification => notification.notificationId !== notificationId);
     // this.setState(prevState => ({ notifications: updatedNotifications }));
 
@@ -100,13 +98,13 @@ class Home extends Component {
         "Content-Type": "application/json"
       },
       method: "DELETE",
-      body: JSON.stringify({ notificationId })
+      body: JSON.stringify({ notification_id })
     })
       .then(response => response.status === 400 ? Promise.reject() : response.json())
       .then(data => {
-        console.log(`Got response after deleting notification with id ${notificationId}`, data);
+        console.log(`Got response after deleting notification with id ${notification_id}`, data);
 
-        const updatedNotifications = this.state.notifications.filter(notification => notification.notificationId !== notificationId);
+        const updatedNotifications = this.state.notifications.filter(notification => notification.notification_id !== notification_id);
         this.setState(prevState => ({ notifications: updatedNotifications }));
       })
       .catch(error => {
