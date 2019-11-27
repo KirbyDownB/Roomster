@@ -8,7 +8,9 @@ from flask_cors import CORS
 from flask_mongoengine import MongoEngine
 from flask_socketio import SocketIO
 import pyrebase
-from .keys import config, mongo_uri
+from twilio.rest import Client
+from .keys import config, mongo_uri, account_sid, auth_token
+
 
 
 
@@ -38,6 +40,9 @@ api = Api(
 )
 site = "http://localhost:3000/"
 endpoint_name = "reset/"
+twilio_phone = '+15413786796'
+client = Client(account_sid, auth_token)
+
 from .login import api as ns_login
 from .signup import api as ns_signup
 from .passwordreset import api as ns_passwordreset
