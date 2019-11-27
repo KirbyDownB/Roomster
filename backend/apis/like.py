@@ -86,7 +86,7 @@ class Like(Resource):
 
         user_obj.likedPosts.append(data.get('posting_id'))
 
-        n = Notification(category="feed",content="{} liked your post".format(user_email))
+        n = Notification(category="Feed",content="{} liked your post".format(user_email))
         
         p = User.objects.get(email=post_obj.poster_email)
         token = jwt.encode({'email':p.email}, "SECRET_KEY")

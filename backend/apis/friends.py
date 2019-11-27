@@ -67,7 +67,7 @@ class FriendsAdd(Resource):
             return {"Message":"You're already friends with this user"}, 400
         
         
-        n = Notification(category="feed",content="{} posted a review about you".format(user_obj.first().first_name + ' ' + user_obj.first().last_name))
+        n = Notification(category="Friend Request",content="{} sent you a friend request".format(user_obj.first().first_name + ' ' + user_obj.first().last_name))
         
         p = User.objects.get(email=friend_obj.first().email)
         p.notifications.append(n)

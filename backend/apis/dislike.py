@@ -84,7 +84,7 @@ class dislike(Resource):
 
         user_obj.dislikedPosts.append(data.get('posting_id'))
 
-        n = Notification(category="feed",content="{} disliked your post".format(user_email))
+        n = Notification(category="Feed",content="{} disliked your post".format(user_email))
         
         p = User.objects.get(email=post_obj.poster_email)
         p.notifications.append(n)

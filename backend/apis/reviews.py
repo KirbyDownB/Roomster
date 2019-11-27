@@ -86,7 +86,7 @@ class AddReview(Resource):
 
         print(review.person_who_was_rated_email)
 
-        n = Notification(category="feed",content="{} posted a review about you".format(user_obj.first().first_name + ' ' + user_obj.first().last_name))
+        n = Notification(category="Feed",content="{} posted a review about you".format(user_obj.first().first_name + ' ' + user_obj.first().last_name))
         
         p = User.objects.get(email=friend_obj.first().email)
         
