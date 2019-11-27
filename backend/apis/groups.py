@@ -316,6 +316,7 @@ class GetGroup(Resource):
             if u is not None:
                 U = json.loads(\
                     u.to_json())
+                U['name'] = U['first_name'] + ' '  + U['last_name']
                 group_users.append(U)
 
         g['members'] = group_users
