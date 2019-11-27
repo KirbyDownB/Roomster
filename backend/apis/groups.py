@@ -22,6 +22,9 @@ create_posting_in_group = api.model('create_posting_in_group',{
     'name':fields.String(description='member emails'),
     'content':fields.String(description='member emails')
 })
+delete_posting_in_group = api.model('create_posting_in_group',{
+    'posting_id':fields.String(description='member emails'),
+})
 parser = api.parser()
 parser.add_argument('Authorization',type=str,location='headers',help='Bearer Access Token', required=True)
 
@@ -91,6 +94,10 @@ class AddFriendToGroup(Resource):
         if not group:
             return {"Message":"This group does not exist"}, 400
 
+
+        if len(group.members) >= 5:
+            return {"Message":"Sorry, it looks like there are too many people in the group already"}, 400
+
         group.members.append(data.get('new_group_member'))
 
         try:
@@ -98,7 +105,7 @@ class AddFriendToGroup(Resource):
             friend_obj.update_one(group=data.get('group_id'))
         except Exception as e:
             print(e)
-            return {"Message":"Something went wrong when trying to add this member to the group"}
+            return {"Message":"Something went wrong when trying to add this member to the group"}, 400
 
         return {"Message":"Group member list updated successfully"}
 
@@ -220,9 +227,50 @@ class CreatePostInGroup(Resource):
             group.save()
         except Exception as e:
             print(e)
-            return {"Something went wrong when trying to submit your post"}
+            return {"Something went wrong when trying to submit your post"}, 400
 
         return {"Message":"Successfully submitted post to group"}
+
+@api.route('/delete_post/')
+class DeletePostInGroup(Resource):
+    @api.doc('Access Token and delete friend request',parser=parser,body=delete_posting_in_group)
+    def delete(self):
+        data = api.payload
+        args = parser.parse_args()
+        print(data)
+        print(args)
+
+        user_email = tokenToEmail(args)
+
+        if user_email is None:
+            return {"Message":"Token machine BROKE"}, 400
+
+        exists, user_obj = emailExists(user_email,2)
+
+        if not exists:
+            return {"Message":"There is no user with that email"}, 400
+
+        g = Group.objects(pk=user_obj.first().group)
+        print(g)
+        gp = GroupPosting.objects.get(pk=data.get('posting_id'))
+
+        if user_email != gp.poster_email:
+            return {"Message":"You can't delete a post that's not your\'s"}, 400
+
+        
+        try:
+            g.update_one(pull__posts_in_group=data.get('posting_id'))
+
+        except Exception as e:
+            print(e)
+            return {"Message":"Something went wrong when trying to delete your post"},400
+
+        return {"Message":"Successfully deleted post from group"}
+
+
+
+
+
 
 @api.route('/group/')
 class GetGroup(Resource):
@@ -258,8 +306,19 @@ class GetGroup(Resource):
             poster = json.loads(poster)
             poster['name'] = poster['first_name'] + ' ' + poster['last_name']
             gp['user'] = poster 
+            gp['posting_id'] = gp['_id']['$oid']
             gps.append(gp)
 
         g['posts_in_group'] = gps
+        group_users = []
+        for member in g['members']:
+            u = User.objects.get(email=member)
+            if u is not None:
+                U = json.loads(\
+                    u.to_json())
+                group_users.append(U)
+
+        g['members'] = group_users
+        
 
         return {"Message":"Successfully got the group", "group":g}
