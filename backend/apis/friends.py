@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restplus import Resource, Api, fields, Namespace
-from .models import User
+from .models import User, Notification
+from . import socketio
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
@@ -65,11 +66,25 @@ class FriendsAdd(Resource):
         if user_obj(friends__all=[friend_obj.first().email]):
             return {"Message":"You're already friends with this user"}, 400
         
+        
+        n = Notification(category="feed",content="{} posted a review about you".format(user_obj.first().first_name + ' ' + user_obj.first().last_name))
+        
+        p = User.objects.get(email=friend_obj.first().email)
+        p.notifications.append(n)
+        token = jwt.encode({'email':p.email}, "SECRET_KEY")
+        token = token.decode('utf-8')
         try:
             friend_obj.update_one(add_to_set__friend_requests=user_obj.first().email)
+            n.save()
+            socketio.emit("{} notification".format(token), json.loads(n.to_json()))
         except Exception as e:
             print(e)
             return {"Message":"Something went wrong when updating the friends list"}, 400
+
+        n = json.loads(n.to_json())
+        p.notifications.append(n['_id']['$oid'])
+        p.save()
+
         return {"Message":"Friends request list updated successfully"}
 
 @api.route('/delete_friend_request/')
