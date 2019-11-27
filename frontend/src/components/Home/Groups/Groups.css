@@ -3,6 +3,12 @@
   margin: 4% auto;
 }
 
+.groups__spinner {
+  display: flex;
+  margin: 0 auto;
+  margin-top: 20%;
+}
+
 .groups__chat-container {
   width: 100%;
   height: 100vh;

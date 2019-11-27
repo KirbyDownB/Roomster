@@ -42,6 +42,7 @@ class GroupCards extends Component {
   };
 
   handleDeletePost = () => {
+    this.props.removePost(this.props.posting_id)
     fetch(`${BASE_URL}/api/groups/delete_post/`, {
       headers: {
         "Content-type": "application/json",
@@ -100,7 +101,7 @@ class GroupCards extends Component {
               <img className="groupcards__profile-image" src={this.props.user.pf_pic}></img>
               <div className="groupcards__title_container">
                 <div className="groupcards__title_inner_container">
-                  <div style={{width: '100%'}}>
+                  <div style={{width: '100%', alignItems: 'center'}}>
                     <h1 className="groupcards__profile-title">{this.props.user.name}</h1>
                   </div>
                   <div style={{width: '100%', float: 'right'}}>
