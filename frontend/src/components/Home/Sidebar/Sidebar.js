@@ -70,6 +70,13 @@ class Sidebar extends Component {
           <Icon type="edit" />
           <span className="menu__text">Edit Profile</span>
         </Item>
+        <Item
+          className="menu__item"
+          key="groups"
+        >
+          <Icon type="team" />
+          <span className="menu__text">Groups</span>
+        </Item>
         <div className="menu__logout--container">
           <Button
             onClick={this.handleLogout}

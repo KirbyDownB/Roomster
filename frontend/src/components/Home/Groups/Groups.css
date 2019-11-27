@@ -1,0 +1,140 @@
+.groups__container {
+  width: 90%;
+  margin: 4% auto;
+}
+
+.groups__spinner {
+  display: flex;
+  margin: 0 auto;
+  margin-top: 20%;
+}
+
+.groups__chat-container {
+  width: 100%;
+  height: 100vh;
+  padding-bottom: 4%;
+  display: flex;
+}
+
+.groups__chat-box {
+  width: 100%;
+}
+
+.groups__icon-button {
+  font-size: 16px;
+  padding-bottom: 2px;
+  cursor: pointer;
+  color: #F57676;
+}
+
+.groups__people-container {
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.groups__people-text {
+  margin: 0;
+  padding-left: 1%;
+}
+
+.groups__user-container {
+  display: flex;
+  align-items: center;
+  margin-top: 2%;
+}
+
+.groups__user-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 2%;
+}
+
+.groups__user-name {
+  margin: 0;
+}
+
+.groups__sections {
+  padding-bottom: 2%;
+}
+
+.groups__empty-container {
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  align-items: center;
+  vertical-align: middle;
+  display: flex;
+  margin-top: -8%;
+}
+
+.groups__empty-title-container {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  vertical-align: middle;
+  padding-bottom: 4%;
+  width: 100%;
+}
+
+.groups__empty-title {
+  font-weight: 700;
+  color: #F57676;
+  margin: 0;
+  margin-bottom: 0.8%;
+  text-align: center;
+}
+
+.groups__empty-img-container {
+  margin: auto;
+}
+
+.groupcards__header-icon {
+  font-size: 16px;
+  padding-left: 1.2%;
+  cursor: pointer;
+}
+
+.groupcards__header-icon:hover {
+  color: #F57676;
+}
+
+.groups__drop-down {
+  background-color: white;
+  box-shadow: 0px 2px 15px rgba(129, 129, 129, 0.12);
+  height: 100%;
+  border-radius: 8px;
+  padding-top: 2%;
+}
+
+.groups__image-dd_selected {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  border: 2px solid #F57676;
+}
+
+.groups__image-dd {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid white;
+  box-shadow: 0px 0px 7px rgba(129, 129, 129, 0.6);
+  text-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.groups__header-buttons {
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.groups__header-buttons_delete {
+  font-weight: bold;
+  border-radius: 10px;
+  margin-left: 1.5%;
+}

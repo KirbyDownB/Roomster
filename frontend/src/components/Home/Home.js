@@ -6,6 +6,7 @@ import Feed from './Feed/Feed';
 import Profile from './Profile/Profile';
 import Friends from './Friends/Friends';
 import Reviews from './Reviews/Reviews';
+import Groups from './Groups/Groups';
 import Notifications from './Notifications/Notifications';
 import {
   showNotification,
@@ -132,6 +133,7 @@ class Home extends Component {
                 {activeInterface === "profile" && <Profile />}
                 {activeInterface === "feed" && <Feed />}
                 {activeInterface === "friends" && <Friends />}
+                {this.state.activeInterface === "groups" && <Groups />}
                 {activeInterface === "reviews" && <Reviews />}
                 {activeInterface === "notifications" &&
                   <Notifications
