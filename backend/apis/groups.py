@@ -184,15 +184,29 @@ class LeaveGroup(Resource):
             return {"Message":"There is no user with that email"}, 400
 
         
-        
-        try:
-            user_obj.update_one(group="")
-        except Exception as e:
-            print(e)
-            return {"Message":"Something went wrong when trying to remove you from the group"}
-        
+        g = Group.objects.get(user_obj.first().group)
+        if len(g.members) > 2:
+            try:
+                user_obj.update_one(group="")
+            except Exception as e:
+                print(e)
+                return {"Message":"Something went wrong when trying to remove you from the group"}
+            
 
-        return {"Message":"Successfully removed you from the group"}
+            return {"Message":"Successfully removed you from the group"}
+        else:
+            
+            try:
+                for member in g.members:
+                    u = User.objects.get(email=member)
+                    u.group = ""
+                g.delete()
+            except Exception as e:
+                return {"Message":"Something went wrong when trying to delete you from the group and delete the group"}
+
+            return {"Message":"Successfully removed you from the group and deleted group"}
+
+
 
 @api.route('/create_post/')
 class CreatePostInGroup(Resource):

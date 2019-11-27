@@ -96,10 +96,15 @@ class dislike(Resource):
             user_obj.save()
             post_obj.save()
             n.save()
-            p.save()
             socketio.emit("{} notification".format(token), json.loads(n.to_json()))
         except Exception as e:
             print(e)
             return {"Message":"Something went wrong saving the user or posting"}, 400
         
+        n = json.loads(n.to_json())
+        p.notifications.append(n['_id']['$oid'])
+        p.save()
+
+
+
         return {"Message":"dislike successfully saved. Post updated, user updated" }, 202

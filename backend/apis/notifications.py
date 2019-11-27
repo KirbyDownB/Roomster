@@ -60,7 +60,8 @@ class GetNotifsByToken(Resource):
         notifs = user_obj.first().notifications
         notifications = []
         for n in notifs:
-            nn = json.loads(n.to_json())
+            nnn = Notification.objects.get(pk=n)
+            nn = json.loads(nnn.to_json())
             d = (str(nn['date']['$date'])[:-3])
             d = int(d)
             nn['date'] = (datetime.utcfromtimestamp(d).strftime('%Y-%m-%d %H:%M:%S'))
@@ -102,7 +103,22 @@ class DeleteNotifs(Resource):
     @api.doc(parser=parser, body=delete_notification_data)
     def delete(self):
         data = api.payload
+        args = parser.parse_args()
         print(data)
+        print(args)
+
+
+        user_email = tokenToEmail(args)
+
+        if user_email is None:
+            return {"Message":"Token machine BROKE"}, 400
+
+        exists, user_obj = emailExists(user_email,2)
+
+        if not exists:
+            return {"Message":"There is no user with that email"}, 400
+
+
         n = Notification.objects(pk=data.get('notification_id'))
 
         if len(n) > 0:
@@ -141,10 +157,6 @@ class DeleteNotifs(Resource):
 
 
 
-        try:
-            n.update_one(pull__notifications=data.get('notification_id'))
-        except Exception as e:
-            print(e)
-            return {"Message":"Something went wrong when deleting the notification"}
+        return {"Message":"Deleted all notifications"}
 
-        return {"Message":"Successfully deleted notification"}
+        
