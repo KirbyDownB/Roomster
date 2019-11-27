@@ -1,11 +1,12 @@
 from flask import Flask
 from flask_restplus import Resource, Api, fields, Namespace
-from .models import User, Review
+from .models import User, Review, Notification
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 from pprint import pprint
 from datetime import datetime
+from . import socketio
 api = Namespace('reviews', description='Review related operations')
 
 posting_id = api.model('posting_id', {
@@ -85,8 +86,18 @@ class AddReview(Resource):
 
         print(review.person_who_was_rated_email)
 
+        n = Notification(category="feed",content="{} posted a review about you".format(user_obj.first().first_name + ' ' + user_obj.first().last_name))
+        
+        p = User.objects.get(email=friend_obj.first().email)
+        
+        token = jwt.encode({'email':p.email}, "SECRET_KEY")
+        token = token.decode('utf-8')
+
         try:
             review.save()
+            n.save()
+            
+            socketio.emit("{} notification".format(token), json.loads(n.to_json()))
         except Exception as e:
             print(e)
             {"Message":"Something went wrong when saving the review"}, 400
@@ -97,7 +108,9 @@ class AddReview(Resource):
 
         user_obj.update_one(add_to_set__my_reviews=r['_id']['$oid'])
         friend_obj.update_one(add_to_set__reviews=r['_id']['$oid'])
-        
+        n = json.loads(n.to_json())
+        p.notifications.append(n['_id']['$oid'])
+        p.save()
 
         return {"Message":"The review was saved successfully and added to both lists"}
 
