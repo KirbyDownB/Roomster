@@ -101,7 +101,7 @@ class Like(Resource):
             post_obj.save()
             n.save()
             client.messages.create(
-                     body="{} liked your post".format(user_obj.first().first_name + ' ' + user_obj.first().last_name),
+                     body="{} liked your post".format(user_obj.first_name + ' ' + user_obj.last_name),
                      from_=twilio_phone,
                      to=user_obj.first().phone_number
                  )
