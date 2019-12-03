@@ -100,7 +100,7 @@ class dislike(Resource):
             client.messages.create(
                     body="{} disliked your post".format(user_obj.first_name + ' ' + user_obj.last_name),
                     from_=twilio_phone,
-                    to=user_obj.first().phone_number
+                    to=user_obj.phone_number
                 )
             socketio.emit("{} notification".format(token), json.loads(n.to_json()))
         except Exception as e:

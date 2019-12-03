@@ -77,7 +77,7 @@ class SendResetEmail(Resource):
         if len(user_data) != 1:
             return {"Message":"No user with this email found"}, 400
 
-        token = jwt.encode({"email":user_data.email}, "SECRET_KEY")
+        token = jwt.encode({"email":user_data.first().email}, "SECRET_KEY")
         link = site + endpoint_name + token.decode('utf-8')
 
         subject = "[Roomster] Password Reset"
