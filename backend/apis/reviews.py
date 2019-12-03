@@ -138,10 +138,14 @@ class AllReview(Resource):
         if not exists:
             return {"Message":"There is no user with that email"}, 400
 
-        otherReviews = []
+        otherReviews = [] # i want the person who reviewed you (so the email in review i think)
         for i in range (0, len(user_obj.first().reviews)):
             r = Review.objects.get(pk=user_obj.first().reviews[i]).to_json()
             r = json.loads(r)
+            print(r['rater_email'])
+            u = User.objects.get(email=r['rater_email'])
+            name = u.first_name + ' ' + u.last_name
+            r['name'] = name
             d = (str(r['date']['$date'])[:-3])
             d = int(d)
             r['date'] = (datetime.utcfromtimestamp(d).strftime('%Y-%m-%d %H:%M:%S'))
@@ -164,7 +168,7 @@ class AllReview(Resource):
             my_reviews.append(r)
 
 
-        return {"Message":"Data retrieved successfully", "otherReviews": otherReviews, "my_reviews":my_reviews, }
+        return {"Message":"Data retrieved successfully", "otherReviews": otherReviews, "my_reviews":my_reviews}
 
 @api.route('/friend_reviews/')
 class AddReview(Resource):

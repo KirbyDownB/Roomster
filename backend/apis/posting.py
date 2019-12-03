@@ -110,8 +110,8 @@ class AllPosting(Resource):
              p['posting_id'] = p['_id']['$oid']
              postings.append(p)
              
-        random.shuffle(postings)
-
+        #random.shuffle(postings)
+        postings = sorted(postings, key=lambda x: x['date'], reverse=True)
 
         all_possible_locations = []
         durations = []
