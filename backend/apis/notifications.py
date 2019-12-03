@@ -148,11 +148,15 @@ class DeleteNotifs(Resource):
 
         if not exists:
             return {"Message":"There is no user with that email"}, 400
+        try:
+            for notification in user_obj.first().notifications:
+                n = Notification.objects.get(pk=notification)
+                user_obj.update_one(pull__notifications=notification)
+                n.delete()
+        except Exception as e:
+            print(e)
+            user_obj.update_one(notifications=[])
 
-        for notification in user_obj.first().notifications:
-            n = Notification.objects.get(pk=notification)
-            n.delete()
-            user_obj.update_one(pull__notifications=notification)
 
 
 
