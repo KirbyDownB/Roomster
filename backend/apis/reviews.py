@@ -96,7 +96,7 @@ class AddReview(Resource):
         try:
             review.save()
             n.save()
-            n['notification_id'] = n['_id']['$oid']
+            n['notification_id'] = json.loads(n.to_json())['_id']['$oid']
             client.messages.create( \
                      body="{} posted a review about you".format(user_obj.first().first_name + ' ' + user_obj.first().last_name), \
                      from_=twilio_phone, \
