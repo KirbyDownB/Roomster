@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restplus import Resource, Api, fields, Namespace
 from .models import User, Review, Group, GroupPosting
+from . import socketio,client, twilio_phone
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
@@ -234,11 +235,27 @@ class CreatePostInGroup(Resource):
         gp = GroupPosting(name=data.get('name'), content=data.get('content'),poster_email=user_email)
         gp.save()
         group = Group.objects.get(pk=user_obj.first().group)
+        #print(group.members[0]+"   \n\n\n\n  "+group.members[1])
 
         group.posts_in_group.append(json.loads(gp.to_json())['_id']['$oid'])
 
+        phoneNumbers = []
+
+        for member in group.members:
+            u = User.objects.get(email=member)
+            if u:
+                phoneNumbers.append(u.phone_number)
+                print("aaaaaa"+"\n\n\n\n\n\n")
+
         try:
             group.save()
+            for numbers in phoneNumbers:
+                if numbers != user_obj.first().phone_number:
+                    client.messages.create( \
+                        body="{} posted in the group '{}'".format(user_obj.first().first_name + ' ' + user_obj.first().last_name, group.name),  \
+                        from_=twilio_phone, \
+                        to=numbers\
+                    )
         except Exception as e:
             print(e)
             return {"Something went wrong when trying to submit your post"}, 400
