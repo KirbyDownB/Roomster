@@ -87,8 +87,8 @@ class FriendsAdd(Resource):
             print(e)
             return {"Message":"Something went wrong when updating the friends list"}, 400
 
-        n = json.loads(n.to_json())
-        p.notifications.append(n['_id']['$oid'])
+        # n = json.loads(n.to_json())
+        p.notifications.append(n['notification_id'])
         p.save()
 
         return {"Message":"Friends request list updated successfully"}

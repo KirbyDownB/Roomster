@@ -113,8 +113,8 @@ class AddReview(Resource):
 
         user_obj.update_one(add_to_set__my_reviews=r['_id']['$oid'])
         friend_obj.update_one(add_to_set__reviews=r['_id']['$oid'])
-        n = json.loads(n.to_json())
-        p.notifications.append(n['_id']['$oid'])
+        # n = json.loads(n.to_json())
+        p.notifications.append(n['notification_id'])
         p.save()
 
         return {"Message":"The review was saved successfully and added to both lists"}

@@ -86,7 +86,7 @@ class Like(Resource):
 
         user_obj.likedPosts.append(data.get('posting_id'))
 
-        n = Notification(category="Feed",content="{} liked your post".format(user_email))
+        n = Notification(category="Feed",content="{} liked your post".format(user_obj.first_name + ' ' + user_obj.last_name))
         
         p = User.objects.get(email=post_obj.poster_email)
         token = jwt.encode({'email':p.email}, "SECRET_KEY")
@@ -111,8 +111,8 @@ class Like(Resource):
             print(e)
             return {"Message":"Something went wrong saving the user or posting"}, 400
         
-        n = json.loads(n.to_json())
-        p.notifications.append(n['_id']['$oid'])
+        # n = json.loads(n.to_json())
+        p.notifications.append(n['notification_id'])
         p.save()
 
         return {"Message":"Like successfully saved. Post updated, user updated" }, 202
