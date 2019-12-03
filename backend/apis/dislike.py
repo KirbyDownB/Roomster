@@ -108,8 +108,8 @@ class dislike(Resource):
             print(e)
             return {"Message":"Something went wrong saving the user or posting"}, 400
         
-        n = json.loads(n.to_json())
-        p.notifications.append(n['_id']['$oid'])
+        # n = json.loads(n.to_json())
+        p.notifications.append(n['notification_id'])
         p.save()
 
 
