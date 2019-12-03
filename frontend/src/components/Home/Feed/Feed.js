@@ -177,8 +177,10 @@ class Feed extends Component {
       .then(response => response.status === 400 ? Promise.reject() : response.json())
       .then(({ results }) => {
         console.log("Response after SEARCHING FEED", results);
+        const postsToNumReactions = results.map(posting => ({ posting_id: posting.posting_id, likes: posting.likedEmails.length, dislikes: posting.dislikedEmails.length }));
         this.setState({
           isFeedSearchLoading: false,
+          postsToNumReactions,
           posts: []
         });
         console.log(results);

@@ -85,7 +85,7 @@ class dislike(Resource):
 
         user_obj.dislikedPosts.append(data.get('posting_id'))
 
-        n = Notification(category="Feed",content="{} disliked your post".format(user_obj.first().first_name + ' ' + user_obj.first().last_name))
+        n = Notification(category="Feed",content="{} disliked your post".format(user_obj.first_name + ' ' + user_obj.last_name))
         
         p = User.objects.get(email=post_obj.poster_email)
         p.notifications.append(n)
@@ -97,10 +97,11 @@ class dislike(Resource):
             user_obj.save()
             post_obj.save()
             n.save()
+            n['notification_id'] = json.loads(n.to_json())['_id']['$oid']
             client.messages.create(
-                    body="{} disliked your post".format(user_obj.first().first_name + ' ' + user_obj.first().last_name),
+                    body="{} disliked your post".format(user_obj.first_name + ' ' + user_obj.last_name),
                     from_=twilio_phone,
-                    to=user_obj.first().phone_number
+                    to=p.phone_number
                 )
             socketio.emit("{} notification".format(token), json.loads(n.to_json()))
         except Exception as e:

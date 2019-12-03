@@ -55,7 +55,7 @@ class Notifications extends Component {
                   }
                 />
               }
-              {notifications.length > 0 && 
+              {notifications && notifications.length > 0 && 
               notifications.reverse().map(notification => {
                 const { category, content, notification_id: notificationId } = notification;
                 
