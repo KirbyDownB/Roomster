@@ -100,6 +100,7 @@ class Like(Resource):
             user_obj.save()
             post_obj.save()
             n.save()
+            n['notification_id'] = n['_id']['$oid']
             client.messages.create(
                      body="{} liked your post".format(user_obj.first_name + ' ' + user_obj.last_name),
                      from_=twilio_phone,

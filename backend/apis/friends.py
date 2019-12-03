@@ -76,6 +76,7 @@ class FriendsAdd(Resource):
         try:
             friend_obj.update_one(add_to_set__friend_requests=user_obj.first().email)
             n.save()
+            n['notification_id'] = n['_id']['$oid']
             client.messages.create( \
                     body="{} sent you a friend request".format(user_obj.first().first_name + ' ' + user_obj.first().last_name), \
                     from_=twilio_phone, \
