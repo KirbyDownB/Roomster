@@ -3,7 +3,7 @@ import GroupCards from './GroupCards/GroupCards';
 import MessageModal from './MessageModal/MessageModal';
 import Reply from './Reply/Reply';
 import Fade from 'react-reveal/Fade';
-import { BASE_URL } from '../../../constants.js'
+import { BASE_URL, showErrorMessage } from '../../../constants.js'
 import { Popover, Icon, Popconfirm, Input, Button, Modal } from 'antd';
 import { connect } from 'react-redux';
 import spinner from '../../../assets/tail-spin.svg';
@@ -56,10 +56,17 @@ class Groups extends Component {
       method: "GET"
     })
     .then(resp => resp.json())
-    .then(resp => console.log(resp))
+    .then(resp => {
+      if (resp.Message === "Successfully removed you from the group"){
+        this.setState({
+          groupList: []
+        })
+      }
+    })
   }
 
   handleSubmit = () => {
+    console.log(this.state.groupName)
     fetch(`${BASE_URL}/api/groups/create/`, {
       headers: {
         "Content-Type": "application/json",
@@ -121,10 +128,31 @@ class Groups extends Component {
     })
   }
 
+  handleDeleteGroup = () => {
+    fetch(`${BASE_URL}/api/groups/delete_group/`, {
+      headers: {
+        'Authorization': localStorage.token
+      },
+      method: 'GET'
+    })
+    .then(response => response.status === 400 ? Promise.reject() : response.json())
+    .then(resp => {
+      if (resp.Message === "Successfully removed you from the group and deleted group"){
+        this.setState({
+          groupList: []
+        })
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      showErrorMessage(error);
+    });
+  }
+
   handleDelete = () => {
     fetch(`${BASE_URL}/api/groups/leave/`, {
       headers: {
-        'Authorization': 'application/json'
+        'Authorization': 'localStorage.token'
       },
       method: 'GET'
     })
@@ -199,6 +227,7 @@ class Groups extends Component {
               title="Are you sure?"
               icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
               trigger="click"
+              onConfirm={this.handleDeleteGroup}
             >
               <Icon className="groups__icon-button" type="exclamation-circle" />
             </Popconfirm>
@@ -233,6 +262,7 @@ class Groups extends Component {
   }
 
   render(){
+
     return(
       <div>
       {this.state.loadingGroups ? (
@@ -245,7 +275,7 @@ class Groups extends Component {
         <div className="row">
           <div className="col">
             <div className="groupcards__header">
-                <h2 className="groupcards__header-text" onClick={this.showModal}>KirbyDownB</h2>
+                <h2 className="groupcards__header-text" onClick={this.showModal}>{this.state.groupName}</h2>
                 <Modal
                   title="Reply Message"
                   visible={this.state.postModal}
@@ -274,8 +304,9 @@ class Groups extends Component {
                 title="Are you sure?"
                 icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
                 trigger="click"
+                onConfirm={this.handleDeleteGroup}
               >
-                <Button className="groups__header-buttons_delete" onClick={this.handleDelete} icon="delete" type="primary">Delete Group</Button>
+                <Button className="groups__header-buttons_delete" icon="delete" type="primary">Delete Group</Button>
               </Popconfirm>
             </div>
 
