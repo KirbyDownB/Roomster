@@ -185,28 +185,68 @@ class LeaveGroup(Resource):
             return {"Message":"There is no user with that email"}, 400
 
         
-        g = Group.objects.get(user_obj.first().group)
+        g = Group.objects.get(pk=user_obj.first().group)
         if len(g.members) > 2:
             try:
                 user_obj.update_one(group="")
             except Exception as e:
                 print(e)
-                return {"Message":"Something went wrong when trying to remove you from the group"}
+                return {"Message":"Something went wrong when trying to remove you from the group"}, 400
             
 
             return {"Message":"Successfully removed you from the group"}
         else:
-            
+            print("Hello group delete")
             try:
                 for member in g.members:
                     u = User.objects.get(email=member)
                     u.group = ""
+                    u.save()
                 g.delete()
             except Exception as e:
-                return {"Message":"Something went wrong when trying to delete you from the group and delete the group"}
+                return {"Message":"Something went wrong when trying to delete you from the group and delete the group"}, 400
 
-            return {"Message":"Successfully removed you from the group and deleted group"}
+            return {"Message":"Successfully removed you from the group"}
+@api.route('/delete_group/')
+class DeleteGroup(Resource):
+    @api.expect(parser)
+    def get(self):
+        args = parser.parse_args()
+        print(args)
+        user_email = tokenToEmail(args)
 
+        if user_email is None:
+            return {"Message":"Token machine BROKE"}, 400
+
+        exists, user_obj = emailExists(user_email,2)
+
+        if not exists:
+            return {"Message":"There is no user with that email"}, 400
+
+        
+        g = Group.objects.get(pk=user_obj.first().group)
+        # if len(g.members) > 2:
+        #     try:
+        #         user_obj.update_one(group="")
+        #     except Exception as e:
+        #         print(e)
+        #         return {"Message":"Something went wrong when trying to remove you from the group"}
+            
+
+        #     return {"Message":"Successfully removed you from the group"}
+        # else:
+        #     print("Hello group delete")
+        try:
+            for member in g.members:
+                u = User.objects.get(email=member)
+                u.group = ""
+                u.save()
+            g.delete()
+        except Exception as e:
+            print(e)
+            return {"Message":"Something went wrong when trying to delete you from the group and delete the group"}, 400
+
+        return {"Message":"Successfully removed you from the group and deleted group"}
 
 
 @api.route('/create_post/')
@@ -320,8 +360,8 @@ class GetGroup(Resource):
             return {"Message":"There is no user with that email"}, 400
 
         
-
-        if user_obj.first().group == "":
+        print("GRoup:   ", user_obj.first().group)
+        if user_obj.first().group == "" or len(user_obj.first().group) == 0:
             return {"Message":"This user is not a part of any group"}
 
         g = json.loads(Group.objects.get(pk=user_obj.first().group).to_json())
