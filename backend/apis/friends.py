@@ -70,7 +70,7 @@ class FriendsAdd(Resource):
         n = Notification(category="Friend Request",content="{} sent you a friend request".format(user_obj.first().first_name + ' ' + user_obj.first().last_name))
         
         p = User.objects.get(email=friend_obj.first().email)
-        p.notifications.append(n)
+        # p.notifications.append(n)
         token = jwt.encode({'email':p.email}, "SECRET_KEY")
         token = token.decode('utf-8')
         try:
