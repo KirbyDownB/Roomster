@@ -37,7 +37,7 @@ protobuf==3.10.0
 psycopg2==2.8.3
 pyasn1==0.4.7
 pyasn1-modules==0.2.7
-pycryptodome==3.4.3
+pycryptodome==3.6.6
 PyJWT==1.7.1
 pymongo==3.9.0
 Pyrebase==3.0.27
