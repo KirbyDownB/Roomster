@@ -45,7 +45,7 @@ pyrsistent==0.15.4
 python-dateutil==2.8.0
 python-editor==1.0.4
 python-http-client==3.2.1
-python-jwt==2.0.1
+python-jwt==3.3.4
 pytz==2019.3
 requests==2.11.1
 requests-toolbelt==0.7.0
